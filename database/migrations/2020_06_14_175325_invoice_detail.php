@@ -18,9 +18,9 @@ class InvoiceDetail extends Migration
             $table->string('dishes')->nullable();
             $table->integer('quantity')->nullable();
             $table->double('price')->nullable();
-            $table->string('created_by');
-            $table->string('updated_by');
-            $table->string('deleted_by');
+            $table->string('created_by')->nullable();
+            $table->string('updated_by')->nullable();
+            $table->string('deleted_by')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

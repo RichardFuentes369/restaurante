@@ -26,9 +26,9 @@ class CompanyInformation extends Migration
             $table->enum('background', ['0', '1']); // si es 0 esta activo el fondo color, si es 1 esta activo el fondo imagen
             $table->string('background_color'); // viene desde el storage
             $table->string('background_image'); // viene desde el storage
-            $table->string('created_by');
-            $table->string('updated_by');
-            $table->string('deleted_by');
+            $table->string('created_by')->nullable();
+            $table->string('updated_by')->nullable();
+            $table->string('deleted_by')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

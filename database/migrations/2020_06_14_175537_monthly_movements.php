@@ -22,9 +22,9 @@ class MonthlyMovements extends Migration
             $table->string('aucente_turns');
             $table->string('total_bills');
             $table->string('number_of_payment');
-            $table->string('created_by');
-            $table->string('updated_by');
-            $table->string('deleted_by');
+            $table->string('created_by')->nullable();
+            $table->string('updated_by')->nullable();
+            $table->string('deleted_by')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

@@ -18,9 +18,9 @@ class Discounts extends Migration
             $table->string('description')->nullable();
             $table->string('name')->nullable();
             $table->string('porcentage')->nullable();
-            $table->string('created_by');
-            $table->string('updated_by');
-            $table->string('deleted_by');
+            $table->string('created_by')->nullable();
+            $table->string('updated_by')->nullable();
+            $table->string('deleted_by')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

@@ -17,9 +17,9 @@ class InvoiceFooter extends Migration
             $table->id();
             $table->string('consumption');
             $table->foreignId('id_iva');
-            $table->string('deleted_by');
-            $table->string('updated_by');
-            $table->string('created_by');
+            $table->string('created_by')->nullable();
+            $table->string('updated_by')->nullable();
+            $table->string('deleted_by')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

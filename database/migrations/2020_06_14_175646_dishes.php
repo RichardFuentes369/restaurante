@@ -13,21 +13,21 @@ class Dishes extends Migration
      */
     public function up()
     {
-        Schema::create('dishes', function (Blueprint $table) {
-            $table->id();
-            $table->string('photo')->nullable();
-            $table->string('name')->nullable();
-            $table->enum('size', ['small', 'big', 'median'])->nullable();
-            $table->string('description')->nullable();
-            $table->string('price')->nullable();
-            $table->foreignId('id_menu')->nullable();
-            $table->string('created_by');
-            $table->string('updated_by');
-            $table->string('deleted_by');
-            $table->softDeletes();
-            $table->timestamps();
-        });
-    }
+      Schema::create('dishes', function (Blueprint $table) {
+        $table->id();
+        $table->string('photo')->nullable();
+        $table->string('name')->nullable();
+        $table->enum('size', ['small', 'big', 'median'])->nullable();
+        $table->string('description')->nullable();
+        $table->string('price')->nullable();
+        $table->foreignId('id_menu')->nullable();
+        $table->string('created_by')->nullable();
+        $table->string('updated_by')->nullable();
+        $table->string('deleted_by')->nullable();
+        $table->softDeletes();
+        $table->timestamps();
+    });
+  }
 
     /**
      * Reverse the migrations.
@@ -36,6 +36,6 @@ class Dishes extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dishes');
-    }
+      Schema::dropIfExists('dishes');
+  }
 }

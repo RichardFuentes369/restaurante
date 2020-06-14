@@ -4,7 +4,7 @@
       <div class="column is-4 is-offset-4">
         <div class="box">
           <h1 class="title text-center">Login</h1>
-          <div class="notification is-danger" v-if="error">
+          <div class="notification text-danger" v-if="error">
             <p>{{error}}</p>
           </div>
           <form autocomplete="off" @submit.prevent="login" method="post">
@@ -33,8 +33,8 @@
 export default {
   data() {
     return {
-      username: null,
-      password: null,
+      username: 'lubowitz.cordie@example.com',
+      password: 'password',
       error: null
     };
   },
