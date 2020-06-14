@@ -15,6 +15,12 @@ class Discounts extends Migration
     {
         Schema::create('discounts', function (Blueprint $table) {
             $table->id();
+            $table->string('description')->nullable();
+            $table->string('name')->nullable();
+            $table->string('porcentage')->nullable();
+            $table->string('created_by');
+            $table->string('updated_by');
+            $table->string('deleted_by');
             $table->softDeletes();
             $table->timestamps();
         });

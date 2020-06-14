@@ -15,6 +15,20 @@ class CompanyInformation extends Migration
     {
         Schema::create('company_information', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('address');
+            $table->string('phone');
+            $table->string('cellphone');
+            $table->string('email');
+            $table->string('logo'); // viene desde el storage
+            $table->string('slogan');
+            $table->string('slogan_color');
+            $table->enum('background', ['0', '1']); // si es 0 esta activo el fondo color, si es 1 esta activo el fondo imagen
+            $table->string('background_color'); // viene desde el storage
+            $table->string('background_image'); // viene desde el storage
+            $table->string('created_by');
+            $table->string('updated_by');
+            $table->string('deleted_by');
             $table->softDeletes();
             $table->timestamps();
         });

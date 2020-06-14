@@ -15,6 +15,12 @@ class InvoiceDetail extends Migration
     {
         Schema::create('invoice_detail', function (Blueprint $table) {
             $table->id();
+            $table->string('dishes')->nullable();
+            $table->integer('quantity')->nullable();
+            $table->double('price')->nullable();
+            $table->string('created_by');
+            $table->string('updated_by');
+            $table->string('deleted_by');
             $table->softDeletes();
             $table->timestamps();
         });

@@ -15,6 +15,15 @@ class Dishes extends Migration
     {
         Schema::create('dishes', function (Blueprint $table) {
             $table->id();
+            $table->string('photo')->nullable();
+            $table->string('name')->nullable();
+            $table->enum('size', ['small', 'big', 'median'])->nullable();
+            $table->string('description')->nullable();
+            $table->string('price')->nullable();
+            $table->foreignId('id_menu')->nullable();
+            $table->string('created_by');
+            $table->string('updated_by');
+            $table->string('deleted_by');
             $table->softDeletes();
             $table->timestamps();
         });

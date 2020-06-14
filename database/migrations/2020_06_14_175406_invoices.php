@@ -15,6 +15,18 @@ class Invoices extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('id_header');
+            $table->foreignId('id_detail');
+            $table->foreignId('id_footer');
+            $table->foreignId('id_table');
+            $table->foreignId('id_discount');
+            $table->enum('efectivo', ['True', 'False']);
+            $table->string('pago_electronico_no');
+            $table->enum('estado_pago', ['True', 'False']);
+            $table->enum('estado_cocina', ['True', 'False']);
+            $table->string('created_by');
+            $table->string('updated_by');
+            $table->string('deleted_by');
             $table->softDeletes();
             $table->timestamps();
         });

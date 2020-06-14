@@ -15,6 +15,10 @@ class InvoiceHeader extends Migration
     {
         Schema::create('invoice_header', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('id_customer');
+            $table->string('created_by');
+            $table->string('updated_by');
+            $table->string('deleted_by');
             $table->softDeletes();
             $table->timestamps();
         });

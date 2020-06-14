@@ -33,9 +33,9 @@ class CreateUsersTable extends Migration
             $table->enum('isAtm', ['True','False'])->default('False');
             $table->enum('isWaiter', ['True','False'])->default('False');
             $table->enum('isChef', ['True','False'])->default('False');
-            $table->string('deleted_by');
-            $table->string('updated_by');
             $table->string('created_by');
+            $table->string('updated_by');
+            $table->string('deleted_by');
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();

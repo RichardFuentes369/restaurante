@@ -15,6 +15,11 @@ class InvoiceFooter extends Migration
     {
         Schema::create('invoice_footer', function (Blueprint $table) {
             $table->id();
+            $table->string('consumption');
+            $table->foreignId('id_iva');
+            $table->string('deleted_by');
+            $table->string('updated_by');
+            $table->string('created_by');
             $table->softDeletes();
             $table->timestamps();
         });

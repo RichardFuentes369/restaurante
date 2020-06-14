@@ -15,6 +15,16 @@ class Customers extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->nullable();
+            $table->string('lastname')->nullable();
+            $table->string('email')->nullable();
+            $table->string('phone')->nullable();
+            $table->date('birthdate')->nullable();
+            $table->enum('td',['CC','TI','RC','CE','PA']);
+            $table->string('dni')->nullable();
+            $table->string('created_by');
+            $table->string('updated_by');
+            $table->string('deleted_by');
             $table->softDeletes();
             $table->timestamps();
         });

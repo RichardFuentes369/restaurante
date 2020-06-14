@@ -15,6 +15,11 @@ class Iva extends Migration
     {
         Schema::create('iva', function (Blueprint $table) {
             $table->id();
+            $table->string('description');
+            $table->string('percentage');
+            $table->string('created_by');
+            $table->string('updated_by');
+            $table->string('deleted_by');
             $table->softDeletes();
             $table->timestamps();
         });

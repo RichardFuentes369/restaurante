@@ -15,6 +15,16 @@ class MonthlyMovements extends Migration
     {
         Schema::create('monthle_movements', function (Blueprint $table) {
             $table->id();
+            $table->string('year');
+            $table->string('month');
+            $table->string('waiter');
+            $table->string('number_of_invoices');
+            $table->string('aucente_turns');
+            $table->string('total_bills');
+            $table->string('number_of_payment');
+            $table->string('created_by');
+            $table->string('updated_by');
+            $table->string('deleted_by');
             $table->softDeletes();
             $table->timestamps();
         });
