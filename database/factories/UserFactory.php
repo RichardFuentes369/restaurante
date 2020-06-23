@@ -27,13 +27,13 @@ $factory->define(User::class, function (Faker $faker) {
 		'email' => $faker->unique()->safeEmail,
 		'email_verified_at' => now(),
         'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-
-		'contract_date' => $faker->dateTime($max = 'now'),
-		'isSuperAdmin' => 'True',
-		'isAdmin' => 'False',
-		'isAtm' => 'False',
-		'isWaiter' => 'False',
-		'isChef' => 'False',
+		'address' => $faker->address,
+		'isSuperAdmin' => '1',
+		'isAdmin' => '0',
+		'isAtm' => '0',
+		'isWaiter' => '0',
+		'isChef' => '0',
+		'isClient' => '0',
         'remember_token' => Str::random(10),
     ];
 });

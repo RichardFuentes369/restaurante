@@ -74,7 +74,16 @@
 									<template slot="prepend">Address</template>
 								</el-input>
 							</div>	
-							<el-popover	placement="bottom" width="200"	trigger="hover" content="Remember that and the email" class="informacion">
+							<div class="mt-3">
+								Rol
+								<ValidationProvider name="Role" :rules="{ required: true, min: 1 }" v-slot="{ errors }">
+									<el-checkbox-group v-model="model.checkCargo">
+										<el-checkbox v-for="item in rol" :label="item.label" :key="item.label" />
+									</el-checkbox-group>
+									<span class="text-danger">{{ errors[0] }}</span>
+								</ValidationProvider>
+							</div>	
+							<el-popover	placement="bottom" width="200"	trigger="hover" content="Remember that the email, password and rol" class="informacion">
 								<el-button slot="reference" circle class="p-0">
 									<i class="el-icon-info" />
 								</el-button>
@@ -112,8 +121,17 @@ export default {
 				sexo: '',
 				email: '',
 				password: '',
-				address: '' 
+				address: '',
+				checkCargo: []      
 			},
+			rol: [
+			{'label': 'isSuperAdmin'},
+			{'label': 'isAdmin'},
+			{'label': 'isAtm'},
+			{'label': 'isWaiter'},
+			{'label': 'isChef'},
+			{'label': 'isClient'},
+			],
 			td: [
 			{'label': 'Cedula de ciudadania', 'value': 'CC'},
 			{'label': 'Tarjeta de identidad', 'value': 'TI'},
@@ -141,19 +159,18 @@ export default {
 				sexo: '',
 				email: '',
 				password: '',
-				address: ''
+				address: '',
+				checkCargo: []
 			}
-			this.$refs.register.reset();
 		},
 		async createUser(){
-			if (this.model.name != '' && this.model.lastname != '' && this.model.td != '' && this.model.dni != '' && this.model.sexo != '' && this.model.email != '' && this.model.password != '' && this.model.address != ''){
-				await axios.post(`${this.route}user-register`, this.model)
+			if (this.model.name != '' && this.model.lastname != '' && this.model.td != '' && this.model.dni != '' && this.model.sexo != '' && this.model.email != '' && this.model.password != '' && this.model.address != '' && this.model.checkCargo != ''){
+				await axios.post(`${this.route}crear-usuario`, this.model)
 				this.$notify({
 					title: 'Success',
 					message: 'Usuario creado exitosamente',
 					type: 'success'
 				});
-				this.clear()
 			} else {
 				this.$notify.error({
 					message: 'Algunos campos no pueden ir vacios',

@@ -28,11 +28,12 @@ class CreateUsersTable extends Migration
         $table->string('password');
         $table->string('address');
         $table->date('contract_date')->nullable();
-        $table->enum('isSuperAdmin', ['True','False'])->default('False');
-        $table->enum('isAdmin', ['True','False'])->default('False');
-        $table->enum('isAtm', ['True','False'])->default('False');
-        $table->enum('isWaiter', ['True','False'])->default('False');
-        $table->enum('isChef', ['True','False'])->default('False');
+        $table->boolean('isSuperAdmin')->default(0);
+        $table->boolean('isAdmin')->default(0);
+        $table->boolean('isAtm')->default(0);
+        $table->boolean('isWaiter')->default(0);
+        $table->boolean('isChef')->default(0);
+        $table->boolean('isClient')->default(0);
         $table->string('created_by')->nullable();
         $table->string('updated_by')->nullable();
         $table->string('deleted_by')->nullable();
