@@ -12,6 +12,8 @@ import Login from './views/index/components/login'
 import Register from './views/index/components/register'
 import Logout from './views/index/views/logout'
 
+import Role from './views/index/views/role'
+
 import SAtemplate from './views/super-admin/template/nav-left'
 import SAindex from './views/super-admin/views/index.vue'
 import SAadministradores from './views/super-admin/views/administradores.vue'
@@ -53,11 +55,17 @@ export default new VueRouter({
 		path: '/login',
 		name: 'login',
 		component: Login,
+		meta: {
+			requiresAuth: false,
+		}
 	},	
 	{
 		path: '/register',
 		name: 'register',
 		component: Register,
+		meta: {
+			requiresAuth: false,
+		}
 	},
 	{ 
 		path: '/404', 
@@ -72,6 +80,14 @@ export default new VueRouter({
 		path: '/logout',
 		name: 'logout',
 		component: Logout,
+		meta: {
+			requiresAuth: true,
+		}
+	},
+	{
+		path: '/role',
+		name: 'role',
+		component: Role,
 		meta: {
 			requiresAuth: true,
 		}

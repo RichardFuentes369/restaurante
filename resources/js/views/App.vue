@@ -3,8 +3,11 @@
     <div id="menu" class="fixed-top">  
       <span class="navbar-brand text-white" href="#">Restaurante</span>
       <ul>
-        <li>
+        <li v-if="this.usuario_logeado == ''">
           <router-link :to="{ name: 'bienvenidos'}" class="nav-link">Inicio</router-link>
+        </li>
+        <li v-else>
+          <router-link :to="{ name: 'role'}" class="nav-link">Rol</router-link>
         </li>
         <li>
           <router-link :to="{ name: 'noticias'}" class="nav-link">Anuncios</router-link>
@@ -12,21 +15,23 @@
       </ul>
     </div>
     <div id="content" class="col-sm-12">
-      <div class="container">
-        <router-view></router-view>
-      </div>
+      <router-view></router-view>
     </div>
   </div>
 </div>
 </template>
 <script>
+import { userMixins } from '../mixins/getuser.js'
 export default {
   data() {
     return {
+      usuario_logeado: ''
     };
   },
-  methods: {
-  }
+  mounted() {
+    this.getUser()
+  },
+  mixins: [userMixins]
 };
 </script>
 <style>

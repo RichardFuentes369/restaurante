@@ -33,7 +33,7 @@
 export default {
   data() {
     return {
-      username: 'lubowitz.cordie@example.com',
+      username: 'melisa.kerluke@example.com',
       password: 'password',
       error: null
     };
@@ -46,8 +46,7 @@ export default {
           password: this.password
         })
         .then(response => {
-          console.log(response)
-          this.$router.push({ name: "dashboard" });
+          this.$router.push({ name: "role" });
         })
         .catch(error => {
           this.error = error.response.data;

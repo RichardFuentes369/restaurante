@@ -90,11 +90,6 @@
 </div>
 </template>
 <style>
-.informacion {
-	position: absolute;
-	margin-top: 1.2rem;
-	margin-left: -1.5rem;
-}
 </style>
 <script>
 export default {

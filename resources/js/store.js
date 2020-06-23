@@ -28,37 +28,49 @@ const store = new Vuex.Store({
           username: credentials.username,
           password: credentials.password,
         })
-          .then(response => {
+        .then(response => {
             //console.log(response)
             const token = response.data.access_token
             localStorage.setItem('access_token', token)
             context.commit('retrieveToken', token)
-
             resolve(response)
           })
-          .catch(error => {
+        .catch(error => {
             //console.log(error)
             reject(error)
           })
       })
 
+    },    
+    userauthenticate() {
+      return new Promise((resolve, reject) => {
+        if(this.state.token != null){
+          axios.get('../api/user', {
+            headers: { Authorization: "Bearer " + this.state.token }
+          }).then(response => {
+            resolve(response)
+          }).catch(error => {
+            reject(error)
+          })
+        }
+      })
     },
     destroyToken(context) {
-      
+
       if (context.getters.loggedIn){
-        
+
         return new Promise((resolve, reject) => {
           axios.post('/api/logout', '', {
-              headers: { Authorization: "Bearer " + context.state.token }
-            })
-            .then(response => {
+            headers: { Authorization: "Bearer " + context.state.token }
+          })
+          .then(response => {
               //console.log(response)
               localStorage.removeItem('access_token')
               context.commit('destroyToken')
-  
+              
               resolve(response)
             })
-            .catch(error => {
+          .catch(error => {
               //console.log(error)
               localStorage.removeItem('access_token')
               context.commit('destroyToken')
