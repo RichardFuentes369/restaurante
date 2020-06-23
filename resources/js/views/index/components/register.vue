@@ -23,7 +23,7 @@
 								:key="item.value"
 								:label="item.label"
 								:value="item.value" />
-							</el-select>
+							</el-select> <br>
 						</div>
 						<div class="mt-3">
 							<el-input placeholder="Please input" v-model="model.dni" maxlength="30" show-word-limit>
@@ -42,53 +42,73 @@
 						</div>
 					</div>
 					<div class="col-sm-6">
-						<div class="mt-3">
-							Sexo
-							<el-select v-model="model.sexo" placeholder="Select">
-								<el-option
-								v-for="item in sexo"
-								:key="item.value"
-								:label="item.label"
-								:value="item.value" />
-							</el-select>
-						</div>
-						<div class="mt-3">
-							<ValidationProvider name="Email" :rules="{ required: true, email: true }" v-slot="{ errors }">
-								<el-input placeholder="Please input" v-model="model.email" maxlength="50" show-word-limit>
-									<template slot="prepend">Email</template>
+						<ValidationObserver v-slot="{ invalid }" ref="register">
+							<div class="mt-3">
+								Sexo
+								<el-select v-model="model.sexo" placeholder="Select">
+									<el-option
+									v-for="item in sexo"
+									:key="item.value"
+									:label="item.label"
+									:value="item.value" />
+								</el-select>
+							</div>
+							<div class="mt-3">
+								<ValidationProvider name="Email" :rules="{ required: true, email: true }" v-slot="{ errors }">
+									<el-input placeholder="Please input" v-model="model.email" maxlength="50" show-word-limit>
+										<template slot="prepend">Email</template>
+									</el-input>
+									<span class="text-danger">{{ errors[0] }}</span>
+								</ValidationProvider>
+							</div>
+							<div class="mt-3">
+								<ValidationProvider name="Password" :rules="{ required: true, regex: /^[a-z0-9A-Z]{6,18}$/ }" v-slot="{ errors }">
+									<el-input placeholder="Please input" v-model="model.password" minlength="8" maxlength="18" show-word-limit>
+										<template slot="prepend">Password</template>
+									</el-input>
+									<span class="text-danger">{{ errors[0] }}</span>
+								</ValidationProvider>
+							</div>
+							<div class="mt-3">
+								<el-input placeholder="Please input" v-model="model.address" maxlength="80" show-word-limit>
+									<template slot="prepend">Address</template>
 								</el-input>
-								<span class="text-danger">{{ errors[0] }}</span>
-							</ValidationProvider>
-						</div>
-						<div class="mt-3">
-							<el-input placeholder="Please input" v-model="model.password" minlength="8" maxlength="50" show-word-limit>
-								<template slot="prepend">Password</template>
-							</el-input>
-						</div>
-						<div class="mt-3">
-							<el-input placeholder="Please input" v-model="model.address" maxlength="80" show-word-limit>
-								<template slot="prepend">Address</template>
-							</el-input>
-						</div>	
-						<div class="mt-3">
-							To selection
-							<el-checkbox-group v-model="model.checkCargo">
-								<el-checkbox label="isSuperAdmin" />
-								<el-checkbox label="isAdmin" />
-								<el-checkbox label="isAtm" />
-								<el-checkbox label="isWaiter" />
-								<el-checkbox label="isChef" />
-							</el-checkbox-group>
-						</div>		
+							</div>	
+							<div class="mt-3">
+								Rol
+								<ValidationProvider name="Role" :rules="{ required: true, min: 1 }" v-slot="{ errors }">
+									<el-checkbox-group v-model="model.checkCargo">
+										<el-checkbox label="isSuperAdmin" />
+										<el-checkbox label="isAdmin" />
+										<el-checkbox label="isAtm" />
+										<el-checkbox label="isWaiter" />
+										<el-checkbox label="isChef" />
+									</el-checkbox-group>
+									<span class="text-danger">{{ errors[0] }}</span>
+								</ValidationProvider>
+							</div>	
+							<el-popover	placement="bottom" width="200"	trigger="hover" content="Remember that the email, password and rol" class="informacion">
+								<el-button slot="reference" circle class="p-0">
+									<i class="el-icon-info" />
+								</el-button>
+							</el-popover>
+							<button class="btn btn-success btn-block mt-3" @click="createUser" :disabled="invalid">Registrarme</button>
+							<router-link :to="{ name: 'bienvenidos'}" class="mt-2 btn btn-primary btn-block">Volver</router-link>
+						</ValidationObserver>
 					</div>
-					<button class="btn btn-success btn-block mt-3" @click="createUser">Registrarme</button>
-					<router-link :to="{ name: 'bienvenidos'}" class="mt-2 btn btn-primary btn-block">Volver</router-link>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
 </template>
+<style>
+.informacion {
+	position: absolute;
+	margin-top: 1.2rem;
+	margin-left: -1.5rem;
+}
+</style>
 <script>
 export default {
 	data() {
@@ -96,16 +116,16 @@ export default {
 			route: 'api/usuario/',
 			usuarios: [],
 			model: {
-				name: '',
-				lastname: '',
-				td: '',
-				dni: '',
-				phone: '',
-				cellphone: '',
-				sexo: '',
-				email: '',
-				password: '',
-				address: '',
+				name: 'javier',
+				lastname: 'baron',
+				td: 'CC',
+				dni: '123456',
+				phone: '3504284093',
+				cellphone: '3504826693',
+				sexo: 'M',
+				email: 'javierbaron6@gmai.cas',
+				password: 'Qwerty9601',
+				address: 'sdsdsdds',
 				checkCargo: []      
 			},
 			td: [
@@ -140,7 +160,7 @@ export default {
 			}
 		},
 		async createUser(){
-			if (this.model.td != '' && this.model.dni != '' && this.model.sexo != '' && this.model.email != '' && this.model.password != '' && this.model.address != '' && this.model.checkCargo != ''){
+			if (this.model.name != '' && this.model.lastname != '' && this.model.td != '' && this.model.dni != '' && this.model.sexo != '' && this.model.email != '' && this.model.password != '' && this.model.address != '' && this.model.checkCargo != ''){
 				await axios.post(`${this.route}crear-usuario`, this.model)
 				this.$notify({
 					title: 'Success',
