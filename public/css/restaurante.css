@@ -1,3 +1,4 @@
+/*CSS MENÚ*/
 #navbarNav ul li{
   display: block;
   font-variant: small-caps;
@@ -41,6 +42,23 @@
   margin-top: 5rem;
 }
 
+/*CSS DISEÑO PRINCIPAL*/
+.boxnametag {
+  margin-top: 7.5rem!important;
+}
+.nametag{
+  background-color: blue;
+  color: white;
+  border-radius: 35%;
+}
+.line-hr{
+  margin-top: 6.8rem!important;
+} 
+.contenido {
+  margin-top: 8rem !important;
+}
+
+/*CSS SCROLLBAR*/
 .contenido::-webkit-scrollbar {
   width: 5px;
   background-color: #F5F5F5;

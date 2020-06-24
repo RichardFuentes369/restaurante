@@ -1,5 +1,5 @@
 <template>
-	<div class="contenido" :style="`height: ${this.alto}px; width: 100%; overflow-y: auto;`"> 
+	<div class="contenido"> 
 		<h2>Carta</h2>
 		
 	</div>
@@ -9,16 +9,11 @@
 export default {
 	data() {
 		return {
-			alto: '',
 		};
 	},
 	mounted() {
-		this.resolution();
 	},
 	methods: {
-		resolution (){
-			this.alto = screen.height - 280
-		}
 	}
 };
 </script>

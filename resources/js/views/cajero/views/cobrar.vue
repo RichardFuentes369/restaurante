@@ -1,5 +1,5 @@
 <template>
-	<div class="contenido" :style="`height: ${this.alto}px; width: 100%; overflow-y: auto; overflow-x: hidden;`"> 
+	<div class="contenido"> 
 		<div class="row">
 			<h2 class="title mb-3">Facturas por cobrar</h2> 
 		</div>
@@ -51,7 +51,7 @@
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
-						<div class="modal-body contenido" :style="`height: ${this.alto}px; width: 100%; overflow-y: auto; overflow-x: hidden;`">
+						<div class="modal-body contenido">
 							<label for="">Nombres</label>
 							<input type="text" class="form-control">
 							<label for="">Apellidos</label>
@@ -87,7 +87,6 @@
 export default {
 	data() {
 		return {
-			alto: '',
 			restaurantes: [
 			{
 				'nombre': 'restaurante dona a',
@@ -160,12 +159,8 @@ export default {
 		};
 	},
 	mounted() {
-		this.resolution();
 	},
 	methods: {
-		resolution (){
-			this.alto = screen.height - 280
-		}
 	}
 };
 </script>

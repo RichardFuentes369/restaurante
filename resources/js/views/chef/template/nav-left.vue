@@ -9,29 +9,17 @@
 					<div class="justify-content-center text-center mx-auto" id="navbarNav">
 						<ul class="navbar-nav">						
 							<li class="nav-item active">
-								<router-link to="/a/index" class="nav-link">index</router-link>
+								<router-link to="/ch/index" class="nav-link">index</router-link>
 							</li>			
-							<li class="nav-item active">
-								<router-link to="/a/menus" class="nav-link">menus</router-link>
+<!-- 							<li class="nav-item active">
+								<router-link to="/c/cobrar" class="nav-link">cobrar</router-link>
 							</li>	
 							<li class="nav-item active">
-								<router-link to="/a/platos" class="nav-link">platos</router-link>
+								<router-link to="/c/devolucion" class="nav-link">devolucion</router-link>
 							</li>
 							<li class="nav-item active">
-								<router-link to="/a/promociones" class="nav-link">promociones</router-link>
-							</li>  					
-							<li class="nav-item active">
-								<router-link to="/a/cajeros" class="nav-link">cajeros</router-link>
-							</li>  	
-							<li class="nav-item active">
-								<router-link to="/a/cocineros" class="nav-link">cocineros</router-link>
-							</li>  		
-							<li class="nav-item active">
-								<router-link to="/a/meseros" class="nav-link">meseros</router-link>
-							</li>  
-							<li class="nav-item active">
 								<router-link to="/logout" class="nav-link">salir</router-link>
-							</li> 
+							</li>  -->
 						</ul>
 					</div>
 				</div>

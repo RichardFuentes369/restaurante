@@ -1,5 +1,5 @@
 <template>
-	<div class="contenido" :style="`height: ${this.alto}px; width: 100%; overflow-y: auto; overflow-x: hidden;`"> 
+	<div class="contenido"> 
 		<div class="row">
 			<h2 class="title">Restaurantes</h2> 
 			<button type="button" class="btn btn-success btnadd ml-3 mt-1" data-toggle="modal" data-target=".bd-example-modal-xl" circle>
@@ -124,17 +124,33 @@ export default {
 				'nombre': 'restaurante dona k',
 				'descripcion': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae, recusandae similique eveniet quis. Quibusdam mollitia fugit officiis repellat, vel voluptates eaque possimus, nostrum dolore quaerat error modi soluta, perferendis! Molestiae.',
 				'imagen': '',
+			},		
+			{
+				'nombre': 'restaurante dona h',
+				'descripcion': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae, recusandae similique eveniet quis. Quibusdam mollitia fugit officiis repellat, vel voluptates eaque possimus, nostrum dolore quaerat error modi soluta, perferendis! Molestiae.',
+				'imagen': '',
+			},
+			{
+				'nombre': 'restaurante dona i',
+				'descripcion': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae, recusandae similique eveniet quis. Quibusdam mollitia fugit officiis repellat, vel voluptates eaque possimus, nostrum dolore quaerat error modi soluta, perferendis! Molestiae.',
+				'imagen': '',
+			},
+			{
+				'nombre': 'restaurante dona j',
+				'descripcion': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae, recusandae similique eveniet quis. Quibusdam mollitia fugit officiis repellat, vel voluptates eaque possimus, nostrum dolore quaerat error modi soluta, perferendis! Molestiae.',
+				'imagen': '',
+			},
+			{
+				'nombre': 'restaurante dona k',
+				'descripcion': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae, recusandae similique eveniet quis. Quibusdam mollitia fugit officiis repellat, vel voluptates eaque possimus, nostrum dolore quaerat error modi soluta, perferendis! Molestiae.',
+				'imagen': '',
 			},
 			]
 		};
 	},
 	mounted() {
-		this.resolution();
 	},
 	methods: {
-		resolution (){
-			this.alto = screen.height - 280
-		}
 	}
 };
 </script>

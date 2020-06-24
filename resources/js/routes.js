@@ -18,7 +18,6 @@ import SAtemplate from './views/super-admin/template/nav-left'
 import SAindex from './views/super-admin/views/index.vue'
 import SAadministradores from './views/super-admin/views/administradores.vue'
 import SArestaurantes from './views/super-admin/views/restaurantes.vue'
-import SAjum from './views/super-admin/views/jum.vue'
 
 import Atemplate from './views/admin/template/nav-left'
 import Aindex from './views/admin/views/index.vue'
@@ -38,6 +37,12 @@ import Mtemplate from './views/mesero/template/nav-left'
 import Mindex from './views/mesero/views/index'
 import Mpedido from './views/mesero/views/pedidos'
 import Mcarta from './views/mesero/views/carta'
+
+import Cltemplate from './views/cliente/template/nav-left'
+import Clindex  from './views/cliente/views/index.vue'
+
+import Chtemplate from './views/chef/template/nav-left'
+import Chindex  from './views/chef/views/index.vue'
 
 export default new VueRouter({
 	routes: [
@@ -115,11 +120,6 @@ export default new VueRouter({
 			path: 'restaurantes',
 			name: 'restaurantes',
 			component: SArestaurantes
-		},
-		{
-			path: 'jum',
-			name: 'jum',
-			component: SAjum
 		}
 		]
 	},	
@@ -218,6 +218,38 @@ export default new VueRouter({
 			path: 'carta',
 			name: 'carta',
 			component: Mcarta,
+		}
+		]
+	},	
+	{
+		path: '/cl',
+		name: 'cliente',
+		component: Cltemplate,
+		default: Clindex,
+		meta: {
+			requiresAuth: true,
+		},
+		children: [
+		{
+			path: 'index',
+			name: 'index',
+			component: Clindex,
+		}
+		]
+	},	
+	{
+		path: '/ch',
+		name: 'chef',
+		component: Chtemplate,
+		default: Chindex,
+		meta: {
+			requiresAuth: true,
+		},
+		children: [
+		{
+			path: 'index',
+			name: 'index',
+			component: Chindex,
 		}
 		]
 	},

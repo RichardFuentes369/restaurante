@@ -1,5 +1,5 @@
 <template>
-	<div class="contenido" :style="`height: ${this.alto}px; width: 100%; overflow-y: auto; overflow-x: hidden;`"> 
+	<div class="contenido"> 
 		<div class="row">
 			<h2 class="title mb-3">Administradores</h2> 
 			<button type="button" class="btn btn-success btnadd ml-3 mt-1" data-toggle="modal" data-target=".bd-example-modal-xl" circle>
@@ -187,12 +187,8 @@ export default {
 		};
 	},
 	mounted() {
-		this.resolution();
 	},
 	methods: {
-		resolution (){
-			this.alto = screen.height - 280
-		}
 	}
 };
 </script>

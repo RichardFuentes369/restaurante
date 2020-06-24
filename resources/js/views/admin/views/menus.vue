@@ -1,5 +1,5 @@
 <template>
-	<div class="contenido" :style="`height: ${this.alto}px; width: 100%; overflow-y: auto; overflow-x: hidden;`"> 
+	<div class="contenido">
 		<div class="row">
 			<h2 class="title mb-3">Menú</h2> 
 			<button type="button" class="btn btn-success btnadd ml-3 mt-1" data-toggle="modal" data-target=".bd-example-modal-xl" circle>
@@ -50,7 +50,8 @@
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
-						<div class="modal-body contenido" :style="`height: ${this.alto}px; width: 100%; overflow-y: auto; overflow-x: hidden;`">
+						<div class="modal-body contenido">
+						<!-- <div class="modal-body contenido" :style="`height: ${this.alto}px; width: 100%; overflow-y: auto; overflow-x: hidden;`"> -->
 							<select name="" id="" class="form-control">
 								<option value="">--Seleccione--</option>
 								<option value="">Masculino</option>
@@ -72,7 +73,6 @@
 export default {
 	data() {
 		return {
-			alto: '',
 			restaurantes: [
 			{
 				'nombre': 'restaurante dona a',
@@ -133,12 +133,8 @@ export default {
 		};
 	},
 	mounted() {
-		this.resolution();
 	},
 	methods: {
-		resolution (){
-			this.alto = screen.height - 280
-		}
 	}
 };
 </script>

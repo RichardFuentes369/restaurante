@@ -1,6 +1,5 @@
 <template>
-	<div class="contenido" :style="`height: ${this.alto}px; width: 100%; overflow-y: auto;
-	overflow-x: hidden;`"> 
+	<div class="contenido"> 
 	<div class="row">
 		<h2 class="title mb-3">Pedidos</h2> 
 		<button type="button" class="btn btn-success btnadd ml-1 mt-1" data-toggle="modal" data-target=".bd-example-modal-xl" circle>
@@ -18,7 +17,7 @@
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-					<div class="modal-body contenido" :style="`height: ${this.alto}px; width: 100%; overflow-y: auto; overflow-x: hidden;`">
+					<div class="modal-body contenido">
 						<label for="">Mesa</label>
 						<select name="" id="" class="form-control">
 							<option value="">--Seleccione--</option>
@@ -118,16 +117,11 @@
 export default {
 	data() {
 		return {
-			alto: '',
 		};
 	},
 	mounted() {
-		this.resolution();
 	},
 	methods: {
-		resolution (){
-			this.alto = screen.height - 280
-		}
 	}
 };
 </script>
