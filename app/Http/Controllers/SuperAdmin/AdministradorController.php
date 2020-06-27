@@ -10,7 +10,8 @@ use App\Models\usuarios;
 class AdministradorController extends Controller
 {
 	public function lista(){
-		return 'hola pirobito';
+		$lista_usuarios = usuarios::where('isAdmin', 1)->get();
+		return $lista_usuarios;
 	}
 
 	public function register(Request $request){
@@ -26,8 +27,8 @@ class AdministradorController extends Controller
 			$crear_usuario->phone = $request->phone;
 			$crear_usuario->sexo = $request->sexo;
 			$crear_usuario->td = $request->td;
-			$isAdmin = array_search("isAdmin", $request->checkCargo) != false ? $crear_usuario->isAdmin = 0 : $crear_usuario->isAdmin = 1;
-			$isAtm = array_search("isAtm", $request->checkCargo) != false ? $crear_usuario->isAtm = 0 : $crear_usuario->isAtm = 1;
+			$request->isAdmin == '1' ? $crear_usuario->isAdmin = 1 : $crear_usuario->isAdmin = 0;
+			$request->isAtm == '1' ? $crear_usuario->isAtm = 1 : $crear_usuario->isAtm = 0;
 			$crear_usuario->save();
 			return 'usuario creado con exito';
 		} catch (Exception $e) {

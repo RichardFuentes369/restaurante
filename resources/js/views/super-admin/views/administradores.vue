@@ -10,30 +10,34 @@
 			<table class="table table-striped">
 				<thead>
 					<tr>
-						<th scope="col">#</th>
-						<th scope="col">First</th>
-						<th scope="col">Last</th>
-						<th scope="col">Handle</th>					
-						<th scope="col">First</th>
-						<th scope="col">Last</th>
-						<th scope="col">Handle</th>				
-						<th scope="col">First</th>
-						<th scope="col">Last</th>
-						<th scope="col">Handle</th>
+						<th scope="col" class="text-center">#</th>
+						<th scope="col" class="text-center">Photo</th>
+						<th scope="col" class="text-center">Name</th>
+						<th scope="col" class="text-center">Lastname</th>
+						<th scope="col" class="text-center">Sexo</th>
+						<th scope="col" class="text-center">Email</th>
+						<th scope="col" class="text-center">Options</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr v-for="(restaurante, key) in restaurantes">
-						<th scope="row">1</th>
-						<td>Mark</td>
-						<td>Otto</td>
-						<td>@mdo</td>
-						<td>Mark</td>
-						<td>Otto</td>
-						<td>@mdo</td>
-						<td>Mark</td>
-						<td>Otto</td>
-						<td>@mdo</td>
+					<tr v-for="(user, key) in users">
+						<th scope="row">{{key+1}}</th>
+						<td class="text-center">{{user.photo}}</td>
+						<td class="text-center">{{user.name}}</td>
+						<td class="text-center">{{user.lastname}}</td>
+						<td class="text-center">{{user.sexo}}</td>
+						<td class="text-center">{{user.email}}</td>
+						<td class="text-center">
+							<button class="btnadd btn btn-primary" title="Ver">
+								<i class="far fa-eye" />
+							</button>
+							<button class="btnadd btn btn-warning" title="Editar">
+								<i class="fas fa-pen" />
+							</button>
+							<button class="btnadd btn btn-danger" title="Eliminar">
+								<i class="fa fa-trash" />
+							</button>
+						</td>
 					</tr>
 				</tbody>
 			</table>
@@ -126,7 +130,7 @@
 											<div class="mt-3">
 												Rol
 												<ValidationProvider name="Role" :rules="{ required: true, min: 1 }" v-slot="{ errors }">
-													<el-checkbox-group v-model="model.checkCargo">
+													<el-checkbox-group v-model="checkCargo">
 														<el-checkbox v-for="item in rol" :label="item.label" :key="item.label" />
 													</el-checkbox-group>
 													<span class="text-danger">{{ errors[0] }}</span>
@@ -168,15 +172,11 @@ export default {
 				email: '',
 				password: '',
 				address: '',
-				checkCargo: []      
+				isAdmin: 0,
+				isAtm: 0    
 			},
-			restaurantes: [
-			{
-				'nombre': 'restaurante dona a',
-				'descripcion': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae, recusandae similique eveniet quis. Quibusdam mollitia fugit officiis repellat, vel voluptates eaque possimus, nostrum dolore quaerat error modi soluta, perferendis! Molestiae.',
-				'imagen': '',
-			},
-			],
+			users: [],
+			checkCargo: [],
 			rol: [
 			{'label': 'isAdmin'},
 			{'label': 'isAtm'},
@@ -199,6 +199,8 @@ export default {
 	},
 	methods: {
 		clear(){
+			this.users = []
+			this.checkCargo = []
 			this.model = {
 				name: '',
 				lastname: '',
@@ -210,17 +212,30 @@ export default {
 				email: '',
 				password: '',
 				address: '',
-				checkCargo: [],    
+				isAdmin: 0,
+				isAtm: 0   
 			}
 			this.$refs.registeradmin.reset()
 		},
 		listAdmin(){
-			console.log('lista')
+			axios.get(`${this.route}admin-list`).then(res => {
+				this.users = res.data
+			})
 		},
 		async guardarAdministrador(){
 			if (this.model.name != '' && this.model.lastname != '' && this.model.td != '' && this.model.dni != '' && this.model.sexo != '' && this.model.email != '' && this.model.password != '' && this.model.address != ''){
+				for (let value of this.checkCargo) {
+					if(value == 'isAdmin'){
+						this.model.isAdmin = 1
+					}
+					if(value == 'isAtm'){
+						this.model.isAtm = 1
+					}
+				}
 				await axios.post(`${this.route}admin-register`, this.model)
 				$('#registerAdmin').modal('hide')
+				this.clear()
+				this.listAdmin()
 				this.$notify({
 					title: 'Success',
 					message: 'Usuario creado exitosamente',
