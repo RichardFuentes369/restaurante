@@ -138,7 +138,7 @@ export default {
 				password: '',
 				address: ''
 			}
-			this.$refs.register.reset();
+			this.$refs.register.reset()
 		},
 		async createUser(){
 			if (this.model.name != '' && this.model.lastname != '' && this.model.td != '' && this.model.dni != '' && this.model.sexo != '' && this.model.email != '' && this.model.password != '' && this.model.address != ''){

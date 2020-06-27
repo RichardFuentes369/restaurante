@@ -78,6 +78,7 @@ class RouteServiceProvider extends ServiceProvider
         ->group(function() {
             require base_path('routes/api.php');
             require base_path('routes/api/usuario.php');
-        });
+            require base_path('routes/api/superadmin/super-admin.php');
+        });    
     }
 }
