@@ -1,7 +1,7 @@
 <template>
 	<div class="contenido">
 		<div class="row">
-			<h2 class="title mb-3">Meseros</h2> 
+			<h2 class="title mb-3">Mesas</h2> 
 			<button type="button" class="btn btn-success btnadd ml-3 mt-1" data-toggle="modal" data-target=".bd-example-modal-xl" circle>
 				<i class="fa fa-plus"></i>
 			</button>

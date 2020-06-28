@@ -21,7 +21,8 @@ import SAestadisticas from './views/super-admin/views/estadisticas.vue'
 
 import Atemplate from './views/admin/template/nav-left'
 import Aindex from './views/admin/views/index.vue'
-import Amenus from './views/admin/views/menus.vue'
+import Amenu from './views/admin/views/menu.vue'
+import Acategoriaplato from './views/admin/views/categoria-plato.vue'
 import Aplatos from './views/admin/views/platos.vue'
 import Apromociones from './views/admin/views/promociones.vue'
 import Acajeros from './views/admin/views/cajeros.vue'
@@ -141,9 +142,14 @@ export default new VueRouter({
 			component: Aindex,
 		},
 		{
-			path: 'menus',
-			name: 'menus',
-			component: Amenus,
+			path: 'menu',
+			name: 'menu',
+			component: Amenu,
+		},	
+		{
+			path: 'categoria-plato',
+			name: 'categoria-plato',
+			component: Acategoriaplato,
 		},	
 		{
 			path: 'platos',
@@ -243,12 +249,12 @@ export default new VueRouter({
 			name: 'index',
 			component: Clindex,
 		},	
-			{
+		{
 			path: 'estado_factura',
 			name: 'estado_factura',
 			component: Clestado_factura,
 		},	
-			{
+		{
 			path: 'historial',
 			name: 'historial',
 			component: Clhistorial,

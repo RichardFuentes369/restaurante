@@ -1,0 +1,141 @@
+<template>
+	<div class="contenido">
+		<div class="row">
+			<h2 class="title mb-3">Categoria de platos</h2> 
+			<button type="button" class="btn btn-success btnadd ml-3 mt-1" data-toggle="modal" data-target=".bd-example-modal-xl" circle>
+				<i class="fa fa-plus"></i>
+			</button>
+		</div>
+		<div class="row justify-content-center">
+			<div class="card my-2 mx-4" :style="`background-image: url(${restaurante.logo});background-position-x: center; background-position-y: center; background-size: ${restaurante.size}; background-repeat: no-repeat; width: 18rem; height: 15rem`" v-for="restaurante in restaurantes" title="click">
+				<div class="card-tittle text-center text-capitalize">
+					<input class="form-control border-0 text-center" v-model="restaurante.nombre">
+				</div>
+				<div class="card-body">
+					<div class="text-center mb-2 mt-n3">
+						<el-select v-model="model.categoria" placeholder="Select" class="form-control-file">
+							<el-option
+							v-for="item in categorias"
+							:key="item.nombre"
+							:label="item.nombre"
+							:value="item.nombre" />
+						</el-select />			
+					</div>
+					<el-input
+					type="textarea"
+					:autosize="{ minRows: 6, maxRows: 6}"
+					placeholder="Please input"
+					resize="none"
+					v-model="restaurante.descripcion" />
+				</div>
+				<button type="button" class="btn btn-danger btnadd" data-toggle="modal" data-target=".bd-example-modal-xl">
+					<i class="fa fa-trash"></i>
+				</button>
+			</div>
+		</div>
+
+		<!-- Modal -->
+		<div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-xl" role="document">
+				<div class="modal-content">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">Añadir Platos</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body contenido">
+							<select name="" id="" class="form-control">
+								<option value="">--Seleccione--</option>
+								<option value="">Masculino</option>
+								<option value="">Femenino</option>
+							</select>
+						</div>
+						aca iria una lista con los platos que se van agregando y se pueden quitar y al momento de guardar cambios activa esos platos
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							<button type="button" class="btn btn-primary">Save changes</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+<style>
+.btn-danger {
+	margin-left: 17rem;
+	margin-bottom: 6rem
+}
+</style>
+<script>
+export default {
+	data() {
+		return {
+			model: {
+				categoria: ''
+			},
+			categorias: [
+			{
+				'nombre': 'Sopas',
+				'descripcion': ''
+			},
+			{
+				'nombre': 'Entradas',
+				'descripcion': ''
+			},
+			{
+				'nombre': 'Bebidas',
+				'descripcion': ''
+			}
+			],
+			restaurantes: [
+			{
+
+				'nombre': 'Afrodiciacós',
+				'descripcion': 'esta es una descripcion de la empresa que se va a generar por la pandemia del covid 19 es por ello y mucho mas que se puede percibir cosas coherentes como los que no podemos vover, arturo calle es una empresa de las cuales somos parte todos los colombianos es por ellos que los componentes de la chingada masdre es por ello que frank no me va a dar trabajo eso es por confiar en gente estupida y relativamente idiota',
+				'imagen': '',
+			},
+			{
+				'nombre': 'Cremas',
+				'descripcion': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae, recusandae similique eveniet quis. Quibusdam mollitia fugit officiis repellat, vel voluptates eaque possimus, nostrum dolore quaerat error modi soluta, perferendis! Molestiae.it. Molestiae, recusandae similique eveniet quis. Quibusdam mollitia fugit officiis repellat, vel voluptates eaque possimus, nostrum dolore quaerat error modi soluta, perferendis! Molestiae.',
+				'imagen': '',
+			},
+			{
+				'nombre': 'Ensaladas',
+				'descripcion': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae, recusandae similique eveniet quis. Quibusdam mollitia fugit officiis repellat, vel voluptates eaque possimus, nostrum dolore quaerat error modi soluta, perferendis! Molestiae.',
+				'imagen': '',
+			},
+			{
+				'nombre': 'Guisos',
+				'descripcion': '',
+				'imagen': '',
+			},
+			{
+				'nombre': 'Carnes',
+				'descripcion': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae, recusandae similique eveniet quis. Quibusdam mollitia fugit officiis repellat, vel voluptates eaque possimus, nostrum dolore quaerat error modi soluta, perferendis! Molestiae.',
+				'imagen': '',
+			},
+			{
+				'nombre': 'Aperitivos',
+				'descripcion': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae, recusandae similique eveniet quis. Quibusdam mollitia fugit officiis repellat, vel voluptates eaque possimus, nostrum dolore quaerat error modi soluta, perferendis! Molestiae.',
+				'imagen': '',
+			},
+			{
+				'nombre': 'Embutidos',
+				'descripcion': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae, recusandae similique eveniet quis. Quibusdam mollitia fugit officiis repellat, vel voluptates eaque possimus, nostrum dolore quaerat error modi soluta, perferendis! Molestiae.',
+				'imagen': '',
+			},
+			]
+		};
+	},
+	mounted() {
+	},
+	methods: {
+	}
+};
+</script>
+<style>
+
+</style>

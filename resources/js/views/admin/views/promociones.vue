@@ -1,28 +1,42 @@
 <template>
 	<div class="contenido"> 
 		<div class="row">
-			<h2 class="title">Promociónes</h2> 
+			<h2 class="title mb-3">Promociónes</h2> 
 			<button type="button" class="btn btn-success btnadd ml-3 mt-1" data-toggle="modal" data-target=".bd-example-modal-xl" circle>
 				<i class="fa fa-plus"></i>
 			</button>
 		</div>
-		<div class="row justify-content-center">
-			<div class="card mt-3 mx-2" style="width: 18rem;" v-for="(restaurante, key) in restaurantes">
-				<div class="card-header">
-					<h5 class="card-title">{{restaurante.nombre}}</h5>
-				</div>
-				<div class="card-body">
-					<p class="card-text">{{restaurante.descripcion}}</p>
-					<div class="row justify-content-center">
-						<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-xl">
-							<i class="fa fa-pen"></i>
-						</button>
-						<a href="#" class="btn btn-danger ml-3">
-							<i class="fa fa-trash"></i>
-						</a>
-					</div>
-				</div>
-			</div>
+		<div class="justify-content-center table-responsive">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">First</th>
+						<th scope="col">Last</th>
+						<th scope="col">Handle</th>					
+						<th scope="col">First</th>
+						<th scope="col">Last</th>
+						<th scope="col">Handle</th>				
+						<th scope="col">First</th>
+						<th scope="col">Last</th>
+						<th scope="col">Handle</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for="(restaurante, key) in restaurantes">
+						<th scope="row">1</th>
+						<td>Mark</td>
+						<td>Otto</td>
+						<td>@mdo</td>
+						<td>Mark</td>
+						<td>Otto</td>
+						<td>@mdo</td>
+						<td>Mark</td>
+						<td>Otto</td>
+						<td>@mdo</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 		
 		<!-- Modal -->
@@ -36,23 +50,28 @@
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
-						<div class="modal-body">
-							<label for="">Razón Social</label>
+						<!-- <div class="modal-body contenido" :style="`height: ${this.alto}px; width: 100%; overflow-y: auto; overflow-x: hidden;`"> -->
+						<div class="modal-body contenido">
+							<label for="">Nombres</label>
 							<input type="text" class="form-control">
-							<label for="">Descrpción</label>
-							<textarea class="form-control" style="resize:none"/>
-							<label for="">Slogan</label>
+							<label for="">Apellidos</label>
 							<input type="text" class="form-control">
-							<label for="">Administrador</label>			
+							<label for="">Genero</label>
 							<select name="" id="" class="form-control">
 								<option value="">--Seleccione--</option>
-								<option value="">Juan De Dios</option>
-								<option value="">Rodrigo Beleño</option>
+								<option value="">Masculino</option>
+								<option value="">Femenino</option>
 							</select>
-							<hr>
-							<label for="">Header</label>
-							<br>
-							<label for="">Footer</label>
+							<label for="">Dirección</label>
+							<input type="text" class="form-control">
+							<label for="">Telecono</label>
+							<input type="text" class="form-control">
+							<label for="">Celular</label>
+							<input type="text" class="form-control">
+							<label for="">Correo electronico</label>
+							<input type="text" class="form-control">
+							<label for="">Fecha de nacimiento</label>
+							<input type="text" class="form-control">
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -70,57 +89,57 @@ export default {
 		return {
 			restaurantes: [
 			{
-				'nombre': 'Promoción a',
+				'nombre': 'restaurante dona a',
 				'descripcion': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae, recusandae similique eveniet quis. Quibusdam mollitia fugit officiis repellat, vel voluptates eaque possimus, nostrum dolore quaerat error modi soluta, perferendis! Molestiae.',
 				'imagen': '',
 			},
 			{
-				'nombre': 'Promoción b',
+				'nombre': 'restaurante dona b',
 				'descripcion': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae, recusandae similique eveniet quis. Quibusdam mollitia fugit officiis repellat, vel voluptates eaque possimus, nostrum dolore quaerat error modi soluta, perferendis! Molestiae.',
 				'imagen': '',
 			},
 			{
-				'nombre': 'Promoción c',
+				'nombre': 'restaurante dona c',
 				'descripcion': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae, recusandae similique eveniet quis. Quibusdam mollitia fugit officiis repellat, vel voluptates eaque possimus, nostrum dolore quaerat error modi soluta, perferendis! Molestiae.',
 				'imagen': '',
 			},
 			{
-				'nombre': 'Promoción d',
+				'nombre': 'restaurante dona d',
 				'descripcion': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae, recusandae similique eveniet quis. Quibusdam mollitia fugit officiis repellat, vel voluptates eaque possimus, nostrum dolore quaerat error modi soluta, perferendis! Molestiae.',
 				'imagen': '',
 			},
 			{
-				'nombre': 'Promoción e',
+				'nombre': 'restaurante dona e',
 				'descripcion': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae, recusandae similique eveniet quis. Quibusdam mollitia fugit officiis repellat, vel voluptates eaque possimus, nostrum dolore quaerat error modi soluta, perferendis! Molestiae.',
 				'imagen': '',
 			},
 			{
-				'nombre': 'Promoción f',
+				'nombre': 'restaurante dona f',
 				'descripcion': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae, recusandae similique eveniet quis. Quibusdam mollitia fugit officiis repellat, vel voluptates eaque possimus, nostrum dolore quaerat error modi soluta, perferendis! Molestiae.',
 				'imagen': '',
 			},
 			{
-				'nombre': 'Promoción g',
+				'nombre': 'restaurante dona g',
 				'descripcion': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae, recusandae similique eveniet quis. Quibusdam mollitia fugit officiis repellat, vel voluptates eaque possimus, nostrum dolore quaerat error modi soluta, perferendis! Molestiae.',
 				'imagen': '',
 			},
 			{
-				'nombre': 'Promoción h',
+				'nombre': 'restaurante dona h',
 				'descripcion': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae, recusandae similique eveniet quis. Quibusdam mollitia fugit officiis repellat, vel voluptates eaque possimus, nostrum dolore quaerat error modi soluta, perferendis! Molestiae.',
 				'imagen': '',
 			},
 			{
-				'nombre': 'Promoción i',
+				'nombre': 'restaurante dona i',
 				'descripcion': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae, recusandae similique eveniet quis. Quibusdam mollitia fugit officiis repellat, vel voluptates eaque possimus, nostrum dolore quaerat error modi soluta, perferendis! Molestiae.',
 				'imagen': '',
 			},
 			{
-				'nombre': 'Promoción j',
+				'nombre': 'restaurante dona j',
 				'descripcion': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae, recusandae similique eveniet quis. Quibusdam mollitia fugit officiis repellat, vel voluptates eaque possimus, nostrum dolore quaerat error modi soluta, perferendis! Molestiae.',
 				'imagen': '',
 			},
 			{
-				'nombre': 'Promoción k',
+				'nombre': 'restaurante dona k',
 				'descripcion': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae, recusandae similique eveniet quis. Quibusdam mollitia fugit officiis repellat, vel voluptates eaque possimus, nostrum dolore quaerat error modi soluta, perferendis! Molestiae.',
 				'imagen': '',
 			},

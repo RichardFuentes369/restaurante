@@ -12,10 +12,13 @@
 								<router-link to="/a/index" class="nav-link">index</router-link>
 							</li>			
 							<li class="nav-item active">
-								<router-link to="/a/menus" class="nav-link">menus</router-link>
+								<router-link to="/a/categoria-plato" class="nav-link">categoria platos</router-link>
 							</li>	
 							<li class="nav-item active">
 								<router-link to="/a/platos" class="nav-link">platos</router-link>
+							</li>
+							<li class="nav-item active">
+								<router-link to="/a/menu" class="nav-link">menu</router-link>
 							</li>
 							<li class="nav-item active">
 								<router-link to="/a/promociones" class="nav-link">promociones</router-link>
