@@ -17,7 +17,7 @@ import Role from './views/index/views/role'
 import SAtemplate from './views/super-admin/template/nav-left'
 import SAindex from './views/super-admin/views/index.vue'
 import SAadministradores from './views/super-admin/views/administradores.vue'
-import SArestaurantes from './views/super-admin/views/restaurantes.vue'
+import SAestadisticas from './views/super-admin/views/estadisticas.vue'
 
 import Atemplate from './views/admin/template/nav-left'
 import Aindex from './views/admin/views/index.vue'
@@ -27,6 +27,7 @@ import Apromociones from './views/admin/views/promociones.vue'
 import Acajeros from './views/admin/views/cajeros.vue'
 import Acocineros from './views/admin/views/cocineros.vue'
 import Ameseros from './views/admin/views/meseros.vue'
+import Amesas from './views/admin/views/mesas.vue'
 
 import Ctemplate from './views/cajero/template/nav-left'
 import Cindex  from './views/cajero/views/index.vue'
@@ -40,6 +41,8 @@ import Mcarta from './views/mesero/views/carta'
 
 import Cltemplate from './views/cliente/template/nav-left'
 import Clindex  from './views/cliente/views/index.vue'
+import Clestado_factura  from './views/cliente/views/estado.vue'
+import Clhistorial  from './views/cliente/views/historial.vue'
 
 import Chtemplate from './views/chef/template/nav-left'
 import Chindex  from './views/chef/views/index.vue'
@@ -115,11 +118,11 @@ export default new VueRouter({
 			path: 'administradores',
 			name: 'administradores',
 			component: SAadministradores,
-		},
+		},	
 		{
-			path: 'restaurantes',
-			name: 'restaurantes',
-			component: SArestaurantes
+			path: 'estadisticas',
+			name: 'estadisticas',
+			component: SAestadisticas,
 		}
 		]
 	},	
@@ -161,6 +164,11 @@ export default new VueRouter({
 			path: 'cocineros',
 			name: 'cocineros',
 			component: Acocineros
+		},		
+		{
+			path: 'mesas',
+			name: 'mesas',
+			component: Amesas
 		},
 		{
 			path: 'meseros',
@@ -234,7 +242,17 @@ export default new VueRouter({
 			path: 'index',
 			name: 'index',
 			component: Clindex,
-		}
+		},	
+			{
+			path: 'estado_factura',
+			name: 'estado_factura',
+			component: Clestado_factura,
+		},	
+			{
+			path: 'historial',
+			name: 'historial',
+			component: Clhistorial,
+		},
 		]
 	},	
 	{

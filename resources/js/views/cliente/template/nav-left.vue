@@ -11,15 +11,12 @@
 							<li class="nav-item active">
 								<router-link to="/cl/index" class="nav-link">index</router-link>
 							</li>			
-<!-- 							<li class="nav-item active">
-								<router-link to="/c/cobrar" class="nav-link">cobrar</router-link>
+							<li class="nav-item active">
+								<router-link to="/cl/estado_factura" class="nav-link">estado factura</router-link>
 							</li>	
 							<li class="nav-item active">
-								<router-link to="/c/devolucion" class="nav-link">devolucion</router-link>
+								<router-link to="/cl/historial" class="nav-link">historial</router-link>
 							</li>
-							<li class="nav-item active">
-								<router-link to="/logout" class="nav-link">salir</router-link>
-							</li>  -->
 						</ul>
 					</div>
 				</div>

@@ -13,10 +13,10 @@
 							</li>			
 							<li class="nav-item active">
 								<router-link to="/sa/administradores" class="nav-link">administradores</router-link>
-							</li>
+							</li>			
 							<li class="nav-item active">
-								<router-link to="/sa/restaurantes" class="nav-link">restaurantes</router-link>
-							</li>  		
+								<router-link to="/sa/estadisticas" class="nav-link">estadisticas</router-link>
+							</li>		
 							<li class="nav-item active">
 								<router-link to="/logout" class="nav-link">salir</router-link>
 							</li>  
