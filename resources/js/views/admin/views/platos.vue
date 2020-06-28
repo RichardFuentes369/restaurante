@@ -117,7 +117,8 @@ export default {
 			},
 			{
 				'nombre': 'Carne',
-				'categoria': 'Carnes',
+				'categoria': 'Carnes', 
+				
 				'descripcion': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae, recusandae similique eveniet quis. Quibusdam mollitia fugit officiis repellat, vel voluptates eaque possimus, nostrum dolore quaerat error modi soluta, perferendis! Molestiae.',
 				'imagen': 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRZvEiPqkouueweCzF1B5ALEmVq706k7-WWqA&usqp=CAU',
 			},
