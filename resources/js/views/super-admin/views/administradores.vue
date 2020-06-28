@@ -2,8 +2,8 @@
 	<div class="contenido"> 
 		<div class="row">
 			<h2 class="title mb-3">Administradores</h2> 
-			<button type="button" class="btn btn-success btnadd ml-3 mt-1" data-toggle="modal" data-target=".bd-example-modal-xl" circle>
-				<i class="fa fa-plus"></i>
+			<button class="btn btn-success btnadd ml-3 mt-1" @click="abrirModal(0)">
+				<i class="fa fa-plus" />
 			</button>
 		</div>
 		<div class="justify-content-center table-responsive">
@@ -28,13 +28,13 @@
 						<td class="text-center">{{user.sexo}}</td>
 						<td class="text-center">{{user.email}}</td>
 						<td class="text-center">
-							<button class="btnadd btn btn-primary" title="Ver">
+							<button class="btnadd btn btn-primary" title="Ver" @click="abrirModal(1, user)">
 								<i class="far fa-eye" />
 							</button>
-							<button class="btnadd btn btn-warning" title="Editar">
+							<button class="btnadd btn btn-warning" title="Editar" @click="abrirModal(2, user)">
 								<i class="fas fa-pen" />
 							</button>
-							<button class="btnadd btn btn-danger" title="Eliminar">
+							<button class="btnadd btn btn-danger" title="Eliminar" @click="eliminar(user)">
 								<i class="fa fa-trash" />
 							</button>
 						</td>
@@ -50,7 +50,7 @@
 					<div class="modal-content">
 						<ValidationObserver v-slot="{ invalid }" ref="registeradmin">
 							<div class="modal-header">
-								<h5 class="modal-title" id="exampleModalLabel">Añadir Administrador</h5>
+								<h5 class="modal-title text-dark" id="exampleModalLabel">{{model.titulo}}</h5>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 									<span aria-hidden="true">&times;</span>
 								</button>
@@ -114,14 +114,28 @@
 													<span class="text-danger">{{ errors[0] }}</span>
 												</ValidationProvider>
 											</div>
-											<div class="mt-3">
+											<div class="mt-3" v-show="model.opcion == 0">
 												<ValidationProvider name="Password" :rules="{ required: true, regex: /^[a-z0-9A-Z]{6,18}$/ }" v-slot="{ errors }">
 													<el-input placeholder="Please input" v-model="model.password" minlength="8" maxlength="18" show-word-limit>
 														<template slot="prepend">Password</template>
 													</el-input>
 													<span class="text-danger">{{ errors[0] }}</span>
 												</ValidationProvider>
-											</div>
+											</div>						
+											<div class="mt-3" v-show="model.opcion == 1">
+												<el-input placeholder="Please input" v-model="model.password" minlength="8" maxlength="18" show-word-limit>
+													<template slot="prepend">Password</template>
+												</el-input>
+											</div>	
+											<div class="mt-3" v-show="model.opcion == 2">
+												<el-switch v-model="model.haspassword" class="mb-3 carousel-indicators" active-text="Actualizar contraseña" inactive-text="No actualizar contraseña" />
+												<ValidationProvider name="Password" :rules="{ required: true, regex: /^[a-z0-9A-Z]{6,18}$/ }" v-slot="{ errors }">
+													<el-input placeholder="Please input" v-show="model.haspassword == true" v-model="model.password" minlength="8" maxlength="18" show-word-limit>
+														<template slot="prepend">Password</template>
+													</el-input>
+													<span class="text-danger">{{ errors[0] }}</span>
+												</ValidationProvider>
+											</div>		
 											<div class="mt-3">
 												<el-input placeholder="Please input" v-model="model.address" maxlength="80" show-word-limit>
 													<template slot="prepend">Address</template>
@@ -147,7 +161,8 @@
 									</el-button>
 								</el-popover>
 								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-								<button type="button" class="btn btn-primary" @click="guardarAdministrador" :disabled="invalid">Save changes</button>
+								<button type="button" v-show="model.opcion == 0" class="btn btn-primary" @click="guardarAdministrador" :disabled="invalid">{{model.nombre_boton}}</button>
+								<button type="button" v-show="model.opcion == 2" class="btn btn-primary" @click="editarAdministrador" :disabled="invalid">{{model.nombre_boton}}</button>
 							</div>
 						</ValidationObserver>
 					</div>
@@ -162,6 +177,11 @@ export default {
 		return {
 			route: window.location.origin+'/api/super-admin/',
 			model: {
+				titulo: '',
+				nombre_boton: '',
+				opcion: '',
+				haspassword: false,
+				id: '',
 				name: '',
 				lastname: '',
 				td: '',
@@ -198,10 +218,21 @@ export default {
 		this.listAdmin()
 	},
 	methods: {
-		clear(){
+		listAdmin(){
 			this.users = []
+			axios.get(`${this.route}admin-list`).then(res => {
+				this.users = res.data
+			})
+		},
+
+		clear(){
 			this.checkCargo = []
-			this.model = {
+			this.model = {		
+				titulo: '',
+				nombre_boton: '',
+				opcion: '',
+				haspassword: false,
+				id: '',
 				name: '',
 				lastname: '',
 				td: '',
@@ -217,11 +248,61 @@ export default {
 			}
 			this.$refs.registeradmin.reset()
 		},
-		listAdmin(){
-			axios.get(`${this.route}admin-list`).then(res => {
-				this.users = res.data
-			})
+
+		async abrirModal(opcion, user){
+			await this.clear()
+			if(opcion === 0){
+				this.model = {
+					titulo: 'Crear',
+					nombre_boton: 'Guardar',
+					opcion: opcion
+				}
+			}
+			if(opcion === 1){
+				this.model.isAdmin = (user.isAdmin === 1) ? this.checkCargo.push("isAdmin") : ''
+				this.model.isAtm = (user.isAtm === 1) ? this.checkCargo.push("isAtm") : ''
+				this.model = {
+					titulo: 'Ver',
+					nombre_boton: '',	
+					opcion: opcion,
+					haspassword: false,
+					id: user.id,
+					name: user.name,
+					lastname: user.lastname,
+					td: user.td,
+					dni: user.dni,
+					phone: user.phone,
+					cellphone: user.cellphone,
+					sexo: user.sexo,
+					email: user.email,
+					password: '***********',
+					address: user.address
+				}
+			}
+			if(opcion === 2){
+				this.model.isAdmin = (user.isAdmin === 1) ? this.checkCargo.push("isAdmin") : ''
+				this.model.isAtm = (user.isAtm === 1) ? this.checkCargo.push("isAtm") : ''
+				this.model = {
+					titulo: 'Editar',
+					nombre_boton: 'Actualizar',
+					opcion: opcion,
+					haspassword: false,
+					id: user.id,
+					name: user.name,
+					lastname: user.lastname,
+					td: user.td,
+					dni: user.dni,
+					phone: user.phone,
+					cellphone: user.cellphone,
+					sexo: user.sexo,
+					email: user.email,
+					password: '',
+					address: user.address
+				}			
+			}
+			$('#registerAdmin').modal('show')
 		},
+
 		async guardarAdministrador(){
 			if (this.model.name != '' && this.model.lastname != '' && this.model.td != '' && this.model.dni != '' && this.model.sexo != '' && this.model.email != '' && this.model.password != '' && this.model.address != ''){
 				for (let value of this.checkCargo) {
@@ -234,7 +315,6 @@ export default {
 				}
 				await axios.post(`${this.route}admin-register`, this.model)
 				$('#registerAdmin').modal('hide')
-				this.clear()
 				this.listAdmin()
 				this.$notify({
 					title: 'Success',
@@ -246,7 +326,52 @@ export default {
 					message: 'Algunos campos no pueden ir vacios',
 				});
 			}
-		}
+		},		
+
+		async editarAdministrador(){
+			if (this.model.name != '' && this.model.lastname != '' && this.model.td != '' && this.model.dni != '' && this.model.sexo != '' && this.model.email != ''  && this.model.address != ''){
+				for (let value of this.checkCargo) {
+					if(value == 'isAdmin'){
+						this.model.isAdmin = 1
+					}
+					if(value == 'isAtm'){
+						this.model.isAtm = 1
+					}
+				}
+				await axios.put(`${this.route}${this.model.id}/admin-update`, this.model)
+				$('#registerAdmin').modal('hide')
+				this.listAdmin()
+				this.$notify({
+					title: 'Success',
+					message: 'Usuario actualizado exitosamente',
+					type: 'success'
+				});
+			} else {
+				this.$notify.error({
+					message: 'Algunos campos no pueden ir vacios',
+				});
+			}
+		},
+
+		eliminar(user){
+			this.$confirm('Esta seguro que desea eliminar este administrador?', 'Warning', {
+				confirmButtonText: 'Eliminar',
+				cancelButtonText: 'Cancelar',
+				type: 'warning'
+			}).then(() => {
+				axios.delete(`${this.route}${user.id}/admin-delete`)
+				this.$message({
+					type: 'success',
+					message: 'Eliminación completada'
+				});
+				this.listAdmin()
+			}).catch(() => {
+				this.$message({
+					type: 'info',
+					message: 'Eliminación cancelada'
+				});          
+			});
+		},
 	}
 };
 </script>
