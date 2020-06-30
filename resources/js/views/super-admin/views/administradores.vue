@@ -16,7 +16,7 @@
 						<th scope="col" class="text-center">Lastname</th>
 						<th scope="col" class="text-center">Sexo</th>
 						<th scope="col" class="text-center">Email</th>
-						<th scope="col" class="text-center">Options</th>
+						<th scope="col" class="text-center" colspan="3">Options</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -34,7 +34,7 @@
 							<button class="btnadd btn btn-warning" title="Editar" @click="abrirModal(2, user)">
 								<i class="fas fa-pen" />
 							</button>
-							<button class="btnadd btn btn-danger" title="Eliminar" @click="eliminar(user)">
+							<button class="btnadd btn btn-danger m-0" title="Eliminar" @click="eliminar(user)">
 								<i class="fa fa-trash" />
 							</button>
 						</td>

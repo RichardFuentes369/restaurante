@@ -50,7 +50,7 @@
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
-						<div class="modal-body contenido">
+						<div class="modal-body">
 						<!-- <div class="modal-body contenido" :style="`height: ${this.alto}px; width: 100%; overflow-y: auto; overflow-x: hidden;`"> -->
 							<label for="">Nombres</label>
 							<input type="text" class="form-control">

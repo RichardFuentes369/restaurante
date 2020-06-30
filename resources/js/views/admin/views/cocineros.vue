@@ -51,7 +51,7 @@
 							</button>
 						</div>
 						<!-- <div class="modal-body contenido" :style="`heighat: ${this.alto}px; width: 100%; overflow-y: auto; overflow-x: hidden;`"> -->
-						<div class="modal-body contenido">
+						<div class="modal-body">
 							<label for="">Nombres</label>
 							<input type="text" class="form-control">
 							<label for="">Apellidos</label>

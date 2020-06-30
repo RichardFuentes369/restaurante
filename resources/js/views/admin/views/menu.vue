@@ -91,7 +91,7 @@
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
-						<div class="modal-body contenido">
+						<div class="modal-body">
 							<select name="" id="" class="form-control">
 								<option value="">--Seleccione--</option>
 								<option value="">Masculino</option>
