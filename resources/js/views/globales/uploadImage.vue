@@ -9,12 +9,10 @@
 		accept="image/png" 
 		size="10" 
 		button-class="btn btn-primary"
-		:custom-strings="{
-		upload: '<h1>Bummer!</h1>',
-		drag: 'Drag a 😺 GIF or GTFO'
-	}"
-	@change="onChange"/>
-</div>
+		:removable="true" 
+		:custom-strings="{upload: '<h1>Bummer!</h1>', drag: 'Drag a 😺 GIF or GTFO'	}"
+		@change="onChange" />
+	</div>
 </template>
 <script>
 import PictureInput from 'vue-picture-input'

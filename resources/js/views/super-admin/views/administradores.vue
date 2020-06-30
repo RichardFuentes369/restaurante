@@ -22,7 +22,9 @@
 				<tbody>
 					<tr v-for="(user, key) in users">
 						<th scope="row">{{key+1}}</th>
-						<td class="text-center">{{user.photo}}</td>
+						<td class="text-center">
+							<uploadImage />
+						</td>
 						<td class="text-center">{{user.name}}</td>
 						<td class="text-center">{{user.lastname}}</td>
 						<td class="text-center">{{user.sexo}}</td>
