@@ -32,22 +32,42 @@
 				<div class="modal-content">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel">Añadir Platos</h5>
+							<h5 class="modal-title" id="exampleModalLabel">Añadir Categoria de Platos</h5>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
-						<div class="modal-body">
-							<select name="" id="" class="form-control">
-								<option value="">--Seleccione--</option>
-								<option value="">Masculino</option>
-								<option value="">Femenino</option>
-							</select>
-						</div>
-						aca iria una lista con los platos que se van agregando y se pueden quitar y al momento de guardar cambios activa esos platos
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-							<button type="button" class="btn btn-primary">Save changes</button>
+						<div class="col-sm-12">
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="mt-3">
+										<el-input placeholder="Please input" maxlength="50" show-word-limit>
+											<template slot="prepend">Name</template>
+										</el-input>
+									</div>
+								</div>
+								<div class="col-sm-12 mt-2">
+									<div class="row">
+										<div class="col-sm-6 text-center" v-show="model.show != false">
+											<uploadImage />
+										</div>
+										<div class="col-sm-6 text-center">
+											<el-color-picker v-model="model.color" />
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-12">
+									<el-input
+									type="textarea"
+									:autosize="{ minRows: 7, maxRows: 7}"
+									placeholder="Please input"
+									resize="none"/>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+										<button type="button" class="btn btn-primary">Save changes</button>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -65,6 +85,10 @@
 export default {
 	data() {
 		return {
+			model: {
+				show: true,
+				color: '#DD2929'
+			},
 			restaurantes: [
 			{
 
