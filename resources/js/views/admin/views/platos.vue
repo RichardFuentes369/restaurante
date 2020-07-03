@@ -7,7 +7,7 @@
 			</button>
 		</div>
 		<div class="text-center mb-3">
-			<el-select v-model="model.categoria" placeholder="Select" class="form-control-file">
+			<el-select v-model="model.id_dishes_categoria" placeholder="Select" class="form-control-file">
 				<el-option
 				v-for="item in categorias"
 				:key="item.nombre"
@@ -46,17 +46,67 @@
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
-						<div class="modal-body">
-							<select name="" id="" class="form-control">
-								<option value="">--Seleccione--</option>
-								<option value="">Masculino</option>
-								<option value="">Femenino</option>
-							</select>
-						</div>
-						aca iria una lista con los platos que se van agregando y se pueden quitar y al momento de guardar cambios activa esos platos
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-							<button type="button" class="btn btn-primary">Save changes</button>
+						<div class="col-sm-12">
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="mt-3">
+										<el-input placeholder="Please input" maxlength="50" v-model="model.name" show-word-limit>
+											<template slot="prepend">Name</template>
+										</el-input>
+									</div>
+								</div>	
+								<div class="col-sm-12 mt-2">
+									<div class="row">
+										<div class="col-sm-2 text-center mt-2">
+											<el-input-number v-model="model.price" :min="1" :max="1000000"> 
+												<template slot="prepend">Price</template>
+											</el-input-number>
+										</div>
+										<div class="col-sm-5 mt-2">
+											<el-select v-model="model.id_dishes_categoria" placeholder="Select" class="form-control-file">
+												<el-option
+												v-for="item in categorias"
+												:key="item.nombre"
+												:label="item.nombre"
+												:value="item.nombre" />
+											</el-select />	
+										</div>
+										<div class="col-sm-5 mt-2">
+											<el-select v-model="model.tamano" placeholder="Select" class="form-control-file">
+												<el-option
+												v-for="item in tamano"
+												:key="item.nombre"
+												:label="item.nombre"
+												:value="item.nombre" />
+											</el-select />	
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-12 mt-2">
+									<div class="row">
+										<div class="col-sm-6 text-center">
+											<el-switch v-model="model.show"/>
+										</div>
+										<div class="col-sm-6">
+											<div class="text-center" v-show="model.show != false">
+												<uploadImage />
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-12 mt-2">
+									<el-input
+									type="textarea"
+									:autosize="{ minRows: 7, maxRows: 7}"
+									placeholder="Please input"
+									resize="none"
+									v-model="model.description" />
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+										<button type="button" class="btn btn-primary">Guardar</button>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -74,8 +124,16 @@
 export default {
 	data() {
 		return {
+			route: window.location.origin+'/api/dishes/',
 			model: {
-				categoria: ''
+				show: true,
+				id_dishes_categoria: '',
+				photo: '',
+				name: '',
+				size: '',
+				description: '',
+				tamano: '',
+				price: ''
 			},
 			categorias: [
 			{
@@ -88,6 +146,20 @@ export default {
 			},
 			{
 				'nombre': 'Bebidas',
+				'descripcion': ''
+			}
+			],			
+			tamano: [
+			{
+				'nombre': 'Big',
+				'descripcion': ''
+			},
+			{
+				'nombre': 'Medium',
+				'descripcion': ''
+			},
+			{
+				'nombre': 'small',
 				'descripcion': ''
 			}
 			],

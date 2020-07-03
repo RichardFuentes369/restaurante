@@ -31,7 +31,7 @@
 			</div>
 			<div class="text-center">
 				<div class="col-sm-12 row mt-2">
-					<div class="col-sm-2">	
+					<div class="col-sm-2 mt-2">	
 						<button v-model="this.boton" class="btn btn-success" @click="option">Go to</button>
 						<el-popover	placement="bottom" width="200"	trigger="hover" content="Click 'Go To' for see the profiles" class="informacion ml-2 mt-1">
 							<el-button slot="reference" circle class="p-0">
@@ -39,7 +39,7 @@
 							</el-button>
 						</el-popover>
 					</div>
-					<div class="col-sm text-left">
+					<div class="col-sm text-left mt-2">
 						<el-select v-show="this.boton == true" v-model="rol_selection" placeholder="Select"
 						class="form-control-file" @change="goTo">
 						<el-option

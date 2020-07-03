@@ -22,16 +22,16 @@
 							</li>
 							<li class="nav-item active">
 								<router-link to="/a/promociones" class="nav-link">promociones</router-link>
-							</li>  					
+							</li>  				
+							<li class="nav-item active">
+								<router-link to="/a/mesas" class="nav-link">mesas</router-link>
+							</li> 	
 							<li class="nav-item active">
 								<router-link to="/a/cajeros" class="nav-link">cajeros</router-link>
 							</li>  	
 							<li class="nav-item active">
 								<router-link to="/a/cocineros" class="nav-link">cocineros</router-link>
-							</li>  		
-							<li class="nav-item active">
-								<router-link to="/a/mesas" class="nav-link">mesas</router-link>
-							</li>  		
+							</li>  		 		
 							<li class="nav-item active">
 								<router-link to="/a/meseros" class="nav-link">meseros</router-link>
 							</li>  
