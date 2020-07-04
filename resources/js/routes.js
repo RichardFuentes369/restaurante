@@ -54,7 +54,7 @@ export default new VueRouter({
 		path: '/',
 		name: 'bienvenidos',
 		component: Bienvenidos,
-	},	
+	},
 	{
 		path: '/noticias',
 		name: 'noticias',
