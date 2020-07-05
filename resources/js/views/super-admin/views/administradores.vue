@@ -62,14 +62,14 @@
         </thead>
         <tbody>
           <tr 
-            v-for="user in users"
+            v-for="(user, key) in users"
             :key="user.id"
           >
             <th scope="row">
-              {{ key+1 }}
+              {{ key + 1 }}
             </th>
             <td class="text-center">
-              <uploadImage />
+              <uploadImage @cargarImagen="imagen" />
             </td>
             <td class="text-center">
               {{ user.name }}
@@ -422,6 +422,7 @@ export default {
         opcion: '',
         haspassword: false,
         id: '',
+        photo: '',
         name: '',
         lastname: '',
         td: '',
@@ -612,6 +613,14 @@ export default {
         });          
       });
     },
+
+    imagen(image){
+      if(image != undefined){
+        this.model.photo = image
+      } else {
+        this.model.photo = ''        
+      }
+    }
   }
 };
 </script>

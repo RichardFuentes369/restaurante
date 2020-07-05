@@ -58,7 +58,7 @@
       aria-hidden="true"
     >
       <div 
-        class="modal-dialog modal-xl" 
+        class="modal-dialog modal-dialog-scrollable modal-xl" 
         role="document"
       >
         <div class="modal-content">
@@ -81,8 +81,8 @@
             </div>
             <div class="col-sm-12">
               <div class="row">
-                <div class="col-sm-12">
-                  <div class="mt-3">
+                <div class="col-sm-12 row">
+                  <div class="mt-3 col-sm-11">
                     <el-input 
                       v-model="model.name"
                       placeholder="Please input" 
@@ -94,20 +94,23 @@
                       </template>
                     </el-input>
                   </div>
-                </div>
-                <div class="col-sm-12 mt-2">
-                  <div class="text-center">
-                    <el-switch v-model="model.show" />
+                  <div class="mt-3 col-sm-1 text-center">
+                    <el-color-picker v-model="model.color" />
                   </div>
-                  <div class="row">
+                </div>
+                <div class="col-sm-12 mt-2 mb-2">
+                  <div class="text-center mb-2">
+                    <el-switch 
+                      v-model="model.show"
+                      class="text-center" 
+                    />
+                  </div>
+                  <div class="text-center">
                     <div 
-                      v-show="model.show != false" 
-                      class="col-sm-6 text-center"
+                      v-if="model.show != false" 
+                      class="text-center"
                     >
-                      <uploadImage />
-                    </div>
-                    <div class="col-sm-6 text-center">
-                      <el-color-picker v-model="model.color" />
+                      <uploadImage :alto="200" :ancho="200" @cargarImagen="imagen" />
                     </div>
                   </div>
                 </div>
@@ -156,7 +159,7 @@ export default {
     return {
       route: window.location.origin+'/api/dishes_category/',
       model: {
-        show: true,
+        show: false,
         photo: '',
         name: '',
         description: '',
@@ -177,6 +180,13 @@ export default {
       axios.get(`${this.route}dishes-category-list`).then(res => {
         this.categoria_platos = res.data
       })
+    },
+    imagen(image){
+      if(image != undefined){
+        this.model.photo = image
+      } else {
+        this.model.photo = ''        
+      }
     },
     async guardarCategoria(){
       if (this.model.name != '' && this.model.description != ''){
