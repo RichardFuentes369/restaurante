@@ -1,13 +1,12 @@
 <template>
   <div>
-    <!-- accept="image/jpeg,image/png"  -->
     <picture-input 
       ref="pictureInput"
       :width="`${alto}`" 
       :height="`${ancho}`" 
       margin="0" 
-      accept="image/png" 
-      size="25" 
+      size="10" 
+      accept="image/jpeg, image/png"
       button-class="btn btn-primary"
       :hideChangeButton="true" 
       :prefill="`${imagen}`"

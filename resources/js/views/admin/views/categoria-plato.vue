@@ -161,7 +161,6 @@
                         v-else
                         :alto="200" 
                         :ancho="200" 
-                        :imagen="`/images/noImagen/nodisponible.png`"
                         @cargarImagen="imagen" 
                       />
                     </div>

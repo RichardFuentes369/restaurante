@@ -21,15 +21,10 @@ class Controller extends BaseController
 		return $image; 
 	}
 
-	public function getB64Extension($base64_image, $full=null){  
-    // Obtener mediante una expresión regular la extensión imagen y guardarla
-    // en la variable "img_extension"        
-		preg_match("/^data:image\/(.*);base64/i",$base64_image, $img_extension);   
-    // Dependiendo si se pide la extensión completa o no retornar el arreglo con
-    // los datos de la extensión en la posición 0 - 1
-		return ($full) ?  $img_extension[0] : $img_extension[1];  
+	public function getB64Extension($base64_image){  
+		$img_extension = explode('/', mime_content_type($base64_image))[1];
+		return $img_extension;  
 	}
-
 
 //ver imagen
 	public function getImageB64($filename){
