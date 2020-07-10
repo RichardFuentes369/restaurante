@@ -8,7 +8,7 @@
         data-toggle="modal" 
         data-target=".bd-example-modal-xl" 
         circle 
-        @click="abrirModal"
+        @click="abrirModal(1)"
       >
         <i class="fa fa-plus" />
       </button>
@@ -17,34 +17,72 @@
       <div 
         v-for="categoria in categoria_platos" 
         :key="categoria.id"
-        title="click"
-        class="card my-2 mx-4" 
-        :style="`background-image: url(${categoria.photo});background-position-x: center; background-position-y: center; background-repeat: no-repeat; width: 18rem; height: 15rem`"
+        class="card my-2 mx-4 algo" 
       >
-        <div class="card-tittle text-center text-capitalize mt-2">
-          <input
-            v-model="categoria.name"
-            class="form-control border-0 text-center" 
-            :style="`text-decoration: underline overline wavy ${categoria.color}; font-family: cursive;`"
-          >
+        <div class="card-header p-0">
+          <div class="card-tittle text-center text-capitalize mt-2">
+            <el-tooltip class="item" effect="dark" content="Click para editar" placement="top">
+              <input
+                v-model="categoria.name"
+                class="form-control border-0 text-center bg-transparent" 
+                :style="`text-decoration: underline overline wavy ${categoria.color}; font-family: cursive;`"
+              >
+            </el-tooltip>
+          </div>
         </div>
-        <div class="card-body">
+        <div
+          v-if="categoria.photo != null"
+          class="card-body"
+          :style="`background-image: url(/images/dishesCategory/${categoria.photo});background-position-x: center; background-position-y: center; background-repeat: no-repeat; width: 18rem; height: 15rem`" 
+        > 
+          <button 
+            type="button" 
+            class="btn btn-warning mt-4 btnadd btn-position-accion" 
+            title="Actualizar" 
+            @click="abrirModal(categoria)"
+          >
+            <i class="fa fa-pen" />
+          </button>  
+          <button 
+            type="button" 
+            class="btn btn-danger mt-4 btnadd btn-position-accion" 
+            title="Eliminar" 
+            @click="eliminar(categoria)"
+          >
+            <i class="fa fa-trash" />
+          </button>
+        </div>       
+        <div
+          v-else=""
+          class="card-body"
+          :style="`background-image: url(/images/noImagen/nodisponible.png);background-position-x: center; background-position-y: center; background-repeat: no-repeat; width: 18rem; height: 15rem`" 
+        > 
+          <button 
+            type="button" 
+            class="btn btn-warning mt-4 btnadd btn-position-accion" 
+            title="Actualizar" 
+            @click="abrirModal(categoria)"
+          >
+            <i class="fa fa-pen" />
+          </button>      
+          <button 
+            type="button" 
+            class="btn btn-danger mt-4 btnadd btn-position-accion" 
+            title="Eliminar" 
+            @click="eliminar(categoria)"
+          >
+            <i class="fa fa-trash" />
+          </button>
+        </div>
+        <div class="card-footer">
           <el-input
             v-model="categoria.description" 
             type="textarea"
-            :autosize="{ minRows: 7, maxRows: 7}"
+            :autosize="{ minRows: 1, maxRows: 3}"
             placeholder="Please input"
             resize="none"
           />
         </div>
-        <button 
-          type="button" 
-          class="btn btn-danger btnadd" 
-          title="Eliminar" 
-          @click="eliminar(categoria)"
-        >
-          <i class="fa fa-trash" />
-        </button>
       </div>
     </div>
 
@@ -68,7 +106,9 @@
                 id="exampleModalLabel" 
                 class="modal-title"
               >
-                Añadir Categoria de Platos
+                {{
+                  model.titulo
+                }}
               </h5>
               <button 
                 type="button" 
@@ -110,7 +150,20 @@
                       v-if="model.show != false" 
                       class="text-center"
                     >
-                      <uploadImage :alto="200" :ancho="200" @cargarImagen="imagen" />
+                      <uploadImage 
+                        v-if="model.photo != null"
+                        :alto="200" 
+                        :ancho="200" 
+                        :imagen="`/images/dishesCategory/${model.photo}`"
+                        @cargarImagen="imagen" 
+                      />
+                      <uploadImage 
+                        v-else
+                        :alto="200" 
+                        :ancho="200" 
+                        :imagen="`/images/noImagen/nodisponible.png`"
+                        @cargarImagen="imagen" 
+                      />
                     </div>
                   </div>
                 </div>
@@ -135,7 +188,9 @@
                       class="btn btn-primary" 
                       @click="guardarCategoria"
                     >
-                      Guardar
+                      {{
+                        model.boton
+                      }}
                     </button>
                   </div>
                 </div>
@@ -159,6 +214,8 @@ export default {
     return {
       route: window.location.origin+'/api/dishes_category/',
       model: {
+        titulo: '',
+        boton: '',
         show: false,
         photo: '',
         name: '',
@@ -172,8 +229,37 @@ export default {
     this.listDishesCategory()
   },
   methods: {
-    abrirModal(){
-      $('#registerDishesCategory').modal('show')
+    limpiar(){
+      this.model = {
+        titulo: '',
+        boton: '',
+        show: false,
+        photo: '',
+        name: '',
+        description: '',
+        color: '#DD2929'
+      }
+    },
+    abrirModal(categoria){
+      this.limpiar()
+      if(categoria != 1){
+        this.model = {
+          titulo: 'Editando la categoria',
+          boton: 'Editar',
+          show: categoria.photo != null ? true : false,
+          name: categoria.name,
+          description: categoria.description,
+          photo: categoria.photo,
+          color: categoria.color
+        }
+      } else {
+        this.model = {
+          titulo: 'Creando una nueva categoria',
+          boton: 'Crear',
+          show: false,
+        }
+      }
+        $('#registerDishesCategory').modal('show')
     },
     listDishesCategory(){
       this.categoria_platos = []
@@ -209,13 +295,13 @@ export default {
         confirmButtonText: 'Eliminar',
         cancelButtonText: 'Cancelar',
         type: 'warning'
-      }).then(() => {
-        axios.delete(`${this.route}${categoria.id}/dishes-category-delete`)
+      }).then(async () => {
+        await axios.delete(`${this.route}${categoria.id}/dishes-category-delete`)
         this.$message({
           type: 'success',
           message: 'Eliminación completada'
         });
-        this.listDishesCategory()
+        await this.listDishesCategory()
       }).catch(() => {
         this.$message({
           type: 'info',

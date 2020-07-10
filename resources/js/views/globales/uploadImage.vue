@@ -7,11 +7,15 @@
       :height="`${ancho}`" 
       margin="0" 
       accept="image/png" 
-      size="10" 
+      size="25" 
       button-class="btn btn-primary"
       :hideChangeButton="true" 
+      :prefill="`${imagen}`"
       :removable="true" 
-      :custom-strings="{upload: '<h1>Bummer!</h1>', drag: 'Drag a 😺 GIF or GTFO'  }"
+      :custom-strings="{
+        upload: '<h1>Bummer!</h1>',
+        drag: 'Drag a 😺 GIF or GTFO'
+      }"
       @change="onChange"
       @remove="onChange"
     />
@@ -31,11 +35,14 @@ export default {
     ancho: {
       type: Number,
       default: 100
+    },
+    imagen: {
+      type: String,
+      default: ''
     }
   },
   data() {
     return {
-      route2: 'api/empleados/',
       dialogImageUrl: '',
       dialogVisible: false
     }
@@ -46,7 +53,7 @@ export default {
     },
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
-      this.dialogVisible = true;
+      this.dialogVisible = false;
     },  
     async onChange(image){
       this.$emit('cargarImagen', image)

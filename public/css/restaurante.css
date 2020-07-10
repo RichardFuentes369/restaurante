@@ -67,6 +67,17 @@
 .btnadd i{
   margin-left: -2px;
 }
+.card{
+  cursor: pointer;
+}
+.card .btn-position-accion{
+  visibility: hidden;
+}
+.card:hover .btn-position-accion{
+  visibility: visible;
+  margin-left: 15.7rem!important;
+  margin-top: -5.3rem;
+}
 
 .title{
   margin-left: 5%;
