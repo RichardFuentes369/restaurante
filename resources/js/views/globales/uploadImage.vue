@@ -16,7 +16,7 @@
         drag: 'Drag a 😺 GIF or GTFO'
       }"
       @change="onChange"
-      @remove="onChange"
+      @remove="onRemove"
     />
   </div>
 </template>
@@ -56,6 +56,9 @@ export default {
     },  
     async onChange(image){
       this.$emit('cargarImagen', image)
+    },    
+    async onRemove(){
+      this.$emit('cargarImagen')
     },
   }
 };

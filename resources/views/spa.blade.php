@@ -15,6 +15,7 @@
 	<link rel="stylesheet" href="/css/restaurante.css">
 </head>
 <body>
+	
 	<div id="app">
 		<app></app>
 	</div>

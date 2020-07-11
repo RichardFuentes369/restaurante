@@ -6,5 +6,6 @@ Route::group(['prefix'=>'dishes_category'], function(){
 
 	Route::get("dishes-category-list", "$controller@listaDishesCategory");
 	Route::post("dishes-category-register", "$controller@registerDishesCategory");	
-	Route::delete("{id_categoria_platos}/dishes-category-delete", "$controller@deleteDishesCategory");	
+	Route::put("dishes-category-update", "$controller@updateDishesCategory");	
+	Route::delete("{id_categoria_plato}/dishes-category-delete", "$controller@deleteDishesCategory");	
 });

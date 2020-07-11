@@ -1,7 +1,9 @@
 <template>
   <div class="contenido">
     <div class="row">
-      <h2 class="title mb-3">Categoria de platos</h2> 
+      <h2 class="title mb-3">
+        Categoria de platos
+      </h2> 
       <button 
         type="button" 
         class="btn btn-success btnadd ml-3 mt-1" 
@@ -17,15 +19,21 @@
       <div 
         v-for="categoria in categoria_platos" 
         :key="categoria.id"
-        class="card my-2 mx-4 algo" 
+        class="card my-2 mx-4" 
       >
         <div class="card-header p-0">
           <div class="card-tittle text-center text-capitalize mt-2">
-            <el-tooltip class="item" effect="dark" content="Click para editar" placement="top">
+            <el-tooltip 
+              class="item" 
+              effect="dark" 
+              content="Click para editar" 
+              placement="top"
+            >
               <input
                 v-model="categoria.name"
                 class="form-control border-0 text-center bg-transparent" 
                 :style="`text-decoration: underline overline wavy ${categoria.color}; font-family: cursive;`"
+                @change="actualizar(categoria)"
               >
             </el-tooltip>
           </div>
@@ -33,7 +41,7 @@
         <div
           v-if="categoria.photo != null"
           class="card-body"
-          :style="`background-image: url(/images/dishesCategory/${categoria.photo});background-position-x: center; background-position-y: center; background-repeat: no-repeat; width: 18rem; height: 15rem`" 
+          :style="`background-image: url(/images/dishesCategory/${categoria.photo});background-position-x: center; background-position-y: center; background-repeat: no-repeat; width: 18rem; height: 15rem;`" 
         > 
           <button 
             type="button" 
@@ -81,6 +89,7 @@
             :autosize="{ minRows: 1, maxRows: 3}"
             placeholder="Please input"
             resize="none"
+            @change="actualizar(categoria)"
           />
         </div>
       </div>
@@ -183,9 +192,20 @@
                       Close
                     </button>
                     <button 
+                      v-if="model.boton == 'Crear' "
                       type="button" 
                       class="btn btn-primary" 
                       @click="guardarCategoria"
+                    >
+                      {{
+                        model.boton
+                      }}
+                    </button>
+                    <button 
+                      v-else
+                      type="button" 
+                      class="btn btn-primary" 
+                      @click="actualizarpomodal"
                     >
                       {{
                         model.boton
@@ -208,13 +228,16 @@
 }
 </style>
 <script>
+import { funciones } from '../../../functions/funciones_principales'
 export default {
+  mixins: [funciones],
   data() {
     return {
       route: window.location.origin+'/api/dishes_category/',
       model: {
         titulo: '',
         boton: '',
+        id: '',
         show: false,
         photo: '',
         name: '',
@@ -232,6 +255,7 @@ export default {
       this.model = {
         titulo: '',
         boton: '',
+        id: '',
         show: false,
         photo: '',
         name: '',
@@ -245,6 +269,7 @@ export default {
         this.model = {
           titulo: 'Editando la categoria',
           boton: 'Editar',
+          id: categoria.id,
           show: categoria.photo != null ? true : false,
           name: categoria.name,
           description: categoria.description,
@@ -256,9 +281,14 @@ export default {
           titulo: 'Creando una nueva categoria',
           boton: 'Crear',
           show: false,
+          color: '#DD2929',
+          id: '', 
+          photo: '',
+          name: '',
+          description: ''
         }
       }
-        $('#registerDishesCategory').modal('show')
+      $('#registerDishesCategory').modal('show')
     },
     listDishesCategory(){
       this.categoria_platos = []
@@ -276,17 +306,31 @@ export default {
     async guardarCategoria(){
       if (this.model.name != '' && this.model.description != ''){
         await axios.post(`${this.route}dishes-category-register`, this.model)
-        $('#registerDishesCategory').modal('hide')
-        this.listDishesCategory()
-        this.$notify({
-          title: 'Success',
-          message: 'Categoria de plato creada exitosamente',
-          type: 'success'
-        });
+        this.closeModal('#registerDishesCategory')
+        await this.listDishesCategory()
+        this.notify(1, 'Success', 'Categoria de plato creada exitosamente', 'success')
       } else {
-        this.$notify.error({
-          message: 'Algunos campos no pueden ir vacios',
-        });
+        this.notify(2, '', 'Algunos campos no pueden ir vacios', '')
+      }
+    },
+    async actualizar(categoria) {
+      if (categoria.name != '' && categoria.description != ''){
+        await axios.put(`${this.route}dishes-category-update`, categoria)
+        await this.listDishesCategory()
+        this.notify(1, 'Success', 'Categoria de plato actualizada exitosamente', 'success')
+      } else {
+        await this.listDishesCategory()
+        this.notify(2, '', 'Algunos campos no pueden ir vacios', '')
+      }
+    },    
+    async actualizarpomodal() {
+      if (this.model.name != '' && this.model.description != ''){
+        await axios.put(`${this.route}dishes-category-update`, this.model)
+        $('#registerDishesCategory').modal('hide')
+        await this.listDishesCategory()
+        this.notify(1, 'Success', 'Categoria de plato actualizada exitosamente', 'success')
+      } else {
+        this.notify(2, '', 'Algunos campos no pueden ir vacios', '')
       }
     },
     eliminar(categoria){
@@ -296,16 +340,10 @@ export default {
         type: 'warning'
       }).then(async () => {
         await axios.delete(`${this.route}${categoria.id}/dishes-category-delete`)
-        this.$message({
-          type: 'success',
-          message: 'Eliminación completada'
-        });
+        this.notify(2, '', 'Algunos campos no pueden ir vacios', '')
         await this.listDishesCategory()
       }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: 'Eliminación cancelada'
-        });          
+        this.message(1, 'Eliminación cancelada', 'info')         
       });
     }
   }

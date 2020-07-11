@@ -22,11 +22,15 @@ class DishesCategoryController extends Controller
 			$creando_categoria_plato->description = $request->description;
 			$creando_categoria_plato->color = $request->color;
 			if($request->show == true){
-				$img = $this->getB64Image($request->photo);
-				$img_extension = $this->getB64Extension($request->photo);
-				$img_name = 'dishes_category'. time() . '.' . $img_extension; 
-				$creando_categoria_plato->photo = $img_name;
-				Storage::disk('dishesCategory')->put($img_name, $img);
+				if($request->photo != null){
+					$img = $this->getB64Image($request->photo);
+					$img_extension = $this->getB64Extension($request->photo);
+					$img_name = 'dishes_category'. time() . '.' . $img_extension; 
+					$creando_categoria_plato->photo = $img_name;
+					Storage::disk('dishesCategory')->put($img_name, $img);
+				}else{
+					$creando_categoria_plato->photo = null;
+				}
 			}
 			$creando_categoria_plato->save();
 			return $request;
@@ -35,9 +39,9 @@ class DishesCategoryController extends Controller
 		}
 	}
 
-	public function deleteDishesCategory($id_categoria_platos){
+	public function deleteDishesCategory($id_categoria_plato){
 		try {
-			$eliminar_categoria = categoria_plato::find($id_categoria_platos);
+			$eliminar_categoria = categoria_plato::find($id_categoria_plato);
 			$url_photo = $eliminar_categoria->photo;
 			Storage::disk('dishesCategory')->delete($url_photo);
 			$eliminar_categoria->delete();
@@ -47,30 +51,37 @@ class DishesCategoryController extends Controller
 		}
 	}
 
-
-	/*
-	public function subirimagen(Request $request){
+	public function updateDishesCategory(Request $request){
 		try {
-			$img = $this->getB64Image($request->imagen);
-			$img_extension = $this->getB64Extension($request->imagen);
-			$img_name = 'user_avatar'. time() . '.' . $img_extension; 
-			$actualizar_fotografia = empleados::find($request->idEmpleado);
-			$actualizar_fotografia->url_fotografia = $img_name;
-			$actualizar_fotografia->save();
-			Storage::disk('images_base64')->put($img_name, $img);
-			return 'imagen guardada correctamente';
+			$actualizar_categoria = categoria_plato::find($request->id);
+			$actualizar_categoria->name = $request->name;
+			$actualizar_categoria->color = $request->color;
+			$actualizar_categoria->description = $request->description;
+
+			if(isset($request->show)){
+				if($request->show == true){
+					if($request->photo != null){
+						Storage::disk('dishesCategory')->delete($request->photo);
+						$img = $this->getB64Image($request->photo);
+						$img_extension = $this->getB64Extension($request->photo);
+						$img_name = 'dishes_category'. time() . '.' . $img_extension; 
+						$actualizar_categoria->photo = $img_name;
+						Storage::disk('dishesCategory')->put($img_name, $img);
+					}else{
+						$actualizar_categoria->photo = null;
+					}
+				}else{
+					if($request->photo != null){
+						Storage::disk('dishesCategory')->delete($request->photo);
+					}
+					$actualizar_categoria->photo = null;
+				}
+			}
+
+			$actualizar_categoria->save();
+			return 'categoria plato actualizada';	
 		} catch (Exception $e) {
-			return ($e);
+			return $e;
 		}
-	}	
-
-	public function eliminarFoto($url_imagen, $id_empleado){
-		$eliminar_fotografia = empleados::find($id_empleado);
-		$eliminar_fotografia->url_fotografia = null;
-		$eliminar_fotografia->save();
-		Storage::disk('images_base64')->delete($url_imagen);
-		return 'imagen eliminada correctamente';
 	}
-
-	*/
 }
