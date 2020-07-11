@@ -84,7 +84,9 @@
 	</div>
 </template>
 <script>
-export default {
+import { funciones } from '../../../functions/funciones_principales'
+export default {  
+	mixins: [funciones],
 	data() {
 		return {
 			restaurantes: [

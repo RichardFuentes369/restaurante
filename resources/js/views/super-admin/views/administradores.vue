@@ -412,7 +412,9 @@
   </div>
 </template>
 <script>
+import { funciones } from '../../../functions/funciones_principales'
 export default {
+  mixins: [funciones],
   data() {
     return {
       route: window.location.origin+'/api/super-admin/',
@@ -541,7 +543,7 @@ export default {
           address: user.address
         }           
       }
-      $('#registerAdmin').modal('show')
+      this.openModal('#registerAdmin')
     },
 
     async guardarAdministrador(){
@@ -555,17 +557,11 @@ export default {
           }
         }
         await axios.post(`${this.route}admin-register`, this.model)
-        $('#registerAdmin').modal('hide')
+        this.closeModal('#registerAdmin')
+        this.notify('1','Success','Usuario creado exitosamente','success')
         this.listAdmin()
-        this.$notify({
-          title: 'Success',
-          message: 'Usuario creado exitosamente',
-          type: 'success'
-        });
       } else {
-        this.$notify.error({
-          message: 'Algunos campos no pueden ir vacios',
-        });
+        this.notify('2','','Algunos campos no pueden ir vacios','')
       }
     },      
 
@@ -582,15 +578,9 @@ export default {
         await axios.put(`${this.route}${this.model.id}/admin-update`, this.model)
         $('#registerAdmin').modal('hide')
         this.listAdmin()
-        this.$notify({
-          title: 'Success',
-          message: 'Usuario actualizado exitosamente',
-          type: 'success'
-        });
+        this.notify('1','Success','Usuario actualizado exitosamente','success')
       } else {
-        this.$notify.error({
-          message: 'Algunos campos no pueden ir vacios',
-        });
+        this.notify('2','','Algunos campos no pueden ir vacios','')
       }
     },
 
@@ -601,16 +591,10 @@ export default {
         type: 'warning'
       }).then(() => {
         axios.delete(`${this.route}${user.id}/admin-delete`)
-        this.$message({
-          type: 'success',
-          message: 'Eliminación completada'
-        });
+        this.notify('2','','Eliminación Completada','')
         this.listAdmin()
       }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: 'Eliminación cancelada'
-        });          
+        this.message('1','Eliminación cancelada','info')        
       });
     },
 

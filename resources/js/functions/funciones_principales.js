@@ -1,5 +1,8 @@
 export const funciones = {
 	methods: {
+		openModal(nameModal) {
+			$(nameModal).modal('show')
+		},		
 		closeModal(nameModal) {
 			$(nameModal).modal('hide')
 		},

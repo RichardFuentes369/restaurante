@@ -210,7 +210,9 @@
 }
 </style>
 <script>
+import { funciones } from '../../../functions/funciones_principales'
 export default {
+  mixins: [funciones],
   data() {
     return {
       route: window.location.origin+'/api/dishes/',

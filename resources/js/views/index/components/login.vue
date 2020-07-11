@@ -4,25 +4,53 @@
       <div class="column is-4 is-offset-4">
         <div class="box">
           <h1 class="title text-center">Login</h1>
-          <div class="notification text-danger" v-if="error">
-            <p>{{error}}</p>
+          <div 
+            v-if="error"
+            class="notification text-danger" 
+          >
+            <p>
+              {{ error }}
+            </p>
           </div>
-          <form autocomplete="off" @submit.prevent="login" method="post">
+          <form 
+            method="post"
+            autocomplete="off" 
+            @submit.prevent="login" 
+          >
             <div class="field mt-3">
               <div class="control">
                 <label for="">Email</label>
-                <input type="email" class="form-control" placeholder="user@example.com" v-model="username" />
+                <input 
+                  v-model="username"
+                  type="email" 
+                  class="form-control" 
+                  placeholder="user@example.com"
+                >
               </div>
             </div>
             <div class="field mt-3">
               <div class="control">
                 <label for="">Password</label>
-                <input type="password" class="form-control" v-model="password" />
+                <input 
+                  v-model="password"
+                  type="password" 
+                  class="form-control"
+                >
               </div>
             </div>
-            <button type="submit" class="btn btn-block btn-success mt-3">Sign in</button>
+            <button 
+              type="submit" 
+              class="btn btn-block btn-success mt-3"
+            >
+              Sign in
+            </button>
           </form>
-          <router-link :to="{ name: 'register'}" class="mt-2 btn btn-primary btn-block">Register</router-link>
+          <router-link 
+            :to="{ name: 'register'}" 
+            class="mt-2 btn btn-primary btn-block"
+          >
+            Register
+          </router-link>
         </div>
       </div>
     </div>
