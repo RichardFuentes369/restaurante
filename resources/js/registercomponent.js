@@ -1,6 +1,7 @@
 import Vue from 'vue'
 
 /*Globales*/
+Vue.component('loading', require('./views/globales/loading.vue').default);
 Vue.component('uploadImage', require('./views/globales/uploadImage.vue').default);
 
 /*Index*/

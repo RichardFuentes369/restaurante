@@ -128,7 +128,8 @@
     </div>
   </div>
 </template>
-
+<style>
+</style>
 <script>
 import { userMixins } from '../../../mixins/getuser.js'
 export default {
@@ -154,5 +155,3 @@ export default {
   }
 };
 </script>
-<style>
-</style>

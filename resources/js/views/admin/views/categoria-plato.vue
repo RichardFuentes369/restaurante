@@ -15,6 +15,7 @@
         <i class="fa fa-plus" />
       </button>
     </div>
+    <loading />
     <div class="row justify-content-center">
       <div 
         v-for="categoria in categoria_platos" 
@@ -291,6 +292,7 @@ export default {
       $('#registerDishesCategory').modal('show')
     },
     listDishesCategory(){
+      this.loading(2000)
       this.categoria_platos = []
       axios.get(`${this.route}dishes-category-list`).then(res => {
         this.categoria_platos = res.data
