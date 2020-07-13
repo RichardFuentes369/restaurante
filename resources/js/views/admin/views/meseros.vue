@@ -14,7 +14,11 @@
         <i class="fa fa-plus" />
       </button>
     </div>
-    <div class="justify-content-center table-responsive">
+    <loading @mostrar="loading" :time="200" />
+    <div 
+      v-show="!hidden"
+      class="justify-content-center table-responsive"
+    >
       <table class="table table-striped">
         <thead>
           <tr>
@@ -183,6 +187,7 @@
     mixins: [funciones],
     data() {
       return {
+        hidden: true,
         restaurantes: [
         {
           'nombre': 'restaurante dona a',
@@ -245,6 +250,9 @@
     mounted() {
     },
     methods: {
+      loading(algo){
+        this.hidden = algo
+      },
     }
   };
   </script>

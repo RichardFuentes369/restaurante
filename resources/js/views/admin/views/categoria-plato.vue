@@ -15,8 +15,11 @@
         <i class="fa fa-plus" />
       </button>
     </div>
-    <loading />
-    <div class="row justify-content-center">
+    <loading @mostrar="loading" :time="200" />
+    <div 
+      v-show="!hidden" 
+      class="row justify-content-center"
+    >
       <div 
         v-for="categoria in categoria_platos" 
         :key="categoria.id"
@@ -235,11 +238,11 @@ export default {
   data() {
     return {
       route: window.location.origin+'/api/dishes_category/',
+      hidden: true,
       model: {
         titulo: '',
         boton: '',
         id: '',
-        show: false,
         photo: '',
         name: '',
         description: '',
@@ -252,6 +255,9 @@ export default {
     this.listDishesCategory()
   },
   methods: {
+    loading(algo){
+      this.hidden = algo
+    },
     limpiar(){
       this.model = {
         titulo: '',
@@ -292,8 +298,8 @@ export default {
       $('#registerDishesCategory').modal('show')
     },
     listDishesCategory(){
-      this.loading(2000)
       this.categoria_platos = []
+      this.charge(200)
       axios.get(`${this.route}dishes-category-list`).then(res => {
         this.categoria_platos = res.data
       })

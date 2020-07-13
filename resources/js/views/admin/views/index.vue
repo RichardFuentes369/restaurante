@@ -15,6 +15,9 @@ export default {
   mounted() {
   },
   methods: {
+    loading(algo){
+      this.hidden = algo
+    },
   }
 };
 </script>

@@ -31,10 +31,10 @@ export const funciones = {
         });
       }
     },
-    loading(time){
-      setTimeout(function(){
-        return console.log('deberia funcionar');
-      }, time); 
+    charge(time){
+      setTimeout(() => {
+        console.log('cargando')
+      }, time)
     }
   }
 }

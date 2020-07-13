@@ -1,7 +1,12 @@
 <template>
-  <div class="position">
-    <div class="preloader" />
-  </div>
+  <transition name="fade">
+    <div class="position">
+      <div
+        v-if="show" 
+        class="preloader"
+      />
+    </div>
+  </transition>
 </template>
 <style>
 .position {
@@ -36,6 +41,23 @@
 </style>
 <script>
 export default {
-
+  props: ['time'],
+  data(){
+    return {
+      show: true
+    }
+  },
+  mounted(){
+    if(Boolean(this.show)) this.showToggle()
+  },
+methods: {
+  showToggle(){
+    setTimeout(() => {
+      this.show = false
+      this.$emit('mostrar' , this.show)
+    }, this.time)
+  }
+}
 };
 </script>
+

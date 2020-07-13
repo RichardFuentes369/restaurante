@@ -14,8 +14,12 @@
         <i class="fa fa-plus" />
       </button>
     </div>
+    <loading @mostrar="loading" :time="200" />
 
-    <div class="container">
+    <div 
+      v-show="!hidden"
+      class="container"
+    >
       Cremas____________________________________________________________________________________<br>
       producto ............................................................................$2500 <br>
       producto ............................................................................$2500 <br>
@@ -169,12 +173,15 @@ export default {
   mixins: [funciones],
   data() {
     return {
-      
+      hidden: true,      
     };
   },
   mounted() {
   },
   methods: {
+    loading(algo){
+      this.hidden = algo
+    },
   }
 };
 </script>

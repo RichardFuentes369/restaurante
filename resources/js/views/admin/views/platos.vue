@@ -14,6 +14,7 @@
         <i class="fa fa-plus" />
       </button>
     </div>
+    <loading @mostrar="loading" :time="200" />
     <div class="text-center mb-3">
       <el-select 
         v-model="model.id_dishes_categoria" 
@@ -29,6 +30,7 @@
       </el-select>          
     </div>
     <div 
+      v-show="!hidden"
       class="row justify-content-center"
     >
       <div  
@@ -215,6 +217,7 @@ export default {
   mixins: [funciones],
   data() {
     return {
+      hidden: true,
       route: window.location.origin+'/api/dishes/',
       model: {
         show: false,
@@ -311,6 +314,9 @@ export default {
   mounted() {
   },
   methods: {
+    loading(algo){
+      this.hidden = algo
+    },
     imagen(image){
       if(image != undefined){
         this.model.photo = image
