@@ -7,9 +7,7 @@
       <button 
         type="button" 
         class="btn btn-success btnadd ml-3 mt-1" 
-        data-toggle="modal" 
-        data-target=".bd-example-modal-xl" 
-        circle 
+        title="Crear" 
         @click="abrirModal(1)"
       >
         <i class="fa fa-plus" />
@@ -243,7 +241,7 @@ export default {
         titulo: '',
         boton: '',
         id: '',
-        photo: '',
+        photo: '/images/noImagen/nodisponible.png',
         name: '',
         description: '',
         color: '#DD2929'
@@ -264,7 +262,7 @@ export default {
         boton: '',
         id: '',
         show: false,
-        photo: '',
+        photo: '/images/noImagen/nodisponible.png',
         name: '',
         description: '',
         color: '#DD2929'
@@ -290,16 +288,15 @@ export default {
           show: false,
           color: '#DD2929',
           id: '', 
-          photo: '',
           name: '',
           description: ''
         }
       }
-      $('#registerDishesCategory').modal('show')
+      this.openModal('#registerDishesCategory')  
     },
     listDishesCategory(){
-      this.categoria_platos = []
       this.charge(200)
+      this.categoria_platos = []
       axios.get(`${this.route}dishes-category-list`).then(res => {
         this.categoria_platos = res.data
       })
@@ -334,7 +331,7 @@ export default {
     async actualizarpomodal() {
       if (this.model.name != '' && this.model.description != ''){
         await axios.put(`${this.route}dishes-category-update`, this.model)
-        $('#registerDishesCategory').modal('hide')
+        this.closeModal('#registerDishesCategory')
         await this.listDishesCategory()
         this.notify(1, 'Success', 'Categoria de plato actualizada exitosamente', 'success')
       } else {
@@ -348,7 +345,7 @@ export default {
         type: 'warning'
       }).then(async () => {
         await axios.delete(`${this.route}${categoria.id}/dishes-category-delete`)
-        this.notify(2, '', 'Algunos campos no pueden ir vacios', '')
+        this.notify(2, '', 'Se elimino la categoria con exito', '')
         await this.listDishesCategory()
       }).catch(() => {
         this.message(1, 'Eliminación cancelada', 'info')         

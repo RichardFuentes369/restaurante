@@ -5,9 +5,9 @@
       :width="`${alto}`" 
       :height="`${ancho}`" 
       margin="0" 
-      size="10" 
       accept="image/jpeg, image/png"
       button-class="btn btn-primary"
+      :crop="true"
       :hideChangeButton="true" 
       :prefill="`${imagen}`"
       :removable="true" 
@@ -51,6 +51,7 @@ export default {
       console.log(file, fileList);
     },
     handlePictureCardPreview(file) {
+      console.log(file)
       this.dialogImageUrl = file.url;
       this.dialogVisible = false;
     },  

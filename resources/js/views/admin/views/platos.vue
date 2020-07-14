@@ -22,10 +22,10 @@
         class="form-control-file"
       >
         <el-option
-          v-for="item in categorias"
-          :key="item.nombre"
-          :label="item.nombre"
-          :value="item.nombre"
+          v-for="categoria in categorias"
+          :key="categoria.id"
+          :label="categoria.name"
+          :value="categoria.id"
         />
       </el-select>          
     </div>
@@ -134,24 +134,24 @@
                         class="form-control-file"
                       >
                         <el-option
-                          v-for="item in categorias"
-                          :key="item.nombre"
-                          :label="item.nombre"
-                          :value="item.nombre"
+                          v-for="categoria in categorias"
+                          :key="categoria.id"
+                          :label="categoria.name"
+                          :value="categoria.id"
                         />
                       </el-select>  
                     </div>
                     <div class="col-sm-5 mt-2">
                       <el-select 
-                        v-model="model.tamano" 
+                        v-model="model.size" 
                         placeholder="Select" 
                         class="form-control-file"
                       >
                         <el-option
-                          v-for="item in tamano"
-                          :key="item.nombre"
-                          :label="item.nombre"
-                          :value="item.nombre"
+                          v-for="item in sizes"
+                          :key="item.value"
+                          :label="item.label"
+                          :value="item.value"
                         />
                       </el-select>  
                     </div>
@@ -169,7 +169,11 @@
                       v-if="model.show != false" 
                       class="text-center"
                     >
-                      <uploadImage :alto="200" :ancho="200" @cargarImagen="imagen" />
+                      <uploadImage 
+                        :alto="200" 
+                        :ancho="200" 
+                        @cargarImagen="imagen" 
+                      />
                     </div>
                   </div>
                 </div>
@@ -218,6 +222,7 @@ export default {
   data() {
     return {
       hidden: true,
+      route2: window.location.origin+'/api/dishes_category/',
       route: window.location.origin+'/api/dishes/',
       model: {
         show: false,
@@ -226,36 +231,22 @@ export default {
         name: '',
         size: '',
         description: '',
-        tamano: '',
         price: ''
       },
-      categorias: [
-      {
-        'nombre': 'Sopas',
-        'descripcion': ''
-      },
-      {
-        'nombre': 'Entradas',
-        'descripcion': ''
-      },
-      {
-        'nombre': 'Bebidas',
-        'descripcion': ''
-      }
-      ],          
-      tamano: [
-      {
-        'nombre': 'Big',
-        'descripcion': ''
-      },
-      {
-        'nombre': 'Medium',
-        'descripcion': ''
-      },
-      {
-        'nombre': 'small',
-        'descripcion': ''
-      }
+      categorias: [],
+      sizes:[
+        {
+          'label': 'Big',
+          'value': 1
+        },
+        {
+          'label': 'Samll',
+          'value': 2
+        },
+        {
+          'label': 'Samll',
+          'value': 3
+        }
       ],
       restaurantes: [
       {
@@ -312,6 +303,7 @@ export default {
     };
   },
   mounted() {
+    this.dishes_category()
   },
   methods: {
     loading(algo){
@@ -323,6 +315,13 @@ export default {
       } else {
         this.model.photo = ''        
       }
+    },
+    dishes_category(){
+      this.charge(200)
+      this.categorias = []
+      axios.get(`${this.route2}dishes-category-list`).then(res => {
+        this.categorias = res.data
+      })
     }
   }
 };

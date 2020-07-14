@@ -61,13 +61,14 @@ class DishesCategoryController extends Controller
 			if(isset($request->show)){
 				if($request->show == true){
 					if($request->photo != null){
-						Storage::disk('dishesCategory')->delete($request->photo);
+						Storage::disk('dishesCategory')->delete($actualizar_categoria->photo);	
 						$img = $this->getB64Image($request->photo);
 						$img_extension = $this->getB64Extension($request->photo);
 						$img_name = 'dishes_category'. time() . '.' . $img_extension; 
 						$actualizar_categoria->photo = $img_name;
 						Storage::disk('dishesCategory')->put($img_name, $img);
 					}else{
+						Storage::disk('dishesCategory')->delete($actualizar_categoria->photo);
 						$actualizar_categoria->photo = null;
 					}
 				}else{
