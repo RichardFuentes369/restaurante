@@ -14,12 +14,16 @@
         <i class="fa fa-plus" />
       </button>
     </div>
-    <loading @mostrar="loading" :time="200" />
+    <loading 
+      :time="200" 
+      @mostrar="loading" 
+    />
     <div class="text-center mb-3">
       <el-select 
         v-model="model.id_dishes_categoria" 
         placeholder="Select" 
         class="form-control-file"
+        @change="CategoryChange(model.id_dishes_categoria)"
       >
         <el-option
           v-for="categoria in categorias"
@@ -30,43 +34,88 @@
       </el-select>          
     </div>
     <div 
-      v-show="!hidden"
+      v-show="!hidden" 
       class="row justify-content-center"
     >
-      <div  
-        v-for="restaurante in restaurantes"
-        :key="restaurante.id" 
+      <div 
+        v-for="dishe in dishes" 
+        :key="dishe.id"
         class="card my-2 mx-4" 
-        :style="`background-image: url(${restaurante.imagen});background-position-x: center; background-position-y: center; background-size: ${restaurante.size}; background-repeat: no-repeat; width: 18rem; height: 15rem`"
-        title="click"
       >
-        <div class="card-tittle text-center text-capitalize mt-2">
-          <input 
-            v-model="restaurante.nombre"
-            class="form-control border-0 text-center" 
-            :style="`text-decoration: underline overline wavy ${restaurante.color}; 
-          font-family: cursive;`"
-          >
+        <div class="card-header p-0">
+          <div class="card-tittle text-center text-capitalize mt-2">
+            <el-tooltip 
+              class="item" 
+              effect="dark" 
+              content="Click para editar" 
+              placement="top"
+            >
+              <input
+                v-model="dishe.name"
+                class="form-control border-0 text-center bg-transparent" 
+                :style="`text-decoration: underline overline wavy ${dishe.color}; font-family: cursive;`"
+                @change="actualizar(dishe)"
+              >
+            </el-tooltip>
+          </div>
         </div>
-        <div class="card-body">
+        <div
+          v-if="dishe.photo != null"
+          class="card-body"
+          :style="`background-image: url(/images/dishesCategory/${dishe.photo});background-position-x: center; background-position-y: center; background-repeat: no-repeat; width: 18rem; height: 15rem;`" 
+        > 
+          <button 
+            type="button" 
+            class="btn btn-warning mt-4 btnadd btn-position-accion" 
+            title="Actualizar" 
+            @click="abrirModal(dishe)"
+          >
+            <i class="fa fa-pen" />
+          </button>  
+          <button 
+            type="button" 
+            class="btn btn-danger mt-4 btnadd btn-position-accion" 
+            title="Eliminar" 
+            @click="eliminar(dishe)"
+          >
+            <i class="fa fa-trash" />
+          </button>
+        </div>       
+        <div
+          v-else=""
+          class="card-body"
+          :style="`background-image: url(/images/noImagen/nodisponible.png);background-position-x: center; background-position-y: center; background-repeat: no-repeat; width: 18rem; height: 15rem`" 
+        > 
+          <button 
+            type="button" 
+            class="btn btn-warning mt-4 btnadd btn-position-accion" 
+            title="Actualizar" 
+            @click="abrirModal(dishe)"
+          >
+            <i class="fa fa-pen" />
+          </button>      
+          <button 
+            type="button" 
+            class="btn btn-danger mt-4 btnadd btn-position-accion" 
+            title="Eliminar" 
+            @click="eliminar(dishe)"
+          >
+            <i class="fa fa-trash" />
+          </button>
+        </div>
+        <div class="card-footer">
           <el-input
-            v-model="restaurante.descripcion"
+            v-model="dishe.description" 
             type="textarea"
-            :autosize="{ minRows: 7, maxRows: 7}"
+            :autosize="{ minRows: 1, maxRows: 3}"
             placeholder="Please input"
             resize="none"
+            @change="actualizar(dishe)"
           />
         </div>
-        <button 
-          type="button" 
-          class="btn btn-danger btnadd" 
-          data-toggle="modal" 
-          data-target=".bd-example-modal-xl"
-        >
-          <i class="fa fa-trash" />
-        </button>
       </div>
     </div>
+
 
     <!-- Modal -->
     <div 
@@ -222,7 +271,6 @@ export default {
   data() {
     return {
       hidden: true,
-      route2: window.location.origin+'/api/dishes_category/',
       route: window.location.origin+'/api/dishes/',
       model: {
         show: false,
@@ -232,8 +280,7 @@ export default {
         size: '',
         description: '',
         price: ''
-      },
-      categorias: [],
+      }, 
       sizes:[
         {
           'label': 'Big',
@@ -248,58 +295,8 @@ export default {
           'value': 3
         }
       ],
-      restaurantes: [
-      {
-        'nombre': 'Champiñon',
-        'categoria': 'Cremas',
-        'descripcion': 'esta es una descripcion de la empresa que se va a generar por la pandemia del covid 19 es por ello y mucho mas que se puede percibir cosas coherentes como los que no podemos vover, arturo calle es una empresa de las cuales somos parte todos los colombianos es por ellos que los componentes de la chingada masdre es por ello que frank no me va a dar trabajo eso es por confiar en gente estupida y relativamente idiota',
-        'imagen': 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRkrFHybKUNuHTYXf2q-hhoYORHF1cHVXi92Q&usqp=CAU',
-        'color': '#F16868'
-      },
-      {
-        'nombre': 'Múte',
-        'categoria': 'Cremas',
-        'descripcion': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae, recusandae similique eveniet quis. Quibusdam mollitia fugit officiis repellat, vel voluptates eaque possimus, nostrum dolore quaerat error modi soluta, perferendis! Molestiae.it. Molestiae, recusandae similique eveniet quis. Quibusdam mollitia fugit officiis repellat, vel voluptates eaque possimus, nostrum dolore quaerat error modi soluta, perferendis! Molestiae.',
-        'imagen': 'https://recetasdemicolombia.com/wp-content/uploads/2020/02/mute-santandereano-500x375.jpg',
-        'color': '#F16868'
-      },
-      {
-        'nombre': 'Ajiaco',
-        'categoria': 'Cremas',
-        'descripcion': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae, recusandae similique eveniet quis. Quibusdam mollitia fugit officiis repellat, vel voluptates eaque possimus, nostrum dolore quaerat error modi soluta, perferendis! Molestiae.',
-        'imagen': 'https://www.canalrcn.com/nuestra-cocina/wp-content/uploads/2020/03/ajiaco-nuestra-cocina.jpg',
-        'color': '#F16868'
-      },
-      {
-        'nombre': 'Pollo',
-        'categoria': 'Carnes',
-        'descripcion': '',
-        'imagen': 'https://t2.rg.ltmcdn.com/es/images/8/1/2/img_caldo_de_pollo_casero_37218_600_square.jpg',
-        'color': '#F16868'
-      },
-      {
-        'nombre': 'Carne',
-        'categoria': 'Carnes', 
-
-        'descripcion': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae, recusandae similique eveniet quis. Quibusdam mollitia fugit officiis repellat, vel voluptates eaque possimus, nostrum dolore quaerat error modi soluta, perferendis! Molestiae.',
-        'imagen': 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRZvEiPqkouueweCzF1B5ALEmVq706k7-WWqA&usqp=CAU',
-        'color': '#F16868'
-      },
-      {
-        'nombre': 'Verengena',
-        'categoria': 'Ensalada',
-        'descripcion': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae, recusandae similique eveniet quis. Quibusdam mollitia fugit officiis repellat, vel voluptates eaque possimus, nostrum dolore quaerat error modi soluta, perferendis! Molestiae.',
-        'imagen': 'https://i.blogs.es/de6df6/chips-vegetales-berenjena-calabacin-zanahoria-pepino-vitonica2/450_1000.jpg',
-        'color': '#F16868'
-      },
-      {
-        'nombre': 'Patacón',
-        'categoria': 'Aperitivo',
-        'descripcion': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae, recusandae similique eveniet quis. Quibusdam mollitia fugit officiis repellat, vel voluptates eaque possimus, nostrum dolore quaerat error modi soluta, perferendis! Molestiae.',
-        'imagen': 'https://i.ytimg.com/vi/Wyzz3_VAfVc/maxresdefault.jpg',
-        'color': '#F16868'
-      },
-      ]
+      categorias: [],
+      dishes: []
     };
   },
   mounted() {
@@ -319,9 +316,19 @@ export default {
     dishes_category(){
       this.charge(200)
       this.categorias = []
-      axios.get(`${this.route2}dishes-category-list`).then(res => {
+      axios.get(`${this.route}dishes-list`).then(res => {
         this.categorias = res.data
+        for (var i = 0 ; i < this.categorias.length; i++) {
+          let platos = this.categorias[i].misplatos
+          for (const plato of platos) {
+            this.dishes.push(plato)
+          }
+        }
       })
+    },
+    CategoryChange(id){
+      console.log('aca filtro las categorias, le paso el paramero, filtro los hijos y los pusheo en el arreglo')
+      console.log(id)
     }
   }
 };

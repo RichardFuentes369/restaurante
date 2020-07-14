@@ -2,7 +2,7 @@
 
 Route::group(['prefix'=>'dishes'], function(){
 	
-	$controller = "Admin\DishesCategoryController";
+	$controller = "Admin\DishesController";
 
 	Route::get("dishes-list", "$controller@listaDishes");
 	Route::get("{id_category}/dishes-list-for-category", "$controller@listaDishesForCategory");

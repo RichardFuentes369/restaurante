@@ -4,7 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class platos extends Model
+class plato extends Model
 {
-    //
+	protected $table = "dishes";  
 }
+ 
