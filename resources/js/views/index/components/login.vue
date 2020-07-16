@@ -31,11 +31,11 @@
             <div class="field mt-3">
               <div class="control">
                 <label for="">Password</label>
-                <input 
+                <el-input 
                   v-model="password"
-                  type="password" 
-                  class="form-control"
-                >
+                  placeholder="Please input password" 
+                  show-password
+                />                
               </div>
             </div>
             <button 

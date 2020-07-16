@@ -20,10 +20,9 @@
     />
     <div class="text-center mb-3">
       <el-select 
-        v-model="model.id_dishes_categoria" 
+        v-model="id_dishes_categoria" 
         placeholder="Select" 
         class="form-control-file"
-        @change="CategoryChange(model.id_dishes_categoria)"
       >
         <el-option
           v-for="categoria in categorias"
@@ -178,7 +177,7 @@
                     </div>
                     <div class="col-sm-5 mt-2">
                       <el-select 
-                        v-model="model.id_dishes_categoria" 
+                        v-model="model.mid_dishes_categoria" 
                         placeholder="Select" 
                         class="form-control-file"
                       >
@@ -272,9 +271,10 @@ export default {
     return {
       hidden: true,
       route: window.location.origin+'/api/dishes/',
+      id_dishes_categoria: '',
       model: {
         show: false,
-        id_dishes_categoria: '',
+        mid_dishes_categoria: '',
         photo: '',
         name: '',
         size: '',
@@ -296,8 +296,28 @@ export default {
         }
       ],
       categorias: [],
-      dishes: []
+      dishes: [],
+      clon: []
     };
+  },
+  watch: {
+    id_dishes_categoria: function (val) {
+      if(this.clon != ''){   
+        this.dishes = this.clon
+        let filtro = this.dishes.filter(obj => obj.id_disehs_category === val) 
+        this.dishes = []     
+        for (const fil of filtro) {
+          this.dishes.push(fil)
+        }    
+      }else{   
+        this.clon = [...this.dishes]
+        let filtro = this.dishes.filter(obj => obj.id_disehs_category === val) 
+        this.dishes = []     
+        for (const fil of filtro) {
+          this.dishes.push(fil)
+        }   
+      }
+    }
   },
   mounted() {
     this.dishes_category()
@@ -325,10 +345,6 @@ export default {
           }
         }
       })
-    },
-    CategoryChange(id){
-      console.log('aca filtro las categorias, le paso el paramero, filtro los hijos y los pusheo en el arreglo')
-      console.log(id)
     }
   }
 };
