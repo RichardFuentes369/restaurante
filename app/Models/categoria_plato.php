@@ -9,6 +9,6 @@ class categoria_plato extends Model
 	protected $table = "dishes_category";
 
 	public function misplatos(){
-		return $this->hasMany('App\Models\plato','id_disehs_category');
+		return $this->hasMany('App\Models\plato','id_dishes_category');
 	}
 }

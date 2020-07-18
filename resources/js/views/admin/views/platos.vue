@@ -7,9 +7,8 @@
       <button 
         type="button" 
         class="btn btn-success btnadd ml-3 mt-1" 
-        data-toggle="modal" 
-        data-target=".bd-example-modal-xl" 
-        circle
+        title="Crear" 
+        @click="abrirModal(1)"
       >
         <i class="fa fa-plus" />
       </button>
@@ -118,6 +117,7 @@
 
     <!-- Modal -->
     <div 
+      id="redisterDishes" 
       class="modal fade bd-example-modal-xl " 
       tabindex="-1" 
       role="dialog" 
@@ -135,7 +135,7 @@
                 id="exampleModalLabel"
                 class="modal-title"
               >
-                Añadir Platos
+                {{ model.titulo }}
               </h5>
               <button 
                 type="button" 
@@ -167,6 +167,7 @@
                     <div class="col-sm-2 text-center mt-2">
                       <el-input-number 
                         v-model="model.price" 
+                        placeholder="price" 
                         :min="1" 
                         :max="1000000"
                       > 
@@ -176,32 +177,36 @@
                       </el-input-number>
                     </div>
                     <div class="col-sm-5 mt-2">
-                      <el-select 
-                        v-model="model.mid_dishes_categoria" 
-                        placeholder="Select" 
-                        class="form-control-file"
-                      >
-                        <el-option
-                          v-for="categoria in categorias"
-                          :key="categoria.id"
-                          :label="categoria.name"
-                          :value="categoria.id"
-                        />
-                      </el-select>  
+                      <el-tooltip class="item" effect="light" content="Category dishe" placement="bottom">
+                        <el-select 
+                          v-model="model.mid_dishes_categoria" 
+                          placeholder="Select" 
+                          class="form-control-file"
+                        >
+                          <el-option
+                            v-for="categoria in categorias"
+                            :key="categoria.id"
+                            :label="categoria.name"
+                            :value="categoria.id"
+                          />
+                        </el-select>  
+                      </el-tooltip>
                     </div>
                     <div class="col-sm-5 mt-2">
-                      <el-select 
-                        v-model="model.size" 
-                        placeholder="Select" 
-                        class="form-control-file"
-                      >
-                        <el-option
-                          v-for="item in sizes"
-                          :key="item.value"
-                          :label="item.label"
-                          :value="item.value"
-                        />
-                      </el-select>  
+                      <el-tooltip class="item" effect="light" content="Size" placement="bottom">
+                        <el-select 
+                          v-model="model.size" 
+                          placeholder="Select" 
+                          class="form-control-file"
+                        >
+                          <el-option
+                            v-for="item in sizes"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value"
+                          />
+                        </el-select>  
+                      </el-tooltip>
                     </div>
                   </div>
                 </div>
@@ -247,8 +252,11 @@
               <button 
                 type="button" 
                 class="btn btn-primary"
+                @click="guardarPlato"
               >
-                Guardar
+                {{ 
+                  model.boton 
+                }}
               </button>
             </div>
           </div>
@@ -284,15 +292,16 @@ export default {
       sizes:[
         {
           'label': 'Big',
-          'value': 1
+          'value': 'big'
         },
         {
-          'label': 'Samll',
-          'value': 2
+          'label': 'Median',
+          'value': 'median' 
         },
         {
+
           'label': 'Samll',
-          'value': 3
+          'value': 'small'
         }
       ],
       categorias: [],
@@ -304,14 +313,14 @@ export default {
     id_dishes_categoria: function (val) {
       if(this.clon != ''){   
         this.dishes = this.clon
-        let filtro = this.dishes.filter(obj => obj.id_disehs_category === val) 
+        let filtro = this.dishes.filter(obj => obj.id_dishes_category === val) 
         this.dishes = []     
         for (const fil of filtro) {
           this.dishes.push(fil)
         }    
       }else{   
         this.clon = [...this.dishes]
-        let filtro = this.dishes.filter(obj => obj.id_disehs_category === val) 
+        let filtro = this.dishes.filter(obj => obj.id_dishes_category === val) 
         this.dishes = []     
         for (const fil of filtro) {
           this.dishes.push(fil)
@@ -320,11 +329,46 @@ export default {
     }
   },
   mounted() {
-    this.dishes_category()
+    this.listdishes()
   },
   methods: {
     loading(algo){
       this.hidden = algo
+    },
+    limpiar(){'',
+      this.model = {
+        show: false,
+        mid_dishes_categoria: '',
+        photo: '/images/noImagen/nodisponible.png',
+        name: '',
+        size: '',
+        description: '',
+        price: ''
+      }
+    },
+    abrirModal(plato){
+      this.limpiar()
+      if(plato != 1){
+        this.model = {
+          titulo: 'Editando el plato',
+          boton: 'Editar',
+          id: plato.id,
+          show: plato.photo != null ? true : false,
+          name: plato.name,
+          description: plato.description,
+          photo: plato.photo
+        }
+      } else {
+        this.model = {
+          titulo: 'Creando un nuevo plato',
+          boton: 'Crear',
+          show: false,
+          id: '', 
+          name: '',
+          description: ''
+        }
+      }
+      this.openModal('#redisterDishes')  
     },
     imagen(image){
       if(image != undefined){
@@ -333,7 +377,7 @@ export default {
         this.model.photo = ''        
       }
     },
-    dishes_category(){
+    listdishes(){
       this.charge(200)
       this.categorias = []
       axios.get(`${this.route}dishes-list`).then(res => {
@@ -345,6 +389,16 @@ export default {
           }
         }
       })
+    },
+    async guardarPlato(){
+      if (this.model.mid_dishes_categoria != '' && this.model.name != '' && this.model.description != ''){
+        await axios.post(`${this.route}dishes-register`, this.model)
+        this.closeModal('#redisterDishes')
+        await this.listdishes()
+        this.notify(1, 'Success', 'Plato creado exitosamente', 'success')
+      } else {
+        this.notify(2, '', 'Algunos campos no pueden ir vacios', '')
+      }
     }
   }
 };

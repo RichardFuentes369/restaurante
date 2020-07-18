@@ -21,7 +21,7 @@ class Dishes extends Migration
         $table->string('description')->nullable();
         $table->string('price')->nullable();
         $table->foreignId('id_menu')->nullable();
-        $table->foreignId('id_disehs_category')->nullable();
+        $table->foreignId('id_dishes_category')->nullable();
         $table->string('created_by')->nullable();
         $table->string('updated_by')->nullable();
         $table->string('deleted_by')->nullable();

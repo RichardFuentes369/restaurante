@@ -5,7 +5,6 @@ Route::group(['prefix'=>'dishes'], function(){
 	$controller = "Admin\DishesController";
 
 	Route::get("dishes-list", "$controller@listaDishes");
-	Route::get("{id_category}/dishes-list-for-category", "$controller@listaDishesForCategory");
-	Route::post("dishes-category-register", "$controller@registerDishes");	
-	Route::delete("{id_categoria_platos}/dishes-category-delete", "$controller@deleteDishes");	
+	Route::post("dishes-register", "$controller@registerDishes");	
+	Route::delete("{id_plato}/dishes-delete", "$controller@deleteDishes");	
 });
