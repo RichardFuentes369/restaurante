@@ -14,7 +14,7 @@ class ForeignKeyDishesCategoryDishes extends Migration
     public function up()
     {
         Schema::table('dishes', function (Blueprint $table) {
-            $table->foreign('id_disehs_category')
+            $table->foreign('id_dishes_category')
             ->references('id')
             ->on('dishes_category')
             ->onUpdate('cascade')
