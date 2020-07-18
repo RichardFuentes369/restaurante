@@ -69,6 +69,13 @@ return [
             'root' => public_path('images/dishesCategory'), //ruta en la carpeta storage/app y 
             'url' => env('APP_URL').'/storage', //ruta base storage no cambiar
             'visibility' => 'public', //si se podra acceder desde el exterior
+        ],       
+
+        'dishes' => [
+            'driver' => 'local', //tipo driver local-nube(s3 de amazon)
+            'root' => public_path('images/dishes'), //ruta en la carpeta storage/app y 
+            'url' => env('APP_URL').'/storage', //ruta base storage no cambiar
+            'visibility' => 'public', //si se podra acceder desde el exterior
         ],        
 
         'noImagen' => [

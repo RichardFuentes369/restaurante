@@ -60,7 +60,7 @@
         <div
           v-if="dishe.photo != null"
           class="card-body"
-          :style="`background-image: url(/images/dishesCategory/${dishe.photo});background-position-x: center; background-position-y: center; background-repeat: no-repeat; width: 18rem; height: 15rem;`" 
+          :style="`background-image: url(/images/dishes/${dishe.photo});background-position-x: center; background-position-y: center; background-repeat: no-repeat; width: 18rem; height: 15rem;`" 
         > 
           <button 
             type="button" 
@@ -380,6 +380,7 @@ export default {
     listdishes(){
       this.charge(200)
       this.categorias = []
+      this.dishes = []
       axios.get(`${this.route}dishes-list`).then(res => {
         this.categorias = res.data
         for (var i = 0 ; i < this.categorias.length; i++) {
@@ -399,6 +400,20 @@ export default {
       } else {
         this.notify(2, '', 'Algunos campos no pueden ir vacios', '')
       }
+    },
+    async eliminar(dishe){
+      this.$confirm('Esta seguro que desea eliminar este plato?', 'Warning', {
+        confirmButtonText: 'Eliminar',
+        cancelButtonText: 'Cancelar',
+        type: 'warning'
+      }).then(async () => {
+        await axios.delete(`${this.route}${dishe.id}/dishes-delete`)
+        this.id_dishes_categoria = ''
+        this.notify(2, '', 'Se elimino la categoria con exito', '')
+        await this.listdishes()
+      }).catch(() => {
+        this.message(1, 'Eliminación cancelada', 'info')         
+      });
     }
   }
 };

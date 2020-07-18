@@ -52,9 +52,9 @@ class DishesController extends Controller
 
 	public function deleteDishes($id_categoria_platos){
 		try {
-			$eliminar_categoria = plato::find($id_categoria_platos);
-			$eliminar_categoria->delete();
-			return 'usuario eliminado con exito';
+			$eliminat_plato = plato::find($id_categoria_platos);
+			$eliminat_plato->delete();
+			return 'plato eliminado con exito';
 		} catch (Exception $e) {
 			return $e;
 		}
