@@ -28,7 +28,10 @@
           :key="categoria.id"
           :label="categoria.name"
           :value="categoria.id"
-        />
+        >
+          <span style="float: left">{{ categoria.name }}</span>
+          <span :style="`float: right; color: ${categoria.color}; font-size: 13px`">{{ categoria.color }}</span>
+        </el-option>
       </el-select>          
     </div>
     <div 
@@ -51,7 +54,7 @@
               <input
                 v-model="dishe.name"
                 class="form-control border-0 text-center bg-transparent" 
-                :style="`text-decoration: underline overline wavy ${dishe.color}; font-family: cursive;`"
+                style="font-family: cursive"
                 @change="actualizar(dishe)"
               >
             </el-tooltip>
@@ -223,6 +226,14 @@
                       class="text-center"
                     >
                       <uploadImage 
+                        v-if="model.photo != null"
+                        :alto="200" 
+                        :ancho="200" 
+                        :imagen="`/images/dishes/${model.photo}`"
+                        @cargarImagen="imagen" 
+                      />
+                      <uploadImage 
+                        v-else
                         :alto="200" 
                         :ancho="200" 
                         @cargarImagen="imagen" 
@@ -250,12 +261,23 @@
                 Close
               </button>
               <button 
+                v-if="model.boton == 'Crear' "
                 type="button" 
-                class="btn btn-primary"
+                class="btn btn-primary" 
                 @click="guardarPlato"
               >
-                {{ 
-                  model.boton 
+                {{
+                  model.boton
+                }}
+              </button>
+              <button 
+                v-else
+                type="button" 
+                class="btn btn-primary" 
+                @click="actualizarpomodal"
+              >
+                {{
+                  model.boton
                 }}
               </button>
             </div>
@@ -346,6 +368,12 @@ export default {
         price: ''
       }
     },
+    limpiarArrays(){
+      this.clon = [] // array clon de platos
+      this.categorias = [] //array de categorias
+      this.dishes = [] //array de platos
+      this.id_dishes_categoria = '' //variable del filtro
+    },
     abrirModal(plato){
       this.limpiar()
       if(plato != 1){
@@ -356,7 +384,10 @@ export default {
           show: plato.photo != null ? true : false,
           name: plato.name,
           description: plato.description,
-          photo: plato.photo
+          photo: plato.photo,
+          price: plato.price,
+          size: plato.size,
+          mid_dishes_categoria: plato.id_dishes_category
         }
       } else {
         this.model = {
@@ -379,8 +410,7 @@ export default {
     },
     listdishes(){
       this.charge(200)
-      this.categorias = []
-      this.dishes = []
+      this.limpiarArrays()
       axios.get(`${this.route}dishes-list`).then(res => {
         this.categorias = res.data
         for (var i = 0 ; i < this.categorias.length; i++) {
@@ -397,6 +427,26 @@ export default {
         this.closeModal('#redisterDishes')
         await this.listdishes()
         this.notify(1, 'Success', 'Plato creado exitosamente', 'success')
+      } else {
+        this.notify(2, '', 'Algunos campos no pueden ir vacios', '')
+      }
+    },    
+    async actualizar(dishe) {
+      if (dishe.name != '' && dishe.description != ''){
+        await axios.put(`${this.route}dishes-update`, dishe)
+        await this.listdishes()
+        this.notify(1, 'Success', 'Plato actualizado exitosamente', 'success')
+      } else {
+        await this.listdishes()
+        this.notify(2, '', 'Algunos campos no pueden ir vacios', '')
+      }
+    },   
+    async actualizarpomodal() {
+      if (this.model.name != '' && this.model.description != ''){
+        await axios.put(`${this.route}dishes-update`, this.model)
+        this.closeModal('#redisterDishes')
+        await this.listdishes()
+        this.notify(1, 'Success', 'Categoria de plato actualizada exitosamente', 'success')
       } else {
         this.notify(2, '', 'Algunos campos no pueden ir vacios', '')
       }

@@ -13,7 +13,10 @@
         <i class="fa fa-plus" />
       </button>
     </div>
-    <loading @mostrar="loading" :time="200" />
+    <loading 
+      :time="200"
+      @mostrar="loading" 
+    />
     <div 
       v-show="!hidden" 
       class="row justify-content-center"

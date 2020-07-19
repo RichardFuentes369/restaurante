@@ -50,9 +50,49 @@ class DishesController extends Controller
 		}
 	}
 
+	public function updateDishes(Request $request){
+		try {
+			$actualizar_plato = plato::find($request->id);
+			$actualizar_plato->name = $request->name;
+			$actualizar_plato->size = $request->size;
+			$actualizar_plato->price = $request->price;
+			$actualizar_plato->id_dishes_category = $request->mid_dishes_categoria;
+			$actualizar_plato->description = $request->description;
+
+			if(isset($request->show)){
+				if($request->show == true){
+					if($request->photo != null){
+						Storage::disk('dishes')->delete($actualizar_plato->photo);	
+						$img = $this->getB64Image($request->photo);
+						$img_extension = $this->getB64Extension($request->photo);
+						$img_name = 'dishes'. time() . '.' . $img_extension; 
+						$actualizar_plato->photo = $img_name;
+						Storage::disk('dishes')->put($img_name, $img);
+					}else{
+						Storage::disk('dishes')->delete($actualizar_plato->photo);
+						$actualizar_plato->photo = null;
+					}
+				}else{
+					if($request->photo != null){
+						Storage::disk('dishes')->delete($request->photo);
+					}
+					$actualizar_plato->photo = null;
+				}
+			}
+
+			$actualizar_plato->save();
+			return 'categoria plato actualizada';	
+		} catch (Exception $e) {
+			return $e;
+		}
+	}
+
+
 	public function deleteDishes($id_categoria_platos){
 		try {
 			$eliminat_plato = plato::find($id_categoria_platos);
+			$url_photo = $eliminat_plato->photo;
+			Storage::disk('dishes')->delete($url_photo);
 			$eliminat_plato->delete();
 			return 'plato eliminado con exito';
 		} catch (Exception $e) {
