@@ -15,8 +15,10 @@ class Menu extends Migration
     {
         Schema::create('menu', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('description');
+            $table->string('dishe_name');
+            $table->string('dishe_size');
+            $table->string('dishe_price');
+            $table->string('id_category_dishe');
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();
             $table->string('deleted_by')->nullable();

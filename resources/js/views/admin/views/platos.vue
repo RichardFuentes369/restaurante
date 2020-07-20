@@ -120,7 +120,7 @@
 
     <!-- Modal -->
     <div 
-      id="redisterDishes" 
+      id="registerDishes" 
       class="modal fade bd-example-modal-xl " 
       tabindex="-1" 
       role="dialog" 
@@ -167,8 +167,8 @@
                 </div>  
                 <div class="col-sm-12 mt-2">
                   <div class="row">
-                    <div class="col-sm-2 text-center mt-2">
-                      <el-input-number 
+                    <div class="col-sm-4 text-center mt-2">
+                      <el-input 
                         v-model="model.price" 
                         placeholder="price" 
                         :min="1" 
@@ -177,9 +177,9 @@
                         <template slot="prepend">
                           Price
                         </template>
-                      </el-input-number>
+                      </el-input>
                     </div>
-                    <div class="col-sm-5 mt-2">
+                    <div class="col-sm-4 mt-2">
                       <el-tooltip class="item" effect="light" content="Category dishe" placement="bottom">
                         <el-select 
                           v-model="model.mid_dishes_categoria" 
@@ -195,7 +195,7 @@
                         </el-select>  
                       </el-tooltip>
                     </div>
-                    <div class="col-sm-5 mt-2">
+                    <div class="col-sm-4 mt-2">
                       <el-tooltip class="item" effect="light" content="Size" placement="bottom">
                         <el-select 
                           v-model="model.size" 
@@ -399,7 +399,7 @@ export default {
           description: ''
         }
       }
-      this.openModal('#redisterDishes')  
+      this.openModal('#registerDishes')  
     },
     imagen(image){
       if(image != undefined){
@@ -424,7 +424,7 @@ export default {
     async guardarPlato(){
       if (this.model.mid_dishes_categoria != '' && this.model.name != '' && this.model.description != ''){
         await axios.post(`${this.route}dishes-register`, this.model)
-        this.closeModal('#redisterDishes')
+        this.closeModal('#registerDishes')
         await this.listdishes()
         this.notify(1, 'Success', 'Plato creado exitosamente', 'success')
       } else {
@@ -444,7 +444,7 @@ export default {
     async actualizarpomodal() {
       if (this.model.name != '' && this.model.description != ''){
         await axios.put(`${this.route}dishes-update`, this.model)
-        this.closeModal('#redisterDishes')
+        this.closeModal('#registerDishes')
         await this.listdishes()
         this.notify(1, 'Success', 'Categoria de plato actualizada exitosamente', 'success')
       } else {

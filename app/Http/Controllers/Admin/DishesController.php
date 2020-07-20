@@ -28,9 +28,6 @@ class DishesController extends Controller
 			$creando_plato->price = $request->price;
 			$creando_plato->id_dishes_category = $request->mid_dishes_categoria;
 
-			/*posiblemente tenga que romper con la relacion id_menu en la tabla platos*/
-			$creando_plato->id_menu = $request->id_menu;
-
 			if($request->show == true){
 				if($request->photo != null){
 					$img = $this->getB64Image($request->photo);
