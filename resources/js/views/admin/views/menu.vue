@@ -19,24 +19,25 @@
       @mostrar="loading"
     />
 
-    <div  v-for="(varcategory, key) in category"
-      v-show="!hidden" class="accordion" id="accordionExample">
-      <div class="card">
-        <div class="card-header" id="headingOne">
-          <h2 class="mb-0">
-            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" :data-target="`#${varcategory.dataTarget}`" :aria-expanded="`${varcategory.ariaExpanded}`" :aria-controls="`${varcategory.dataTarget}`">
-              {{varcategory.name}}
-            </button>
-          </h2>
-        </div>
-
-        <div :id="`${varcategory.dataTarget}`" :class="`collapse #${varcategory.show}`" aria-labelledby="headingOne" data-parent="#accordionExample">
-          <div class="card-body" v-for="(dishe, key2) in plato"
-              :key="key2">
-              {{dishe.name}} ... {{dishe.price}}
+    <div class="container">
+      <!-- <el-collapse 
+        v-for="(cat, key) in category"
+        :key="key"
+        v-model="activeNames" 
+        @change="handleChange" 
+      >
+        <el-collapse-item 
+          :title="`${cat.name}`" 
+          :name="`${cat.id}`"
+        >
+          <div
+            v-for="(plat, key2) in cat.misplatos"
+            :key="key2"
+          >
+            {{ plat.name }} .... {{ plat.price }}
           </div>
-        </div>
-      </div>
+        </el-collapse-item>
+      </el-collapse> -->
     </div>
 
     <!-- Modal -->
@@ -76,22 +77,31 @@
                   <div class="text-center container">
                     <div class="col-sm-12 row justify-content-center">
                       <div class="col-sm-5"> 
-                        <el-select v-model="value1" placeholder="Select" class="form-control-file">
+                        <el-select 
+                          v-model="model.categoria_seleccionada" 
+                          placeholder="Select" 
+                          class="form-control-file"
+                          @change="changeCategory"
+                        >
                           <el-option
-                            v-for="item in options"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value"
+                            v-for="(cat, key1) in category"
+                            :key="key1"
+                            :label="cat.name"
+                            :value="cat.id"
                           />
                         </el-select>                     
                       </div>
                       <div class="col-sm-5">
-                        <el-select v-model="value1" placeholder="Select" class="form-control-file">
+                        <el-select 
+                          v-model="model.plato_seleccionado" 
+                          placeholder="Select" 
+                          class="form-control-file"
+                        >
                           <el-option
-                            v-for="item in options"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value"
+                            v-for="(dishe, key2) in dishes"
+                            :key="key2"
+                            :label="dishe.name+' '+'('+dishe.size+' '+'$'+dishe.price+')'"
+                            :value="dishe.id"
                           />
                         </el-select>                      
                       </div>
@@ -99,9 +109,9 @@
                         <button 
                           type="button" 
                           class="btn btn-success btnadd ml-3 mt-1" 
-                          data-toggle="modal" 
                           data-target=".bd-example-modal-xl" 
                           circle
+                          @click="addMenu"
                         >
                           <i class="fa fa-plus" />
                         </button>                    
@@ -112,210 +122,26 @@
               </div>
             </div>
             <div class="modal-body">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">
-                      #
-                    </th>
-                    <th scope="col">
-                      First
-                    </th>
-                    <th scope="col">
-                      Last
-                    </th>
-                    <th scope="col">
-                      Handle
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">
-                      1
-                    </th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      2
-                    </th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      3
-                    </th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      3
-                    </th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      3
-                    </th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      3
-                    </th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      3
-                    </th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      3
-                    </th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      3
-                    </th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      3
-                    </th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      3
-                    </th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      3
-                    </th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      3
-                    </th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      3
-                    </th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      3
-                    </th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      3
-                    </th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      3
-                    </th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      3
-                    </th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      3
-                    </th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      3
-                    </th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      3
-                    </th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      3
-                    </th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      3
-                    </th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                  </tr>
-                </tbody>
-              </table>
+              <div class="container">
+                <el-collapse 
+                  v-for="(men, key) in menu"
+                  :key="key"
+                  v-model="activeNames" 
+                  @change="handleChange" 
+                >
+                  <el-collapse-item 
+                    :title="`${men.name}`" 
+                    :name="`${men.id}`"
+                  >
+                    <!-- <div
+                      v-for="(plat, key2) in men.misplatos"
+                      :key="key2"
+                    >
+                      {{ plat.name }} .... {{ plat.price }}
+                    </div> -->
+                  </el-collapse-item>
+                </el-collapse>
+              </div>
             </div>
             <div class="modal-footer">
               <button 
@@ -351,105 +177,46 @@ export default {
   data() {
     return {
       hidden: true, 
+      route: window.location.origin+'/api/menu/',
+      activeNames: ['1'], 
       model: {
-        cantidad: ''
+        categoria_seleccionada: '',
+        plato_seleccionado: ''
       },
       value1: '',
-      options: [{
-          value: 'Option1',
-          label: 'Option1'
-        }, {
-          value: 'Option2',
-          label: 'Option2'
-        }, {
-          value: 'Option3',
-          label: 'Option3'
-        }, {
-          value: 'Option4',
-          label: 'Option4'
-        }, {
-          value: 'Option5',
-          label: 'Option5'
-        }],
-      category: [
-        {
-          name: 'Principio',
-          dataTarget: 'collapseOne',
-          show: 'show',
-          ariaExpanded: 'true',
-          value: 1
-        },
-        {
-          name: 'Sopas',
-          dataTarget: 'collapseTwot',
-          show: 'show',
-          ariaExpanded: 'false',
-          value: 2
-        },
-        {
-          name: 'Jugo',
-          dataTarget: 'collapseThree',
-          show: 'show',
-          ariaExpanded: 'false',
-          value: 3
-        },
-        {
-          name: 'ensaladas',
-          dataTarget: 'collapseFour',
-          show: 'show',
-          ariaExpanded: 'false',
-          value: 4
-        },      
-      ],
-      plato: [
-        {
-          name: 'bbbb',
-          size: '',
-          price: '2500',
-          id_dishes_category: 1
-        },
-        {
-          name: 'vvvvvv',
-          size: '',
-          price: '2500',
-          id_dishes_category: 2
-        },
-        {
-          name: 'assa',
-          size: '',
-          price: '2500',
-          id_dishes_category: 3
-        },        
-        {
-          name: 'bbbb',
-          size: '',
-          price: '2500',
-          id_dishes_category: 1
-        },
-        {
-          name: 'vvvvvv',
-          size: '',
-          price: '2500',
-          id_dishes_category: 2
-        },
-        {
-          name: 'assa',
-          size: '',
-          price: '2500',
-          id_dishes_category: 3
-        }
-      ],
+      category: [],
+      dishes: [],
       menu: [],     
     };
   },
   mounted() {
+    this.listdishes()
   },
   methods: {
     loading(algo){
       this.hidden = algo
     },
+    handleChange(val) {
+      console.log(val);
+    },
     abrirModal(){
       this.openModal('#registerMenu')  
+    },
+    // ´posiblemente me toque usar un vuex para agilidad y no hacer tantas consultas
+    listdishes(){
+      axios.get(`${this.route}dishes-list`).then(res => {
+        this.category = res.data
+      })
+    },
+    changeCategory(){
+      this.dishes = []
+      this.model.plato_seleccionado = ''
+      if(this.model.categoria_seleccionada != ''){
+        this.dishes = this.category.find(o => o.id === this.model.categoria_seleccionada).misplatos 
+      } 
+    },
+    addMenu(){
+      this.menu.push(this.dishes.find(o => o.id === this.model.plato_seleccionado))
     }
   }
 };
