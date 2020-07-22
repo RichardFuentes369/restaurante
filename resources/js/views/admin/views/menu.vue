@@ -76,7 +76,7 @@
                 <div class="row mt-3">
                   <div class="text-center container">
                     <div class="col-sm-12 row justify-content-center">
-                      <div class="col-sm-5"> 
+                      <div class="col-sm-10"> 
                         <el-select 
                           v-model="model.categoria_seleccionada" 
                           placeholder="Select" 
@@ -90,20 +90,6 @@
                             :value="cat.id"
                           />
                         </el-select>                     
-                      </div>
-                      <div class="col-sm-5">
-                        <el-select 
-                          v-model="model.plato_seleccionado" 
-                          placeholder="Select" 
-                          class="form-control-file"
-                        >
-                          <el-option
-                            v-for="(dishe, key2) in dishes"
-                            :key="key2"
-                            :label="dishe.name+' '+'('+dishe.size+' '+'$'+dishe.price+')'"
-                            :value="dishe.id"
-                          />
-                        </el-select>                      
                       </div>
                       <div class="col-sm-2 justify-content-center">
                         <button 
@@ -133,12 +119,55 @@
                     :title="`${men.name}`" 
                     :name="`${men.id}`"
                   >
-                    <!-- <div
-                      v-for="(plat, key2) in men.misplatos"
-                      :key="key2"
-                    >
-                      {{ plat.name }} .... {{ plat.price }}
-                    </div> -->
+                    <template slot="title">
+                      {{ men.name }}
+                      <!--aca en el popover debo buscarme un metodo para mostrar los platoss seleccionados-->
+                      <el-popover
+                        placement="left"
+                        title="Agregar plato"
+                        width="500"
+                        trigger="click"
+                        content="this is content, this is content, this is content"
+                        v-model="visible"
+                      >
+                        <el-select 
+                          v-model="model.plato_seleccionado" 
+                          placeholder="Select" 
+                          class="form-control-file"
+                          @change="changeCategory"
+                        >
+                          <el-option
+                            v-for="(plato, key2) in menu.misplatos"
+                            :key="key2"
+                            :label="plato.name"
+                            :value="plato.id"
+                          />
+                        </el-select>   
+                        <div style="text-align: right; margin: 0">
+                          <el-button 
+                            size="mini" 
+                            type="text"
+                            @click="visible = false"
+                          >
+                            cancel
+                          </el-button>
+                          <el-button 
+                            type="primary" 
+                            size="mini" 
+                            @click="addDishe"
+                          >
+                            confirm
+                          </el-button>
+                        </div>
+                        <el-button 
+                          slot="reference" 
+                          size="mini"
+                          icon="el-icon-circle-plus" 
+                          circle 
+                          class="ml-2"
+                        />
+                      </el-popover>
+                    </template>
                   </el-collapse-item>
                 </el-collapse>
               </div>
@@ -178,6 +207,7 @@ export default {
     return {
       hidden: true, 
       route: window.location.origin+'/api/menu/',
+      visible: false,
       activeNames: ['1'], 
       model: {
         categoria_seleccionada: '',
@@ -216,7 +246,11 @@ export default {
       } 
     },
     addMenu(){
-      this.menu.push(this.dishes.find(o => o.id === this.model.plato_seleccionado))
+      this.menu.push(this.category.find(o => o.id === this.model.categoria_seleccionada))
+    },
+    addDishe(){
+      console.log('añadiendo diche')
+      this.visible = false
     }
   }
 };
