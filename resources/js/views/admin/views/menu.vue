@@ -20,7 +20,7 @@
     />
 
     <div class="container">
-      <!-- <el-collapse 
+      <el-collapse 
         v-for="(cat, key) in category"
         :key="key"
         v-model="activeNames" 
@@ -37,7 +37,7 @@
             {{ plat.name }} .... {{ plat.price }}
           </div>
         </el-collapse-item>
-      </el-collapse> -->
+      </el-collapse>
     </div>
 
     <!-- Modal -->
@@ -121,8 +121,9 @@
                   >
                     <template slot="title">
                       {{ men.name }} 
+                      {{ men.popover }}
                       <el-popover
-                        v-model="visible"
+                        v-model="men.popover"
                         placement="left"
                         :title="`Agregar plato para ${men.name}`"
                         width="500"
@@ -142,18 +143,18 @@
                             :value="plato.id"
                           />
                         </el-select>   
-                        <div style="text-align: right; margin: 0">
+                        <div class="mt-2" style="text-align: right; margin: 0">
                           <el-button 
                             size="mini" 
                             type="text"
-                            @click="visible = false"
+                            @click="addDishe(0, men)"
                           >
                             cancel
                           </el-button>
                           <el-button 
                             type="primary" 
                             size="mini" 
-                            @click="addDishe"
+                            @click="addDishe(1, men)"
                           >
                             confirm
                           </el-button>
@@ -206,7 +207,6 @@ export default {
     return {
       hidden: true, 
       route: window.location.origin+'/api/menu/',
-      visible: false,
       activeNames: ['1'], 
       model: {
         categoria_seleccionada: '',
@@ -248,9 +248,16 @@ export default {
         return obj['popover'] = false
       })
     },
-    addDishe(){
-      console.log('añadiendo platos')
-      this.visible = false
+    addDishe(opcion, men){
+      if(opcion = 1){
+        console.log(model.plato_seleccionado)
+        let popovermenu = this.menu.find(obj => obj.id === men.id)
+        popovermenu.popover = false
+      }else{
+        console.log(model.plato_seleccionado)
+        let popovermenu = this.menu.find(obj => obj.id === men.id)
+        popovermenu.popover = false
+      }
     }
   }
 };
