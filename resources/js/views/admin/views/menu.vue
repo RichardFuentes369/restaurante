@@ -120,15 +120,14 @@
                     :name="`${men.id}`"
                   >
                     <template slot="title">
-                      {{ men.name }}
-                      <!--aca en el popover debo buscarme un metodo para mostrar los platoss seleccionados-->
+                      {{ men.name }} 
                       <el-popover
+                        v-model="visible"
                         placement="left"
-                        title="Agregar plato"
+                        :title="`Agregar plato para ${men.name}`"
                         width="500"
                         trigger="click"
                         content="this is content, this is content, this is content"
-                        v-model="visible"
                       >
                         <el-select 
                           v-model="model.plato_seleccionado" 
@@ -137,7 +136,7 @@
                           @change="changeCategory"
                         >
                           <el-option
-                            v-for="(plato, key2) in menu.misplatos"
+                            v-for="(plato, key2) in men.misplatos"
                             :key="key2"
                             :label="plato.name"
                             :value="plato.id"
@@ -215,7 +214,6 @@ export default {
       },
       value1: '',
       category: [],
-      dishes: [],
       menu: [],     
     };
   },
@@ -232,24 +230,26 @@ export default {
     abrirModal(){
       this.openModal('#registerMenu')  
     },
-    // ´posiblemente me toque usar un vuex para agilidad y no hacer tantas consultas
     listdishes(){
       axios.get(`${this.route}dishes-list`).then(res => {
         this.category = res.data
       })
     },
     changeCategory(){
-      this.dishes = []
-      this.model.plato_seleccionado = ''
-      if(this.model.categoria_seleccionada != ''){
-        this.dishes = this.category.find(o => o.id === this.model.categoria_seleccionada).misplatos 
-      } 
+      // this.dishes = []
+      // this.model.plato_seleccionado = ''
+      // if(this.model.categoria_seleccionada != ''){
+      //   this.dishes = this.category.find(o => o.id === this.model.categoria_seleccionada).misplatos 
+      // } 
     },
     addMenu(){
       this.menu.push(this.category.find(o => o.id === this.model.categoria_seleccionada))
+      this.menu.map(function(obj){
+        return obj['popover'] = false
+      })
     },
     addDishe(){
-      console.log('añadiendo diche')
+      console.log('añadiendo platos')
       this.visible = false
     }
   }
