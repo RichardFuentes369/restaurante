@@ -23,8 +23,7 @@
       <el-collapse 
         v-for="(cat, key) in category"
         :key="key"
-        v-model="activeNames" 
-        @change="handleChange" 
+        v-model="collapse" 
       >
         <el-collapse-item 
           :title="`${cat.name}`" 
@@ -112,23 +111,23 @@
                 <el-collapse 
                   v-for="(men, key) in menu"
                   :key="key"
-                  v-model="activeNames" 
-                  @change="handleChange" 
+                  v-model="collapse" 
                 >
                   <el-collapse-item 
                     :title="`${men.name}`" 
                     :name="`${men.id}`"
                   >
                     <template slot="title">
-                      {{ men.name }} 
-                      {{ men.popover }}
+                      {{ men.name }}
+                      <!--aca es donde debo controlar el open close del popovber--> 
                       <el-popover
-                        v-model="men.popover"
-                        placement="left"
+                        placement="right"
                         :title="`Agregar plato para ${men.name}`"
                         width="500"
-                        trigger="click"
+                        trigger="manual"
+                        v-model="men.popover"
                         content="this is content, this is content, this is content"
+                        @show="cleanList"
                       >
                         <el-select 
                           v-model="model.plato_seleccionado" 
@@ -142,32 +141,39 @@
                             :label="plato.name"
                             :value="plato.id"
                           />
-                        </el-select>   
-                        <div class="mt-2" style="text-align: right; margin: 0">
-                          <el-button 
-                            size="mini" 
-                            type="text"
-                            @click="addDishe(0, men)"
-                          >
-                            cancel
-                          </el-button>
-                          <el-button 
-                            type="primary" 
-                            size="mini" 
-                            @click="addDishe(1, men)"
-                          >
-                            confirm
-                          </el-button>
-                        </div>
+                        </el-select>  
+                        <el-button 
+                          type="secondary" 
+                          size="mini" 
+                          class="mt-2"
+                          @click="addDishe(0, men)"
+                        >
+                          cancel
+                        </el-button>
+                        <el-button 
+                          type="primary" 
+                          size="mini" 
+                          class="mt-2"
+                          @click="addDishe(1, men)"
+                        >
+                          confirm
+                        </el-button>
                         <el-button 
                           slot="reference" 
                           size="mini"
                           icon="el-icon-circle-plus" 
                           circle 
                           class="ml-2"
+                          @click="men.popover = !men.popover"
                         />
                       </el-popover>
                     </template>
+                    <ul 
+                      v-for="(x, key2) in x"
+                      :key="key2"
+                    >
+                      <li style="list-style:none">{{x.name}} ............................... {{x.price}}</li>
+                    </ul>
                   </el-collapse-item>
                 </el-collapse>
               </div>
@@ -207,14 +213,25 @@ export default {
     return {
       hidden: true, 
       route: window.location.origin+'/api/menu/',
-      activeNames: ['1'], 
+      collapse: [], 
       model: {
         categoria_seleccionada: '',
         plato_seleccionado: ''
       },
       value1: '',
       category: [],
-      menu: [],     
+      menu: [],
+      menuseleccionado: [],
+      x: [
+        {
+          'name': 'subcate1.1',
+          'price': 2500
+        },
+        {
+          'name': 'subcate1.21',
+          'price': 2500
+        }
+      ]     
     };
   },
   mounted() {
@@ -223,9 +240,6 @@ export default {
   methods: {
     loading(algo){
       this.hidden = algo
-    },
-    handleChange(val) {
-      console.log(val);
     },
     abrirModal(){
       this.openModal('#registerMenu')  
@@ -242,6 +256,9 @@ export default {
       //   this.dishes = this.category.find(o => o.id === this.model.categoria_seleccionada).misplatos 
       // } 
     },
+    cleanList(){
+      this.model.plato_seleccionado = ''
+    },
     addMenu(){
       this.menu.push(this.category.find(o => o.id === this.model.categoria_seleccionada))
       this.menu.map(function(obj){
@@ -249,15 +266,12 @@ export default {
       })
     },
     addDishe(opcion, men){
-      if(opcion = 1){
-        console.log(model.plato_seleccionado)
-        let popovermenu = this.menu.find(obj => obj.id === men.id)
-        popovermenu.popover = false
-      }else{
-        console.log(model.plato_seleccionado)
-        let popovermenu = this.menu.find(obj => obj.id === men.id)
-        popovermenu.popover = false
+      if(opcion === 1){
+        console.log('accion de pushear a la lista')
       }
+      let statusPopover = this.menu.find(obj => obj.id === men.id)
+      statusPopover.popover = false
+      this.collapse = []
     }
   }
 };
