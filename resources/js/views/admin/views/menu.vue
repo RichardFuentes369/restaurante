@@ -80,7 +80,6 @@
                           v-model="model.categoria_seleccionada" 
                           placeholder="Select" 
                           class="form-control-file"
-                          @change="changeCategory"
                         >
                           <el-option
                             v-for="(cat, key1) in category"
@@ -133,7 +132,6 @@
                           v-model="model.plato_seleccionado" 
                           placeholder="Select" 
                           class="form-control-file"
-                          @change="changeCategory"
                         >
                           <el-option
                             v-for="(plato, key2) in men.misplatos"
@@ -169,10 +167,12 @@
                       </el-popover>
                     </template>
                     <ul 
-                      v-for="(x, key2) in x"
+                      v-for="(platoseleccionado, key2) in men.disheSeleccionado"
                       :key="key2"
                     >
-                      <li style="list-style:none">{{x.name}} ............................... {{x.price}}</li>
+                      <li style="list-style:none">
+                        {{ platoseleccionado.name }} ............................... {{ platoseleccionado.price }}
+                      </li>
                     </ul>
                   </el-collapse-item>
                 </el-collapse>
@@ -189,6 +189,7 @@
               <button 
                 type="button" 
                 class="btn btn-primary"
+                @click="guardarMenu"
               >
                 Save changes
               </button>
@@ -220,18 +221,7 @@ export default {
       },
       value1: '',
       category: [],
-      menu: [],
-      menuseleccionado: [],
-      x: [
-        {
-          'name': 'subcate1.1',
-          'price': 2500
-        },
-        {
-          'name': 'subcate1.21',
-          'price': 2500
-        }
-      ]     
+      menu: []
     };
   },
   mounted() {
@@ -249,29 +239,47 @@ export default {
         this.category = res.data
       })
     },
-    changeCategory(){
-      // this.dishes = []
-      // this.model.plato_seleccionado = ''
-      // if(this.model.categoria_seleccionada != ''){
-      //   this.dishes = this.category.find(o => o.id === this.model.categoria_seleccionada).misplatos 
-      // } 
-    },
     cleanList(){
       this.model.plato_seleccionado = ''
     },
     addMenu(){
-      this.menu.push(this.category.find(o => o.id === this.model.categoria_seleccionada))
-      this.menu.map(function(obj){
-        return obj['popover'] = false
-      })
+      let existe = this.menu.find(o => o.id === this.model.categoria_seleccionada)
+
+      if(existe != undefined){
+        this.notify(1, 'Warning', 'Esta categoria ya existe en la lista', 'warning')
+      } else {
+
+        this.menu.push(this.category.find(o => o.id === this.model.categoria_seleccionada))
+        this.menu.map(function(obj){
+          return obj['popover'] = false
+        })   
+
+        let agregando = this.menu.find(obj => obj.id === this.model.categoria_seleccionada)
+        Object.assign(agregando, {
+            disheSeleccionado: []
+        });
+      }
     },
     addDishe(opcion, men){
       if(opcion === 1){
-        console.log('accion de pushear a la lista')
+        if(this.model.plato_seleccionado != ''){
+          let plato = men.misplatos.find(o => o.id === this.model.plato_seleccionado)
+          let existe = men.disheSeleccionado.find(obj => obj.id === plato.id)
+          if(existe === undefined){
+            men.disheSeleccionado.push(plato)
+          }else{
+            this.notify(1, 'Warning', 'Este plato ya existe', 'warning')
+          }
+        } else {
+          this.notify(1, 'Warning', 'Debe seleccionar un plato', 'warning')
+        }
       }
       let statusPopover = this.menu.find(obj => obj.id === men.id)
       statusPopover.popover = false
       this.collapse = []
+    },
+    guardarMenu(){
+      console.log(this.menu)
     }
   }
 };
