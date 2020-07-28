@@ -53,7 +53,7 @@ class DishesController extends Controller
 			$actualizar_plato->name = $request->name;
 			$actualizar_plato->size = $request->size;
 			$actualizar_plato->price = $request->price;
-			$actualizar_plato->id_dishes_category = $request->mid_dishes_categoria;
+			$actualizar_plato->id_dishes_category = $request->id_dishes_category;
 			$actualizar_plato->description = $request->description;
 
 			if(isset($request->show)){

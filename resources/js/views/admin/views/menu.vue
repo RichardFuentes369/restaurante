@@ -278,8 +278,10 @@ export default {
       statusPopover.popover = false
       this.collapse = []
     },
-    guardarMenu(){
-      console.log(this.menu)
+    async guardarMenu(){
+      await axios.post(`${this.route}/dishes-register`, {menu: this.menu})
+      this.closeModal('#registerMenu')  
+      this.notify(1, 'Success', 'Menú creado con exito', 'success')
     }
   }
 };
