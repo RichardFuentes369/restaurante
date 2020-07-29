@@ -21,19 +21,19 @@
 
     <div class="container">
       <el-collapse 
-        v-for="(cat, key) in category"
+        v-for="(mend, key) in menubd"
         :key="key"
         v-model="collapse" 
       >
         <el-collapse-item 
-          :title="`${cat.name}`" 
-          :name="`${cat.id}`"
+          :title="`${key}`" 
+          :name="`${key}`"
         >
           <div
-            v-for="(plat, key2) in cat.misplatos"
+            v-for="(plat, key2) in mend"
             :key="key2"
           >
-            {{ plat.name }} .... {{ plat.price }}
+            {{ plat.desplato.name }} .... {{ plat.desplato.price }}
           </div>
         </el-collapse-item>
       </el-collapse>
@@ -221,7 +221,8 @@ export default {
       },
       value1: '',
       category: [],
-      menu: []
+      menu: [],
+      menubd: []
     };
   },
   mounted() {
@@ -236,7 +237,8 @@ export default {
     },
     listdishes(){
       axios.get(`${this.route}dishes-list`).then(res => {
-        this.category = res.data
+        this.category = res.data.lista_platos
+        this.menubd = res.data.menu
       })
     },
     cleanList(){
@@ -282,6 +284,7 @@ export default {
       await axios.post(`${this.route}/dishes-register`, {menu: this.menu})
       this.closeModal('#registerMenu')  
       this.notify(1, 'Success', 'Menú creado con exito', 'success')
+      this.listdishes()
     }
   }
 };

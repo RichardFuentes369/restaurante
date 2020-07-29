@@ -15,7 +15,11 @@ class MenuController extends Controller
 {
     public function listaDishes(){
 		$lista_platos = categoria_plato::with('misplatos')->get();
-		return $lista_platos;
+        $lista_menu = menus::with('catplato','desplato')->get();
+        $menu = $lista_menu->groupBy('catplato.name');
+
+
+		return ['lista_platos' => $lista_platos, 'menu' => $menu];
     }
 
     public function registerDishes(Request $request){
@@ -31,16 +35,16 @@ class MenuController extends Controller
                 }
             }
 
-
             for ($p=0; $p < sizeof($array) ; $p++) { 
                 $creando_menu = new menus();
                 $creando_menu->id_dishes = $array[$p]['id'];
+                $creando_menu->id_category = $array[$p]['id_dishes_category'];
                 $creando_menu->save();
             }
 
 
 
-       		return $array;
+       		return 'menu creado con exito';
     	} catch (Exception $e) {
     		return $e;
     	}
