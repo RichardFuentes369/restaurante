@@ -61,7 +61,7 @@
                     id="exampleModalLabel"
                     class="modal-title"
                   >
-                    Añadir Platos
+                    {{ this.model.title }}
                   </h5>
                   <button 
                     type="button" 
@@ -216,13 +216,13 @@ export default {
       route: window.location.origin+'/api/menu/',
       collapse: [], 
       model: {
+        title: '',
         categoria_seleccionada: '',
         plato_seleccionado: ''
       },
-      value1: '',
-      category: [],
-      menu: [],
-      menubd: []
+      category: [], //arreglo que almacena las categorias
+      menu: [], // arreglo que mando de la vista a la bd
+      menubd: []  // arreglo que traigo de la bd 
     };
   },
   mounted() {
@@ -233,6 +233,30 @@ export default {
       this.hidden = algo
     },
     abrirModal(){
+      if(this.menubd.length === 0){
+        this.model = {
+          title: 'Crear menú',
+          categoria_seleccionada: '',
+          plato_seleccionado: ''
+        }
+        this.menu = []
+      }else{
+        this.menu = []
+        this.model = {
+          title: 'Editar menú',
+          categoria_seleccionada: '',
+          plato_seleccionado: ''
+        }
+
+        let newArray = JSON.parse(JSON.stringify(this.menubd))
+
+        for(let obj in newArray){
+          this.menu.push({name: obj, misplatos: this.category.find(o => o.name === obj).misplatos})
+          //para que funcione el editar debo arreglar el disheSeleccionado
+          // this.menu.push({name: obj, misplatos: this.category.find(newArray.id_category).misplatos, disheSeleccionado: ''})
+        }
+
+      }
       this.openModal('#registerMenu')  
     },
     listdishes(){
