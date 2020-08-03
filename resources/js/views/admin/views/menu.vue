@@ -251,9 +251,9 @@ export default {
         let newArray = JSON.parse(JSON.stringify(this.menubd))
 
         for(let obj in newArray){
-          this.menu.push({name: obj, misplatos: this.category.find(o => o.name === obj).misplatos})
-          //para que funcione el editar debo arreglar el disheSeleccionado
-          // this.menu.push({name: obj, misplatos: this.category.find(newArray.id_category).misplatos, disheSeleccionado: ''})
+          this.menu.push({name: obj, popover: false, misplatos: this.category.find(o => o.name === obj).misplatos, 
+            disheSeleccionado: this.menubd[obj]
+          })
         }
 
       }
