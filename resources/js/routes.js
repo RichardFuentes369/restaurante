@@ -53,12 +53,18 @@ export default new VueRouter({
 	{
 		path: '/',
 		name: 'bienvenidos',
-		component: Bienvenidos,
+		component: Bienvenidos,		
+		meta: {
+			requiresAuth: false,
+		}
 	},
 	{
 		path: '/noticias',
 		name: 'noticias',
-		component: Noticias
+		component: Noticias,		
+		meta: {
+			requiresAuth: false,
+		}
 	},
 	{
 		path: '/login',

@@ -14,7 +14,10 @@
         <i class="fa fa-plus" />
       </button>
     </div>
-    <loading @mostrar="loading" :time="200" />
+    <loading 
+      @mostrar="loading" 
+      :time="200"
+    />
     <div 
       v-show="!hidden"
       class="justify-content-center table-responsive"
@@ -25,7 +28,7 @@
             <th scope="col">
               #
             </th>
-            <th scope="col">
+            <th scope="col"> 
               First
             </th>
             <th scope="col">
@@ -75,7 +78,6 @@
         </tbody>
       </table>
     </div>
-    
     <!-- Modal -->
     <div 
       class="modal fade bd-example-modal-xl" 
@@ -92,8 +94,8 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 
-                class="modal-title" 
                 id="exampleModalLabel"
+                class="modal-title" 
               >
                 Añadir Promoción
               </h5>
@@ -106,7 +108,6 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <!-- <div class="modal-body contenido" :style="`height: ${this.alto}px; width: 100%; overflow-y: auto; overflow-x: hidden;`"> -->
             <div class="modal-body">
               <div class="col-sm-12">
                 <div class="row">
@@ -129,7 +130,7 @@
                     placeholder="Please input"
                     resize="none"
                     maxlength="50" 
-                  />
+                  >
                     <template slot="prepend">
                       Descripcion
                     </template>
