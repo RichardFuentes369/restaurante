@@ -15,7 +15,11 @@
     </div>
     <loading 
       @mostrar="loading" 
+<<<<<<< HEAD
       :time="200" 
+=======
+      :time="200"
+>>>>>>> javier
     />
     <div 
       v-show="!hidden"
@@ -29,11 +33,25 @@
             <th scope="col">
               #
             </th>
+<<<<<<< HEAD
             <th 
               scope="col" 
               class="text-center"
             >
               Nombre
+=======
+            <th scope="col"> 
+              First
+            </th>
+            <th scope="col">
+              Last
+            </th>
+            <th scope="col">
+              Handle
+            </th>         
+            <th scope="col">
+              First
+>>>>>>> javier
             </th>
             <th 
               scope="col" 
@@ -120,7 +138,10 @@
         </tbody>
       </table>
     </div>
+<<<<<<< HEAD
 
+=======
+>>>>>>> javier
     <!-- Modal -->
     <div 
       id="registerDiscount" 

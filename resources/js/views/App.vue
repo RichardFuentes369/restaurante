@@ -11,7 +11,8 @@
         Restaurante
       </span>
       <ul>
-        <li v-if="usuario_logeado == ''">
+        <!-- <li v-if="usuario_logeado == ''"> -->
+        <li v-if="$route.meta.requiresAuth == false">
           <router-link 
             :to="{ name: 'bienvenidos'}" 
             class="nav-link"
@@ -27,7 +28,7 @@
             Rol
           </router-link>
         </li>
-        <li>
+        <li v-if="$route.meta.requiresAuth == false">
           <router-link 
             :to="{ name: 'noticias'}" 
             class="nav-link"
