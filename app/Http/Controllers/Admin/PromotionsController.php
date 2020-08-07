@@ -13,9 +13,14 @@ class PromotionsController extends Controller
 		$lista_descuentos = descuentos::get();
 		return $lista_descuentos;
 	}
-	public function registerDiscount(){
+	public function registerDiscount(Request $request){
 		try {
-			return 'registro';
+			$crear_descuento = new descuentos();
+			$crear_descuento->description = $request->description;
+			$crear_descuento->name = $request->name;
+			$crear_descuento->porcentage = $request->porcentaje;
+			$crear_descuento->save();
+			return 'Descuento creado exitosamente';
 		} catch (Exception $e) {
 			return $e;
 		}

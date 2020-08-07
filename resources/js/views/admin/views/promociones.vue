@@ -7,51 +7,52 @@
       <button
         type="button" 
         class="btn btn-success btnadd ml-3 mt-1" 
-        data-toggle="modal" 
-        data-target=".bd-example-modal-xl" 
-        circle
+        title="Crear" 
+        @click="abrirModal" 
       >
         <i class="fa fa-plus" />
       </button>
     </div>
-    <loading @mostrar="loading" :time="200" />
+    <loading 
+      @mostrar="loading" 
+      :time="200" 
+    />
     <div 
       v-show="!hidden"
       class="justify-content-center table-responsive"
     >
-      <table class="table table-striped">
+      <table 
+        class="table table-striped"
+      >
         <thead>
           <tr>
             <th scope="col">
               #
             </th>
-            <th scope="col">
-              First
+            <th 
+              scope="col" 
+              class="text-center"
+            >
+              Nombre
             </th>
-            <th scope="col">
-              Last
+            <th 
+              scope="col" 
+              class="text-center"
+            >
+              Descripción
             </th>
-            <th scope="col">
-              Handle
-            </th>         
-            <th scope="col">
-              First
-            </th>
-            <th scope="col">
-              Last
-            </th>
-            <th scope="col">
-              Handle
+            <th 
+              scope="col" 
+              class="text-center"
+            >
+              Porcentaje (%)
+            </th>     
+            <th 
+              scope="col" 
+              class="text-center"
+            >
+              Eliminar
             </th>       
-            <th scope="col">
-              First
-            </th>
-            <th scope="col">
-              Last
-            </th>
-            <th scope="col">
-              Handle
-            </th>
           </tr>
         </thead>
         <tbody>
@@ -60,24 +61,69 @@
             :key="key"
           >
             <th scope="row">
-              1
+              {{ key + 1 }}
             </th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
+            <td>
+              <el-tooltip 
+                class="item" 
+                effect="dark" 
+                content="Click para editar" 
+                placement="top"
+              >
+                <el-input 
+                  v-model="promocion.description"
+                />
+              </el-tooltip>
+            </td>
+            <td>
+              <el-tooltip 
+                class="item" 
+                effect="dark" 
+                content="Click para editar" 
+                placement="top"
+              >
+                <el-input   
+                  v-model="promocion.name"
+                />
+              </el-tooltip>
+            </td>
+            <td>
+              <el-tooltip 
+                class="item" 
+                effect="dark" 
+                content="Click para editar" 
+                placement="top"
+              >
+                <el-input 
+                  v-model="promocion.porcentage"
+                  type="number"
+                  min="0"
+                  max="100"
+                >
+                  <template slot="append">
+                    %
+                  </template>
+                </el-input>
+              </el-tooltip>
+            </td>
+            <td class="text-center">
+              <button 
+                type="button" 
+                class="btn btn-danger m-0 btnadd btn-position-accion" 
+                title="Eliminar" 
+                @click="eliminar(promocion)"
+              >
+                <i class="fa fa-trash" />
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
-    
+
     <!-- Modal -->
     <div 
+      id="registerDiscount" 
       class="modal fade bd-example-modal-xl" 
       tabindex="-1" 
       role="dialog" 
@@ -92,10 +138,10 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 
-                class="modal-title" 
                 id="exampleModalLabel"
+                class="modal-title" 
               >
-                Añadir Promoción
+                {{ model.title }}
               </h5>
               <button 
                 type="button" 
@@ -106,7 +152,6 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <!-- <div class="modal-body contenido" :style="`height: ${this.alto}px; width: 100%; overflow-y: auto; overflow-x: hidden;`"> -->
             <div class="modal-body">
               <div class="col-sm-12">
                 <div class="row">
@@ -129,7 +174,7 @@
                     placeholder="Please input"
                     resize="none"
                     maxlength="50" 
-                  />
+                  >
                     <template slot="prepend">
                       Descripcion
                     </template>
@@ -154,8 +199,9 @@
               <button 
                 type="button" 
                 class="btn btn-primary"
+                @click="guardarPromocion"
               >
-                Save changes
+                {{ model.boton }}
               </button>
             </div>
           </div>
@@ -174,6 +220,8 @@ export default {
       route: window.location.origin+'/api/discounts/',
       promociones: [],
       model: {
+        title: '',
+        boton: '',
         name: '',
         description: '',
         porcentaje: 0
@@ -187,10 +235,54 @@ export default {
     loading(algo){
       this.hidden = algo
     },
+    limpiar(){
+      this.model = {
+        title: '',
+        boton: '',
+        name: '',
+        description: '',
+        porcentaje: 0
+      }
+    },
     listarPromociones(){
       axios.get(`${this.route}discounts-list`).then(res=>{
         this.promociones = res.data
       })
+    },
+    abrirModal(){
+      this.limpiar()
+      this.model = {
+        title: 'Crear promoción',
+        boton: 'Guardar',
+        name: '',
+        description: '',
+        porcentaje: 0
+      }
+      this.openModal('#registerDiscount')  
+    },
+    async guardarPromocion(){
+      if(this.model.name != '' && this.model.description != '' && this.model.porcentaje >= 0){
+        await axios.post(`${this.route}discounts-register`, this.model)
+        this.closeModal('#registerDiscount')
+        await this.listarPromociones()
+        this.notify(1,'Success', 'Promoción creada exitosamente', 'success')
+      }else{
+        this.notify(2,'','Algunos campos no pueden ir vacios', '')
+      }
+    },
+    eliminar(promocion){
+      this.$confirm('Esta seguro que desea eliminar esta promoción?', 'Warning', {
+        confirmButtonText: 'Eliminar',
+        cancelButtonText: 'Cancelar',
+        type: 'warning'
+      }).then(async () => {
+        // await axios.delete(`${this.route}${dishe.id}/dishes-delete`)
+        // this.id_dishes_categoria = ''
+        this.notify(2, '', 'Se elimino la categoria con exito', '')
+        await this.listarPromociones()
+      }).catch(() => {
+        this.message(1, 'Eliminación cancelada', 'info')         
+      });
     }
   }
 };
