@@ -14,12 +14,8 @@
       </button>
     </div>
     <loading 
-      @mostrar="loading" 
-<<<<<<< HEAD
       :time="200" 
-=======
-      :time="200"
->>>>>>> javier
+      @mostrar="loading" 
     />
     <div 
       v-show="!hidden"
@@ -33,25 +29,11 @@
             <th scope="col">
               #
             </th>
-<<<<<<< HEAD
             <th 
               scope="col" 
               class="text-center"
             >
               Nombre
-=======
-            <th scope="col"> 
-              First
-            </th>
-            <th scope="col">
-              Last
-            </th>
-            <th scope="col">
-              Handle
-            </th>         
-            <th scope="col">
-              First
->>>>>>> javier
             </th>
             <th 
               scope="col" 
@@ -90,6 +72,7 @@
               >
                 <el-input 
                   v-model="promocion.description"
+                  @change="actualizar(promocion)"
                 />
               </el-tooltip>
             </td>
@@ -102,6 +85,7 @@
               >
                 <el-input   
                   v-model="promocion.name"
+                  @change="actualizar(promocion)"
                 />
               </el-tooltip>
             </td>
@@ -117,6 +101,7 @@
                   type="number"
                   min="0"
                   max="100"
+                  @change="actualizar(promocion)"
                 >
                   <template slot="append">
                     %
@@ -138,10 +123,6 @@
         </tbody>
       </table>
     </div>
-<<<<<<< HEAD
-
-=======
->>>>>>> javier
     <!-- Modal -->
     <div 
       id="registerDiscount" 
@@ -291,14 +272,23 @@ export default {
         this.notify(2,'','Algunos campos no pueden ir vacios', '')
       }
     },
+    async actualizar(promocion){
+      if(promocion.name != '' && promocion.description != '' && promocion.porcentage >= 0 && promocion.porcentage <= 100){
+        this.notify(1,'Success', 'Promoción actualizada exitosamente', 'success')
+        await axios.put(`${this.route}discounts-update`, promocion)
+        this.listarPromociones()
+      }else{
+        this.notify(2, '', 'Algunos campos no pueden ir vacios', '')
+        this.listarPromociones()
+      }
+    },
     eliminar(promocion){
       this.$confirm('Esta seguro que desea eliminar esta promoción?', 'Warning', {
         confirmButtonText: 'Eliminar',
         cancelButtonText: 'Cancelar',
         type: 'warning'
       }).then(async () => {
-        // await axios.delete(`${this.route}${dishe.id}/dishes-delete`)
-        // this.id_dishes_categoria = ''
+        await axios.delete(`${this.route}${promocion.id}/discounts-delete`)
         this.notify(2, '', 'Se elimino la categoria con exito', '')
         await this.listarPromociones()
       }).catch(() => {

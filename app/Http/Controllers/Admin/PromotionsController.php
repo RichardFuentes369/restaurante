@@ -25,16 +25,27 @@ class PromotionsController extends Controller
 			return $e;
 		}
 	}
-	public function updateDiscount(){
+	public function updateDiscount(Request $request){
 		try {
+			$actualizar_descuento = descuentos::find($request->id);
+			$actualizar_descuento->name = $request->name;
+			$actualizar_descuento->description = $request->description;
+			if($request->porcentage != ''){
+				$actualizar_descuento->porcentage = $request->porcentage;
+			}else{
+				$actualizar_descuento->porcentage = "0";
+			}
+			$actualizar_descuento->save();
 			return 'actualizacion';
 		} catch (Exception $e) {
 			return $e;
 		}
 	}
-	public function deleteDiscount(){
+	public function deleteDiscount($id_discount){
 		try {
-			return 'eliminacion';
+			$eliminar_descuento = descuentos::find($id_discount);
+			$eliminar_descuento->delete();
+			return 'Descuento eliminado exitosamente';
 		} catch (Exception $e) {
 			return $e;
 		}

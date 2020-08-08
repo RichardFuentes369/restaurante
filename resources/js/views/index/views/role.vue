@@ -63,6 +63,12 @@
       <div class="col-sm-12 row mt-3 justify-content-center">
         <h3>Seleccióna el rol con el que deseas ingresar</h3>
       </div>
+
+      <loading 
+        :time="200" 
+        @mostrar="loading" 
+      />
+
       <div class="text-center">
         <div class="col-sm-12 row mt-2">
           <div class="col-sm-2 mt-2"> 
@@ -116,6 +122,7 @@ export default {
   mixins: [userMixins],
   data() {
     return {
+      hidden: true,
       usuario_logeado: '',
       boton: false,
       roles: [],
@@ -131,6 +138,9 @@ export default {
     await this.getUser()
   },
   methods: {
+    loading(algo){
+      this.hidden = algo
+    },
     option() {
       this.roles = []
       this.boton = true
