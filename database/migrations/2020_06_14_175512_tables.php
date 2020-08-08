@@ -15,8 +15,8 @@ class Tables extends Migration
     {
         Schema::create('tables', function (Blueprint $table) {
             $table->id();
-            $table->string('nro_table');
-            $table->string('nro_chair');
+            $table->integer('nro_table'); // va a ser autoincrementable dependiendo del fronted
+            $table->integer('nro_chair')->nullable();
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();
             $table->string('deleted_by')->nullable();
