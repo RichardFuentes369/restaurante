@@ -7,5 +7,5 @@ Route::group(['prefix'=>'tables'], function(){
 	Route::get("tables-list", "$controller@listaTables");
 	Route::post("table-register", "$controller@registerTable");	
 	Route::put("table-update", "$controller@updateTable");	
-	Route::delete("{id_table}/table-delete", "$controller@deleteTables");	
+	Route::delete("{id_mesa}/table-delete", "$controller@deleteTable");	
 });

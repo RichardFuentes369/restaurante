@@ -14,9 +14,13 @@ class TablesController extends Controller
 		return $lista_mesas;
 	}
 
-	public function registerTable(){
+	public function registerTable(Request $request){
 		try {
-			return 'registrando';
+			$nuevo_registro = new mesas();
+			$nuevo_registro->nro_table = $request->nro_mesa;
+			$nuevo_registro->nro_chair = $request->nro_silla;
+			$nuevo_registro->save();
+			return 'mesa registrada cone exito';
 		} catch (Exception $e) {
 			return $e;
 		}
@@ -30,9 +34,11 @@ class TablesController extends Controller
 		}
 	}
 
-	public function deleteTable(){
+	public function deleteTable($id_mesa){
 		try {
-			return 'registrando';
+			$eliminar_mesa = mesas::find($id_mesa);
+			$eliminar_mesa->delete();
+			return 'mesa elimnada';
 		} catch (Exception $e) {
 			return $e;
 		}

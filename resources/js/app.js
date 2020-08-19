@@ -6,6 +6,7 @@ import router from './routes'
 import validate from './vee-validate'
 import rules from './rules-vee-validate'
 import element from './element'
+import vuechart from './vue-chart'
 import component from './registercomponent'
 import store from './store'
 

@@ -7,9 +7,8 @@
       <button 
         type="button" 
         class="btn btn-success btnadd ml-3 mt-1" 
-        data-toggle="modal" 
-        data-target=".bd-example-modal-xl" 
-        circle
+        title="Crear" 
+        @click="abrirModal"
       >
         <i class="fa fa-plus" />
       </button>
@@ -22,14 +21,29 @@
       <table class="table table-striped">
         <thead>
           <tr>
-            <th scope="col">
+            <th 
+              scope="col" 
+              class="text-center"
+            >
               #
             </th>
-            <th scope="col">
+            <th 
+              scope="col" 
+              class="text-center"
+            >
               Nro_mesa
             </th>
-            <th scope="col">
+            <th 
+              scope="col" 
+              class="text-center"
+            >
               Nro_sillas
+            </th>
+            <th 
+              scope="col" 
+              class="text-center"
+            >
+              Eliminar
             </th>
           </tr>
         </thead>
@@ -38,11 +52,34 @@
             v-for="(mesa, key) in mesas"
             :key="key"
           >
-            <th scope="row">
+            <th 
+              scope="row" 
+              class="text-center"
+            >
               {{ key+1 }}
             </th>
-            <td>{{ mesa.nro_table }}</td>
-            <td>{{ mesa.nro_chair }}</td>
+            <td class="text-center">
+              {{ mesa.nro_table }}
+            </td>
+            <td class="text-center">
+              <el-tooltip 
+                class="item" 
+                effect="dark" 
+                content="Click para editar" 
+                placement="top"
+              >
+                <input 
+                  class="text-center form-control form-control-plaintext alert-link"
+                  :value="`${mesa.nro_chair}`"
+                  @change="actualizarMesa(mesa)"
+                />
+              </el-tooltip>
+            </td>
+            <td class="text-center">
+              <button class="btn btnadd btn-danger m-0" @click="eliminarMesa(mesa)">
+                <i class="fa fa-trash" />
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -50,6 +87,7 @@
     
     <!-- Modal -->
     <div 
+      id="resgisterTable" 
       class="modal fade bd-example-modal-xl" 
       tabindex="-1" 
       role="dialog" 
@@ -113,6 +151,7 @@
               <button 
                 type="button" 
                 class="btn btn-primary"
+                @click="guardarMesa"
               >
                 Save changes
               </button>
@@ -145,6 +184,13 @@
       loading(algo){
         this.hidden = algo
       },
+      limpiar(){
+        this.model.nro_silla = ''
+      },
+      abrirModal(){
+        this.limpiar()
+        this.openModal('#resgisterTable')  
+      },
       async listTables(){
         await axios.get(`${this.route}tables-list`).then(res => {
           this.mesas = res.data
@@ -154,6 +200,30 @@
         } else {
           this.model.nro_mesa = 1
         }
+      },
+      async guardarMesa(){
+        await axios.post(`${this.route}table-register`, this.model)
+        this.closeModal('#resgisterTable')  
+        this.notify(1, 'Success', 'Mesa creada con exito', 'success')
+        this.listTables()
+      },
+      async actualizarMesa(mesa){
+        await axios.put(`${this.route}`, this.model)
+        this.notify(1, 'Success', 'Mesa actualizada con exito', 'success')
+        this.listTables()
+      },
+      async eliminarMesa(mesa){
+        this.$confirm('Esta seguro que desea eliminar esta mesa?', 'Warning', {
+          confirmButtonText: 'Eliminar',
+          cancelButtonText: 'Cancelar',
+          type: 'warning'
+        }).then(async () => {
+          await axios.delete(`${this.route}${mesa.id}/table-delete`)
+          this.notify(2, '', 'Se elimino la mesa con exito', '')
+          await this.listTables()
+        }).catch(() => {
+          this.message(1, 'Eliminación cancelada', 'info')         
+        });
       }
     }
   };
