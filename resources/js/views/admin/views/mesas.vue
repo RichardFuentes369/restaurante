@@ -208,7 +208,7 @@
         this.listTables()
       },
       async actualizarMesa(mesa){
-        await axios.put(`${this.route}`, this.model)
+        await axios.put(`${this.route}table-update`, this.model)
         this.notify(1, 'Success', 'Mesa actualizada con exito', 'success')
         this.listTables()
       },
