@@ -84,6 +84,7 @@ class RouteServiceProvider extends ServiceProvider
             require base_path('routes/api/admin/menu.php');
             require base_path('routes/api/admin/discounts.php');
             require base_path('routes/api/admin/tables.php');
+            require base_path('routes/api/admin/cajeros.php');
         });    
     }
 }
