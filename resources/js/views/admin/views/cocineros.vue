@@ -109,7 +109,7 @@
               v-show="atm.isAtm == 1"
               class="mx-1"
               size="mini"
-              style="background-color:#04D5FB; color:#FAF5F5"
+              style="background-color:#04D5FB; color:#020202"
             >
               IsAtm
             </el-tag>
@@ -135,7 +135,7 @@
               v-show="atm.isClient == 1"
               class="mx-1"
               size="mini"
-              style="background-color:#FDB900; color:#FAF5F5"
+              style="background-color:#FDB900; color:#020202"
             >
               IsClient
             </el-tag>

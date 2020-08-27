@@ -109,7 +109,7 @@
               v-show="atm.isAtm == 1"
               class="mx-1"
               size="mini"
-              style="background-color:#04D5FB; color:#FAF5F5"
+              style="background-color:#04D5FB; color:#020202"
             >
               IsAtm
             </el-tag>
@@ -135,7 +135,7 @@
               v-show="atm.isClient == 1"
               class="mx-1"
               size="mini"
-              style="background-color:#FDB900; color:#FAF5F5"
+              style="background-color:#FDB900; color:#020202"
             >
               IsClient
             </el-tag>
@@ -479,8 +479,7 @@ export default {
       },      
       rol: [
       {'label': 'isAtm'},
-      {'label': 'isWaiter'},
-      {'label': 'isClient'}
+      {'label': 'isWaiter'}
       ],
       td: [
       {'label': 'Cedula de ciudadania', 'value': 'CC'},
@@ -532,7 +531,6 @@ export default {
       if(atm != 1){
         this.model.isAtm = (atm.isAtm === 1) ? this.checkCargo.push("isAtm") : ''
         this.model.isWaiter = (atm.isWaiter === 1) ? this.checkCargo.push("isWaiter") : ''
-        this.model.isClient = (atm.isClient === 1) ? this.checkCargo.push("isClient") : ''
         this.model = {
           titulo: 'Editando el cajero',
           boton: 'Editar',
@@ -548,7 +546,6 @@ export default {
       } else {
         this.model.isAtm = (atm.isAtm === 1) ? this.checkCargo.push("isAtm") : ''
         this.model.isWaiter = (atm.isWaiter === 1) ? this.checkCargo.push("isWaiter") : ''
-        this.model.isClient = (atm.isClient === 1) ? this.checkCargo.push("isClient") : ''
         this.model = {
           titulo: 'Creando un nuevo cajero',
           boton: 'Crear',
