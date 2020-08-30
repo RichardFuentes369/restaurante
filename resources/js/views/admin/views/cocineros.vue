@@ -540,7 +540,7 @@ export default {
       } else {
         this.model.isChef = (atm.isChef === 1) ? this.checkCargo.push("isChef") : ''
         this.model = {
-          titulo: 'Creando un nuevo cajero',
+          titulo: 'Creando un nuevo cocinero',
           boton: 'Crear',
           // show: false,
           // id: '', 

@@ -144,7 +144,6 @@
       </div>
     </div>
 
-
     <!-- Modal -->
     <div 
       id="registerCajeros" 
@@ -159,284 +158,564 @@
         role="document"
       >
         <div class="modal-content">
-          <div class="modal-content">
-            <ValidationObserver 
-              v-slot="{ invalid }" 
-              ref="registeradmin"
+          <div class="modal-header">
+            <h5 
+              id="exampleModalLabel" 
+              class="modal-title text-dark"
             >
-              <div class="modal-header">
-                <h5 
-                  id="exampleModalLabel" 
-                  class="modal-title text-dark"
+              {{ model.titulo }}
+            </h5>
+            <button 
+              type="button" 
+              class="close" 
+              data-dismiss="modal" 
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="container my-3">
+            <el-tabs type="border-card">
+              <el-tab-pane label="Existente">
+                <el-select class="form-control-file" v-model="value" placeholder="Select">
+                  <el-option
+                    v-for="item in cities"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  >
+                    <span style="float: left">{{ item.label }}</span>
+                    <span style="float: right; color: #8492a6; font-size: 13px">{{ item.value }}</span>
+                  </el-option>
+                </el-select>
+                <ValidationObserver 
+                  v-slot="{ invalid }" 
+                  ref="registeradmin"
                 >
-                  {{ model.titulo }}
-                </h5>
-                <button 
-                  type="button" 
-                  class="close" 
-                  data-dismiss="modal" 
-                  aria-label="Close"
-                >
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <div class="col-sm-12">
-                  <div class="row">
-                    <div class="col-sm-6">
-                      <div class="mt-3">
-                        <el-input 
-                          v-model="model.name" 
-                          placeholder="Please input" 
-                          maxlength="50" 
-                          show-word-limit
-                        >
-                          <template slot="prepend">
-                            Name
-                          </template>
-                        </el-input>
-                      </div>
-                      <div class="mt-3">
-                        <el-input 
-                          v-model="model.lastname"
-                          placeholder="Please input"
-                          maxlength="50" 
-                          show-word-limit
-                        >
-                          <template slot="prepend">
-                            Lastname
-                          </template>
-                        </el-input>
-                      </div>
-                      <div class="mt-3">
-                        Document type
-                        <el-select 
-                          v-model="model.td" 
-                          placeholder="Select"
-                        >
-                          <el-option
-                            v-for="item in td"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value" 
-                          />
-                        </el-select> <br>
-                      </div>
-                      <div class="mt-3">
-                        <el-input
-                          v-model="model.dni" 
-                          placeholder="Please input" 
-                          maxlength="30" 
-                          show-word-limit
-                        >
-                          <template slot="prepend">
-                            DNI
-                          </template>
-                        </el-input>
-                      </div>
-                      <div class="mt-3">
-                        <el-input 
-                          v-model="model.phone"
-                          placeholder="Please input" 
-                          maxlength="30" 
-                          show-word-limit
-                        >
-                          <template slot="prepend">
-                            Phone
-                          </template>
-                        </el-input>
-                      </div>
-                      <div class="mt-3">
-                        <el-input
-                          v-model="model.cellphone"
-                          placeholder="Please input" 
-                          maxlength="30" 
-                          show-word-limit
-                        >
-                          <template slot="prepend">
-                            Cellphone
-                          </template>
-                        </el-input>
-                      </div>
-                    </div>
-                    <div class="col-sm-6">
-                      <div class="mt-3">
-                        Sexo
-                        <el-select 
-                          v-model="model.sexo" 
-                          placeholder="Select"
-                        >
-                          <el-option
-                            v-for="item in sexo"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value"
-                          />
-                        </el-select>
-                      </div>
-                      <div class="mt-3">
-                        <ValidationProvider 
-                          v-slot="{ errors }"
-                          name="Email" 
-                          :rules="{ required: true, email: true }" 
-                        >
-                          <el-input
-                            v-model="model.email" 
-                            placeholder="Please input" 
-                            maxlength="50" 
-                            show-word-limit
+                  <div class="modal-body">
+                    <div class="col-sm-12">
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <div class="mt-3">
+                            <el-input 
+                              v-model="model.name" 
+                              placeholder="Please input" 
+                              maxlength="50" 
+                              show-word-limit
+                            >
+                              <template slot="prepend">
+                                Name
+                              </template>
+                            </el-input>
+                          </div>
+                          <div class="mt-3">
+                            <el-input 
+                              v-model="model.lastname"
+                              placeholder="Please input"
+                              maxlength="50" 
+                              show-word-limit
+                            >
+                              <template slot="prepend">
+                                Lastname
+                              </template>
+                            </el-input>
+                          </div>
+                          <div class="mt-3">
+                            Document type
+                            <el-select 
+                              v-model="model.td" 
+                              placeholder="Select"
+                            >
+                              <el-option
+                                v-for="item in td"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value" 
+                              />
+                            </el-select> <br>
+                          </div>
+                          <div class="mt-3">
+                            <el-input
+                              v-model="model.dni" 
+                              placeholder="Please input" 
+                              maxlength="30" 
+                              show-word-limit
+                            >
+                              <template slot="prepend">
+                                DNI
+                              </template>
+                            </el-input>
+                          </div>
+                          <div class="mt-3">
+                            <el-input 
+                              v-model="model.phone"
+                              placeholder="Please input" 
+                              maxlength="30" 
+                              show-word-limit
+                            >
+                              <template slot="prepend">
+                                Phone
+                              </template>
+                            </el-input>
+                          </div>
+                          <div class="mt-3">
+                            <el-input
+                              v-model="model.cellphone"
+                              placeholder="Please input" 
+                              maxlength="30" 
+                              show-word-limit
+                            >
+                              <template slot="prepend">
+                                Cellphone
+                              </template>
+                            </el-input>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="mt-3">
+                            Sexo
+                            <el-select 
+                              v-model="model.sexo" 
+                              placeholder="Select"
+                            >
+                              <el-option
+                                v-for="item in sexo"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value"
+                              />
+                            </el-select>
+                          </div>
+                          <div class="mt-3">
+                            <ValidationProvider 
+                              v-slot="{ errors }"
+                              name="Email" 
+                              :rules="{ required: true, email: true }" 
+                            >
+                              <el-input
+                                v-model="model.email" 
+                                placeholder="Please input" 
+                                maxlength="50" 
+                                show-word-limit
+                              >
+                                <template slot="prepend">
+                                  Email
+                                </template>
+                              </el-input>
+                              <span class="text-danger">{{ errors[0] }}</span>
+                            </ValidationProvider>
+                          </div>
+                          <div 
+                            v-show="model.opcion == 0"
+                            class="mt-3"
                           >
-                            <template slot="prepend">
-                              Email
-                            </template>
-                          </el-input>
-                          <span class="text-danger">{{ errors[0] }}</span>
-                        </ValidationProvider>
-                      </div>
-                      <div 
-                        v-show="model.opcion == 0"
-                        class="mt-3"
-                      >
-                        <ValidationProvider 
-                          v-slot="{ errors }"
-                          name="Password" 
-                          :rules="{ required: true, regex: /^[a-z0-9A-Z]{6,18}$/ }" 
-                        >
-                          <el-input 
-                            v-model="model.password"
-                            placeholder="Please input" 
-                            minlength="8" 
-                            maxlength="18" 
-                            show-word-limit
+                            <ValidationProvider 
+                              v-slot="{ errors }"
+                              name="Password" 
+                              :rules="{ required: true, regex: /^[a-z0-9A-Z]{6,18}$/ }" 
+                            >
+                              <el-input 
+                                v-model="model.password"
+                                placeholder="Please input" 
+                                minlength="8" 
+                                maxlength="18" 
+                                show-word-limit
+                              >
+                                <template slot="prepend">
+                                  Password
+                                </template>
+                              </el-input>
+                              <span class="text-danger">{{ errors[0] }}</span>
+                            </ValidationProvider>
+                          </div>                      
+                          <div 
+                            v-show="model.opcion == 1"
+                            class="mt-3"
                           >
-                            <template slot="prepend">
-                              Password
-                            </template>
-                          </el-input>
-                          <span class="text-danger">{{ errors[0] }}</span>
-                        </ValidationProvider>
-                      </div>                      
-                      <div 
-                        v-show="model.opcion == 1"
-                        class="mt-3"
-                      >
-                        <el-input 
-                          v-model="model.password"
-                          placeholder="Please input"
-                          minlength="8" 
-                          maxlength="18" 
-                          show-word-limit
-                        >
-                          <template slot="prepend">
-                            Password
-                          </template>
-                        </el-input>
-                      </div>  
-                      <div 
-                        v-show="model.opcion == 2"
-                        class="mt-3" 
-                      >
-                        <el-switch 
-                          v-model="model.haspassword" 
-                          class="mb-3 carousel-indicators" 
-                          active-text="Actualizar contraseña" 
-                          inactive-text="No actualizar contraseña" 
-                        />
-                        <ValidationProvider 
-                          v-slot="{ errors }"
-                          name="Password" 
-                          :rules="{ required: true, regex: /^[a-z0-9A-Z]{6,18}$/ }"
-                        >
-                          <el-input 
-                            v-show="model.haspassword == true"
-                            v-model="model.password"
-                            placeholder="Please input" 
-                            minlength="8" 
-                            maxlength="18" 
-                            show-word-limit
+                            <el-input 
+                              v-model="model.password"
+                              placeholder="Please input"
+                              minlength="8" 
+                              maxlength="18" 
+                              show-word-limit
+                            >
+                              <template slot="prepend">
+                                Password
+                              </template>
+                            </el-input>
+                          </div>  
+                          <div 
+                            v-show="model.opcion == 2"
+                            class="mt-3" 
                           >
-                            <template slot="prepend">
-                              Password 
-                            </template>
-                          </el-input>
-                          <span class="text-danger">
-                            {{ errors[0] }}
-                          </span>
-                        </ValidationProvider>
-                      </div>      
-                      <div class="mt-3">
-                        <el-input 
-                          v-model="model.address"
-                          placeholder="Please input" 
-                          maxlength="80" 
-                          show-word-limit
-                        >
-                          <template slot="prepend">
-                            Address
-                          </template>
-                        </el-input>
-                      </div>
-                      <div class="mt-3">
-                        Rol
-                        <ValidationProvider 
-                          v-slot="{ errors }"
-                          name="Role" 
-                          :rules="{ required: true, min: 1 }"
-                        >
-                          <el-checkbox-group v-model="checkCargo">
-                            <el-checkbox 
-                              v-for="item in rol" 
-                              :key="item.label"
-                              :label="item.label" 
+                            <el-switch 
+                              v-model="model.haspassword" 
+                              class="mb-3 carousel-indicators" 
+                              active-text="Actualizar contraseña" 
+                              inactive-text="No actualizar contraseña" 
                             />
-                          </el-checkbox-group>
-                          <span class="text-danger">{{ errors[0] }}</span>
-                        </ValidationProvider>
-                      </div>      
+                            <ValidationProvider 
+                              v-slot="{ errors }"
+                              name="Password" 
+                              :rules="{ required: true, regex: /^[a-z0-9A-Z]{6,18}$/ }"
+                            >
+                              <el-input 
+                                v-show="model.haspassword == true"
+                                v-model="model.password"
+                                placeholder="Please input" 
+                                minlength="8" 
+                                maxlength="18" 
+                                show-word-limit
+                              >
+                                <template slot="prepend">
+                                  Password 
+                                </template>
+                              </el-input>
+                              <span class="text-danger">
+                                {{ errors[0] }}
+                              </span>
+                            </ValidationProvider>
+                          </div>      
+                          <div class="mt-3">
+                            <el-input 
+                              v-model="model.address"
+                              placeholder="Please input" 
+                              maxlength="80" 
+                              show-word-limit
+                            >
+                              <template slot="prepend">
+                                Address
+                              </template>
+                            </el-input>
+                          </div>
+                          <div class="mt-3">
+                            Rol
+                            <ValidationProvider 
+                              v-slot="{ errors }"
+                              name="Role" 
+                              :rules="{ required: true, min: 1 }"
+                            >
+                              <el-checkbox-group v-model="checkCargo">
+                                <el-checkbox 
+                                  v-for="item in rol" 
+                                  :key="item.label"
+                                  :label="item.label" 
+                                />
+                              </el-checkbox-group>
+                              <span class="text-danger">{{ errors[0] }}</span>
+                            </ValidationProvider>
+                          </div>      
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <el-popover 
-                  placement="bottom" 
-                  width="200"  
-                  trigger="hover" 
-                  content="Remember that the email, password and rol"
+                  <div class="modal-footer">
+                    <el-popover 
+                      placement="bottom" 
+                      width="200"  
+                      trigger="hover" 
+                      content="Remember that the email, password and rol"
+                    >
+                      <el-button 
+                        slot="reference" 
+                        circle 
+                        class="p-0"
+                      >
+                        <i class="el-icon-info" />
+                      </el-button>
+                    </el-popover>
+                    <button 
+                      type="button" 
+                      class="btn btn-secondary" 
+                      data-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                    <button 
+                      v-show="model.opcion == 0" 
+                      :disabled="invalid"
+                      type="button" 
+                      class="btn btn-primary" 
+                    >
+                      {{ model.nombre_boton }}
+                    </button>
+                    <button 
+                      v-show="model.opcion == 2"
+                      :disabled="invalid"
+                      type="button"  
+                      class="btn btn-primary" 
+                    >
+                      {{ model.nombre_boton }}
+                    </button>
+                  </div>
+                </ValidationObserver>
+              </el-tab-pane>
+                
+              </el-tab-pane>
+              <el-tab-pane label="Nuevo">
+                <ValidationObserver 
+                  v-slot="{ invalid }" 
+                  ref="registeradmin"
                 >
-                  <el-button 
-                    slot="reference" 
-                    circle 
-                    class="p-0"
-                  >
-                    <i class="el-icon-info" />
-                  </el-button>
-                </el-popover>
-                <button 
-                  type="button" 
-                  class="btn btn-secondary" 
-                  data-dismiss="modal"
-                >
-                  Close
-                </button>
-                <button 
-                  v-show="model.opcion == 0" 
-                  :disabled="invalid"
-                  type="button" 
-                  class="btn btn-primary" 
-                >
-                  {{ model.nombre_boton }}
-                </button>
-                <button 
-                  v-show="model.opcion == 2"
-                  :disabled="invalid"
-                  type="button"  
-                  class="btn btn-primary" 
-                >
-                  {{ model.nombre_boton }}
-                </button>
-              </div>
-            </ValidationObserver>
+                  <div class="modal-body">
+                    <div class="col-sm-12">
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <div class="mt-3">
+                            <el-input 
+                              v-model="model.name" 
+                              placeholder="Please input" 
+                              maxlength="50" 
+                              show-word-limit
+                            >
+                              <template slot="prepend">
+                                Name
+                              </template>
+                            </el-input>
+                          </div>
+                          <div class="mt-3">
+                            <el-input 
+                              v-model="model.lastname"
+                              placeholder="Please input"
+                              maxlength="50" 
+                              show-word-limit
+                            >
+                              <template slot="prepend">
+                                Lastname
+                              </template>
+                            </el-input>
+                          </div>
+                          <div class="mt-3">
+                            Document type
+                            <el-select 
+                              v-model="model.td" 
+                              placeholder="Select"
+                            >
+                              <el-option
+                                v-for="item in td"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value" 
+                              />
+                            </el-select> <br>
+                          </div>
+                          <div class="mt-3">
+                            <el-input
+                              v-model="model.dni" 
+                              placeholder="Please input" 
+                              maxlength="30" 
+                              show-word-limit
+                            >
+                              <template slot="prepend">
+                                DNI
+                              </template>
+                            </el-input>
+                          </div>
+                          <div class="mt-3">
+                            <el-input 
+                              v-model="model.phone"
+                              placeholder="Please input" 
+                              maxlength="30" 
+                              show-word-limit
+                            >
+                              <template slot="prepend">
+                                Phone
+                              </template>
+                            </el-input>
+                          </div>
+                          <div class="mt-3">
+                            <el-input
+                              v-model="model.cellphone"
+                              placeholder="Please input" 
+                              maxlength="30" 
+                              show-word-limit
+                            >
+                              <template slot="prepend">
+                                Cellphone
+                              </template>
+                            </el-input>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="mt-3">
+                            Sexo
+                            <el-select 
+                              v-model="model.sexo" 
+                              placeholder="Select"
+                            >
+                              <el-option
+                                v-for="item in sexo"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value"
+                              />
+                            </el-select>
+                          </div>
+                          <div class="mt-3">
+                            <ValidationProvider 
+                              v-slot="{ errors }"
+                              name="Email" 
+                              :rules="{ required: true, email: true }" 
+                            >
+                              <el-input
+                                v-model="model.email" 
+                                placeholder="Please input" 
+                                maxlength="50" 
+                                show-word-limit
+                              >
+                                <template slot="prepend">
+                                  Email
+                                </template>
+                              </el-input>
+                              <span class="text-danger">{{ errors[0] }}</span>
+                            </ValidationProvider>
+                          </div>
+                          <div 
+                            v-show="model.opcion == 0"
+                            class="mt-3"
+                          >
+                            <ValidationProvider 
+                              v-slot="{ errors }"
+                              name="Password" 
+                              :rules="{ required: true, regex: /^[a-z0-9A-Z]{6,18}$/ }" 
+                            >
+                              <el-input 
+                                v-model="model.password"
+                                placeholder="Please input" 
+                                minlength="8" 
+                                maxlength="18" 
+                                show-word-limit
+                              >
+                                <template slot="prepend">
+                                  Password
+                                </template>
+                              </el-input>
+                              <span class="text-danger">{{ errors[0] }}</span>
+                            </ValidationProvider>
+                          </div>                      
+                          <div 
+                            v-show="model.opcion == 1"
+                            class="mt-3"
+                          >
+                            <el-input 
+                              v-model="model.password"
+                              placeholder="Please input"
+                              minlength="8" 
+                              maxlength="18" 
+                              show-word-limit
+                            >
+                              <template slot="prepend">
+                                Password
+                              </template>
+                            </el-input>
+                          </div>  
+                          <div 
+                            v-show="model.opcion == 2"
+                            class="mt-3" 
+                          >
+                            <el-switch 
+                              v-model="model.haspassword" 
+                              class="mb-3 carousel-indicators" 
+                              active-text="Actualizar contraseña" 
+                              inactive-text="No actualizar contraseña" 
+                            />
+                            <ValidationProvider 
+                              v-slot="{ errors }"
+                              name="Password" 
+                              :rules="{ required: true, regex: /^[a-z0-9A-Z]{6,18}$/ }"
+                            >
+                              <el-input 
+                                v-show="model.haspassword == true"
+                                v-model="model.password"
+                                placeholder="Please input" 
+                                minlength="8" 
+                                maxlength="18" 
+                                show-word-limit
+                              >
+                                <template slot="prepend">
+                                  Password 
+                                </template>
+                              </el-input>
+                              <span class="text-danger">
+                                {{ errors[0] }}
+                              </span>
+                            </ValidationProvider>
+                          </div>      
+                          <div class="mt-3">
+                            <el-input 
+                              v-model="model.address"
+                              placeholder="Please input" 
+                              maxlength="80" 
+                              show-word-limit
+                            >
+                              <template slot="prepend">
+                                Address
+                              </template>
+                            </el-input>
+                          </div>
+                          <div class="mt-3">
+                            Rol
+                            <ValidationProvider 
+                              v-slot="{ errors }"
+                              name="Role" 
+                              :rules="{ required: true, min: 1 }"
+                            >
+                              <el-checkbox-group v-model="checkCargo">
+                                <el-checkbox 
+                                  v-for="item in rol" 
+                                  :key="item.label"
+                                  :label="item.label" 
+                                />
+                              </el-checkbox-group>
+                              <span class="text-danger">{{ errors[0] }}</span>
+                            </ValidationProvider>
+                          </div>      
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <el-popover 
+                      placement="bottom" 
+                      width="200"  
+                      trigger="hover" 
+                      content="Remember that the email, password and rol"
+                    >
+                      <el-button 
+                        slot="reference" 
+                        circle 
+                        class="p-0"
+                      >
+                        <i class="el-icon-info" />
+                      </el-button>
+                    </el-popover>
+                    <button 
+                      type="button" 
+                      class="btn btn-secondary" 
+                      data-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                    <button 
+                      v-show="model.opcion == 0" 
+                      :disabled="invalid"
+                      type="button" 
+                      class="btn btn-primary" 
+                    >
+                      {{ model.nombre_boton }}
+                    </button>
+                    <button 
+                      v-show="model.opcion == 2"
+                      :disabled="invalid"
+                      type="button"  
+                      class="btn btn-primary" 
+                    >
+                      {{ model.nombre_boton }}
+                    </button>
+                  </div>
+                </ValidationObserver>
+              </el-tab-pane>
+            </el-tabs>
           </div>
         </div>
       </div>
@@ -492,6 +771,33 @@ export default {
       {'label': 'Maculino', 'value': 'M'},
       {'label': 'Femenino', 'value': 'F'}
       ],
+      cities: [
+        {
+          value: 'Beijing',
+          label: 'Beijing'
+        }, 
+        {
+          value: 'Shanghai',
+          label: 'Shanghai'
+        }, 
+        {
+          value: 'Nanjing',
+          label: 'Nanjing'
+        }, 
+        {
+          value: 'Chengdu',
+          label: 'Chengdu'
+        }, 
+        {
+          value: 'Shenzhen',
+          label: 'Shenzhen'
+        }, 
+        {
+          value: 'Guangzhou',
+          label: 'Guangzhou'
+        }
+      ],
+      value: '',
       checkCargo: [],
       atms: []
     };

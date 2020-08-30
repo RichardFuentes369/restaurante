@@ -542,7 +542,7 @@ export default {
       } else {
         this.model.isWaiter = (atm.isWaiter === 1) ? this.checkCargo.push("isWaiter") : ''
         this.model = {
-          titulo: 'Creando un nuevo cajero',
+          titulo: 'Creando un nuevo mesero',
           boton: 'Crear',
           // show: false,
           // id: '', 
