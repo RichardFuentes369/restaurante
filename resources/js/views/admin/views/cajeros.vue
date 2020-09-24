@@ -172,22 +172,12 @@
               aria-label="Close"
             >
               <span aria-hidden="true">&times;</span>
-            </button>
+            </button> 
           </div>
           <div class="container my-3">
-            <el-tabs type="border-card">
-              <el-tab-pane label="Existente">
-                <el-select class="form-control-file" v-model="value" placeholder="Select">
-                  <el-option
-                    v-for="item in cities"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                  >
-                    <span style="float: left">{{ item.label }}</span>
-                    <span style="float: right; color: #8492a6; font-size: 13px">{{ item.value }}</span>
-                  </el-option>
-                </el-select>
+            <el-tabs v-model="activeName" type="border-card">
+              <el-tab-pane label="Cajero" name="first">
+                <h5>{{model.boton}} Cajero</h5>
                 <ValidationObserver 
                   v-slot="{ invalid }" 
                   ref="registeradmin"
@@ -450,9 +440,18 @@
                   </div>
                 </ValidationObserver>
               </el-tab-pane>
-                
-              </el-tab-pane>
-              <el-tab-pane label="Nuevo">
+              <el-tab-pane label="Asignar rol" :disabled="model.disabled" name="second">
+                <el-select class="form-control-file" v-model="value" placeholder="Select">
+                  <el-option
+                    v-for="item in cities"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  >
+                    <span style="float: left">{{ item.label }}</span>
+                    <span style="float: right; color: #8492a6; font-size: 13px">{{ item.value }}</span>
+                  </el-option>
+                </el-select>
                 <ValidationObserver 
                   v-slot="{ invalid }" 
                   ref="registeradmin"
@@ -736,8 +735,10 @@ export default {
     return {
       hidden: true,
       route: window.location.origin+'/api/cajeros/',
+      activeName: '',
       model: {
         show: false,
+        disabled: false,
         titulo: '',
         boton: '',
         photo: '',
@@ -833,6 +834,8 @@ export default {
       }
     },
     abrirModal(atm){
+      console.log(atm)
+      this.activeName = 'first',
       this.limpiar()
       if(atm != 1){
         this.model.isAtm = (atm.isAtm === 1) ? this.checkCargo.push("isAtm") : ''
@@ -840,14 +843,24 @@ export default {
         this.model = {
           titulo: 'Editando el cajero',
           boton: 'Editar',
-          // id: plato.id,
-          // show: plato.photo != null ? true : false,
-          // name: plato.name,
-          // description: plato.description,
-          // photo: plato.photo,
-          // price: plato.price,
-          // size: plato.size,
-          // mid_atms_categoria: plato.id_atms_category
+          disabled: true,
+          // show: false,
+          // photo: '/images/noImagen/nodisponible.png',
+          name: atm.name,
+          lastname: atm.lastname,
+          td: atm.td,
+          dni: atm.dni,
+          phone: atm.phone,
+          cellphone: atm.cellphone,
+          sexo: atm.sexo,
+          email: atm.email,
+          sexo: atm.sexo,
+          // password: '',
+          address: atm.address,
+          // contract_date: '',
+          isAtm: atm.isAtm,
+          isWaiter: atm.isWaiter,
+          // isClient: ''
         }
       } else {
         this.model.isAtm = (atm.isAtm === 1) ? this.checkCargo.push("isAtm") : ''
@@ -855,6 +868,7 @@ export default {
         this.model = {
           titulo: 'Creando un nuevo cajero',
           boton: 'Crear',
+          disabled: false,
           // show: false,
           // id: '', 
           // name: '',
@@ -875,7 +889,7 @@ export default {
       axios.get(`${this.route}atm-list`).then(res => {
         this.atms = res.data
       })
-    },
+    }
     // async guardarPlato(){
     //   if (this.model.mid_atms_categoria != '' && this.model.name != '' && this.model.description != ''){
     //     await axios.post(`${this.route}atms-register`, this.model)
