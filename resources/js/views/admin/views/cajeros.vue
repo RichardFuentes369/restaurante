@@ -443,13 +443,14 @@
               <el-tab-pane label="Asignar rol" :disabled="model.disabled" name="second">
                 <el-select class="form-control-file" v-model="value" placeholder="Select">
                   <el-option
-                    v-for="item in cities"
+                    v-for="item in users"
                     :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
+                    :label="item.name"
+                    :value="item.email"
                   >
-                    <span style="float: left">{{ item.label }}</span>
-                    <span style="float: right; color: #8492a6; font-size: 13px">{{ item.value }}</span>
+                    <span style="float: left">{{ item.name }}</span>
+                    <span style="float: right; color: #116FF6;" v-if="item.sexo == 'M'" class="p-0 text-center">{{ item.sexo }}</span>
+                    <span style="float: right; color: #DA11EC;" v-else class="p-0 text-center">{{ item.sexo }}</span>
                   </el-option>
                 </el-select>
                 <ValidationObserver 
@@ -772,32 +773,7 @@ export default {
       {'label': 'Maculino', 'value': 'M'},
       {'label': 'Femenino', 'value': 'F'}
       ],
-      cities: [
-        {
-          value: 'Beijing',
-          label: 'Beijing'
-        }, 
-        {
-          value: 'Shanghai',
-          label: 'Shanghai'
-        }, 
-        {
-          value: 'Nanjing',
-          label: 'Nanjing'
-        }, 
-        {
-          value: 'Chengdu',
-          label: 'Chengdu'
-        }, 
-        {
-          value: 'Shenzhen',
-          label: 'Shenzhen'
-        }, 
-        {
-          value: 'Guangzhou',
-          label: 'Guangzhou'
-        }
-      ],
+      users: [],
       value: '',
       checkCargo: [],
       atms: []
@@ -834,7 +810,6 @@ export default {
       }
     },
     abrirModal(atm){
-      console.log(atm)
       this.activeName = 'first',
       this.limpiar()
       if(atm != 1){
@@ -884,9 +859,12 @@ export default {
         this.model.photo = ''        
       }
     },
-    listCajeros(){
+    async listCajeros(){
       this.charge(200)
-      axios.get(`${this.route}atm-list`).then(res => {
+      await axios.get(`${this.route}get-users`).then(res => {
+        this.users = res.data
+      })     
+      await axios.get(`${this.route}atm-list`).then(res => {
         this.atms = res.data
       })
     }

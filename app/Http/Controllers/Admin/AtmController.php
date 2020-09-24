@@ -13,6 +13,10 @@ class AtmController extends Controller
 	public function listaAtm() {
 		$lista_atm = usuarios::where('isAtm', 1)->where('deleted_at',Null)->get();
 		return $lista_atm;
+	}	
+	public function listaUsers() {
+		$lista_users = usuarios::where('deleted_at',Null)->get();
+		return $lista_users;
 	}
 	public function registerAtm() {
 		try {
