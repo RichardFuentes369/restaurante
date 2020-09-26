@@ -177,7 +177,7 @@
           <div class="container my-3">
             <el-tabs v-model="activeName" type="border-card">
               <el-tab-pane label="Cajero" name="first">
-                <h5>{{model.boton}} Cajero</h5>
+                <h5 class="text-center">{{ model.boton }} Cajero</h5>
                 <ValidationObserver 
                   v-slot="{ invalid }" 
                   ref="registeradmin"
@@ -441,16 +441,17 @@
                 </ValidationObserver>
               </el-tab-pane>
               <el-tab-pane label="Asignar rol" :disabled="model.disabled" name="second">
-                <el-select class="form-control-file" v-model="value" placeholder="Select">
+                <h5 class="text-center">Asignar el rol Cajero</h5>
+                <el-select class="form-control-file" v-model="model.userSelected" placeholder="Select" @change="llenarDatos()">
                   <el-option
-                    v-for="item in users"
-                    :key="item.value"
-                    :label="item.name"
-                    :value="item.email"
+                    v-for="user in users"
+                    :key="user.value"
+                    :label="user.name"
+                    :value="user.email"
                   >
-                    <span style="float: left">{{ item.name }}</span>
-                    <span style="float: right; color: #116FF6;" v-if="item.sexo == 'M'" class="p-0 text-center">{{ item.sexo }}</span>
-                    <span style="float: right; color: #DA11EC;" v-else class="p-0 text-center">{{ item.sexo }}</span>
+                    <span style="float: left">{{ user.name }}</span>
+                    <span style="float: right; color: #116FF6;" v-if="user.sexo == 'M'" class="p-0 text-center">{{ user.sexo }}</span>
+                    <span style="float: right; color: #DA11EC;" v-else class="p-0 text-center">{{ user.sexo }}</span>
                   </el-option>
                 </el-select>
                 <ValidationObserver 
@@ -742,6 +743,7 @@ export default {
         disabled: false,
         titulo: '',
         boton: '',
+        userSelected: '', //sirve para el editar
         photo: '',
         name: '',
         lastname: '',
@@ -779,6 +781,13 @@ export default {
       atms: []
     };
   },
+  watch:{
+    activeName: function (val){
+      if(val == 'first'){
+        return this.limpiar();
+      }
+    }
+  },
   mounted() {
     this.listCajeros()
   },
@@ -790,7 +799,7 @@ export default {
       this.checkCargo = [],
       this.model = {
         show: false,
-        titulo: '',
+        titulo: 'Crear-Asignar Cajero',
         boton: '',
         photo: '/images/noImagen/nodisponible.png',
         name: '',
@@ -809,17 +818,40 @@ export default {
         isClient: ''
       }
     },
-    abrirModal(atm){
-      this.activeName = 'first',
-      this.limpiar()
-      if(atm != 1){
+    async abrirModal(atm){
+      this.activeName = 'first'
+      let lop = (typeof(atm) == "number") ?  true : false
+      await this.limpiar()
+      if(lop == true){
+        this.model = {
+          titulo: 'Crear-Asignar Cajero',
+          boton: 'Crear',
+          disabled: false,
+          show: false,
+          photo: '/images/noImagen/nodisponible.png',
+          name: '',
+          lastname: '',
+          td: '',
+          dni: '',
+          phone: '',
+          cellphone: '',
+          sexo: '',
+          email: '',
+          password: '',
+          address: '',
+          contract_date: '',
+          isAtm: '',
+          isWaiter: ''
+        }
+      }
+      if(lop == false){
         this.model.isAtm = (atm.isAtm === 1) ? this.checkCargo.push("isAtm") : ''
         this.model.isWaiter = (atm.isWaiter === 1) ? this.checkCargo.push("isWaiter") : ''
         this.model = {
-          titulo: 'Editando el cajero',
+          titulo: 'Editandar Cajero',
           boton: 'Editar',
           disabled: true,
-          // show: false,
+          show: false,
           // photo: '/images/noImagen/nodisponible.png',
           name: atm.name,
           lastname: atm.lastname,
@@ -836,18 +868,6 @@ export default {
           isAtm: atm.isAtm,
           isWaiter: atm.isWaiter,
           // isClient: ''
-        }
-      } else {
-        this.model.isAtm = (atm.isAtm === 1) ? this.checkCargo.push("isAtm") : ''
-        this.model.isWaiter = (atm.isWaiter === 1) ? this.checkCargo.push("isWaiter") : ''
-        this.model = {
-          titulo: 'Creando un nuevo cajero',
-          boton: 'Crear',
-          disabled: false,
-          // show: false,
-          // id: '', 
-          // name: '',
-          // description: ''
         }
       }
       this.openModal('#registerCajeros')  
@@ -867,51 +887,32 @@ export default {
       await axios.get(`${this.route}atm-list`).then(res => {
         this.atms = res.data
       })
+    },
+    llenarDatos(){
+      let usuarioCajero = this.users.find(obj => obj.email === this.model.userSelected)
+      this.model.isAtm = (usuarioCajero.isAtm === 1) ? this.checkCargo.push("isAtm") : ''
+      this.model.isWaiter = (usuarioCajero.isWaiter === 1) ? this.checkCargo.push("isWaiter") : ''
+      this.model = {
+        show: false,
+        titulo: 'Editandar-Asignanar Cajero',
+        boton: '',
+        photo: '/images/noImagen/nodisponible.png',
+        name: usuarioCajero.name,
+        lastname: usuarioCajero.lastname,
+        td: usuarioCajero.td,
+        dni: usuarioCajero.dni,
+        phone: usuarioCajero.phone,
+        cellphone: usuarioCajero.cellphone,
+        sexo: usuarioCajero.sexo,
+        email: usuarioCajero.email,
+        password: usuarioCajero.password,
+        address: usuarioCajero.address,
+        contract_date: '',
+        isAtm: usuarioCajero.isAtm,
+        isWaiter: usuarioCajero.isWaiter,
+        isClient: usuarioCajero.isClient
+      }
     }
-    // async guardarPlato(){
-    //   if (this.model.mid_atms_categoria != '' && this.model.name != '' && this.model.description != ''){
-    //     await axios.post(`${this.route}atms-register`, this.model)
-    //     this.closeModal('#registerCajeros')
-    //     await this.listCajeros()
-    //     this.notify(1, 'Success', 'Plato creado exitosamente', 'success')
-    //   } else {
-    //     this.notify(2, '', 'Algunos campos no pueden ir vacios', '')
-    //   }
-    // },    
-    // async actualizar(atm) {
-    //   if (atm.name != '' && atm.description != ''){
-    //     await axios.put(`${this.route}atms-update`, atm)
-    //     await this.listCajeros()
-    //     this.notify(1, 'Success', 'Plato actualizado exitosamente', 'success')
-    //   } else {
-    //     await this.listCajeros()
-    //     this.notify(2, '', 'Algunos campos no pueden ir vacios', '')
-    //   }
-    // },   
-    // async actualizarpomodal() {
-    //   if (this.model.name != '' && this.model.description != ''){
-    //     await axios.put(`${this.route}atms-update`, this.model)
-    //     this.closeModal('#registerCajeros')
-    //     await this.listCajeros()
-    //     this.notify(1, 'Success', 'Categoria de plato actualizada exitosamente', 'success')
-    //   } else {
-    //     this.notify(2, '', 'Algunos campos no pueden ir vacios', '')
-    //   }
-    // },
-    // async eliminar(atm){
-    //   this.$confirm('Esta seguro que desea eliminar este plato?', 'Warning', {
-    //     confirmButtonText: 'Eliminar',
-    //     cancelButtonText: 'Cancelar',
-    //     type: 'warning'
-    //   }).then(async () => {
-    //     await axios.delete(`${this.route}${atm.id}/atms-delete`)
-    //     this.id_atms_categoria = ''
-    //     this.notify(2, '', 'Se elimino la categoria con exito', '')
-    //     await this.listCajeros()
-    //   }).catch(() => {
-    //     this.message(1, 'Eliminación cancelada', 'info')         
-    //   });
-    // }
   }
 };
 </script>

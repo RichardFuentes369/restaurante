@@ -15,7 +15,7 @@ class AtmController extends Controller
 		return $lista_atm;
 	}	
 	public function listaUsers() {
-		$lista_users = usuarios::where('deleted_at',Null)->get();
+		$lista_users = usuarios::where('isAtm',0)->where('deleted_at',Null)->get();
 		return $lista_users;
 	}
 	public function registerAtm() {
