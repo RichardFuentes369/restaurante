@@ -416,6 +416,13 @@
                     </el-popover>
                     <button 
                       type="button" 
+                      class="btn btn-success" 
+                      data-dismiss="modal"
+                    >
+                      {{ model.boton }}
+                    </button>
+                    <button 
+                      type="button" 
                       class="btn btn-secondary" 
                       data-dismiss="modal"
                     >
@@ -692,6 +699,13 @@
                     </el-popover>
                     <button 
                       type="button" 
+                      class="btn btn-success" 
+                      data-dismiss="modal"
+                    >
+                      {{ model.boton }}
+                    </button>
+                    <button 
+                      type="button" 
                       class="btn btn-secondary" 
                       data-dismiss="modal"
                     >
@@ -800,7 +814,7 @@ export default {
       this.model = {
         show: false,
         titulo: 'Crear-Asignar Cajero',
-        boton: '',
+        boton: 'Crear',
         photo: '/images/noImagen/nodisponible.png',
         name: '',
         lastname: '',
@@ -895,7 +909,7 @@ export default {
       this.model = {
         show: false,
         titulo: 'Editandar-Asignanar Cajero',
-        boton: '',
+        boton: 'Crear',
         photo: '/images/noImagen/nodisponible.png',
         name: usuarioCajero.name,
         lastname: usuarioCajero.lastname,
