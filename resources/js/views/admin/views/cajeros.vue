@@ -417,7 +417,7 @@
                     <button 
                       type="button" 
                       class="btn btn-success" 
-                      data-dismiss="modal"
+                      @click="crearCajero(1)"
                     >
                       {{ model.boton }}
                     </button>
@@ -700,7 +700,7 @@
                     <button 
                       type="button" 
                       class="btn btn-success" 
-                      data-dismiss="modal"
+                      @click="crearCajero(2)"
                     >
                       {{ model.boton }}
                     </button>
@@ -710,22 +710,6 @@
                       data-dismiss="modal"
                     >
                       Close
-                    </button>
-                    <button 
-                      v-show="model.opcion == 0" 
-                      :disabled="invalid"
-                      type="button" 
-                      class="btn btn-primary" 
-                    >
-                      {{ model.nombre_boton }}
-                    </button>
-                    <button 
-                      v-show="model.opcion == 2"
-                      :disabled="invalid"
-                      type="button"  
-                      class="btn btn-primary" 
-                    >
-                      {{ model.nombre_boton }}
                     </button>
                   </div>
                 </ValidationObserver>
@@ -926,8 +910,21 @@ export default {
         isWaiter: usuarioCajero.isWaiter,
         isClient: usuarioCajero.isClient
       }
+    },
+    crearCajero(opcion){ 
+      console.log(opcion, this.model)
+      // asignar rol es 2, crear cajero y editar cajero es 1 (opcion)
+      if(opcion == 1){
+       if(this.model.boton == "Crear"){
+        console.log('ando creando cajero')
+      }else{
+        console.log('ando editando cajero')
+      }
+    }else{
+      console.log('ando asignando rol')
     }
-  }
+  },
+}
 };
 </script>
 <style>
