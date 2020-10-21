@@ -24,7 +24,6 @@ class MenuController extends Controller
 
     public function registerDishes(Request $request){
     	try { 
-
             $array = [];
 
             for ($i=0; $i < sizeof($request->menu); $i++) { 

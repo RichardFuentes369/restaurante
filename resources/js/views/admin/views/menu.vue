@@ -305,7 +305,7 @@ export default {
       this.collapse = []
     },
     async guardarMenu(){
-      await axios.post(`${this.route}/dishes-register`, {menu: this.menu})
+      await axios.post(`${this.route}dishes-register`, {menu: this.menu})
       this.closeModal('#registerMenu')  
       this.notify(1, 'Success', 'Menú creado con exito', 'success')
       this.listdishes()
