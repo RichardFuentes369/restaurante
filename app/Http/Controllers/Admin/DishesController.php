@@ -59,18 +59,23 @@ class DishesController extends Controller
 			}else{
 				$actualizar_plato->id_dishes_category = $request->id_dishes_category;			
 			}
-	
+
 			$actualizar_plato->description = $request->description;
 
 			if(isset($request->show)){
 				if($request->show == true){
 					if($request->photo != null){
-						Storage::disk('dishes')->delete($actualizar_plato->photo);	
-						$img = $this->getB64Image($request->photo);
-						$img_extension = $this->getB64Extension($request->photo);
-						$img_name = 'dishes'. time() . '.' . $img_extension; 
-						$actualizar_plato->photo = $img_name;
-						Storage::disk('dishes')->put($img_name, $img);
+						$esBase64 = $this->isBase64($request->photo); /*Si es base64 retorna true de lo contrario retorna false*/
+
+						if($esBase64 == true){
+							Storage::disk('dishes')->delete($actualizar_plato->photo);  
+							$img = $this->getB64Image($request->photo);
+							$img_extension = $this->getB64Extension($request->photo);
+							$img_name = 'dishes'. time() . '.' . $img_extension; 
+							$actualizar_plato->photo = $img_name;
+							Storage::disk('dishes')->put($img_name, $img);
+						}
+						
 					}else{
 						Storage::disk('dishes')->delete($actualizar_plato->photo);
 						$actualizar_plato->photo = null;
