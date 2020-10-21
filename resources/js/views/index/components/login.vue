@@ -61,7 +61,7 @@
 export default {
   data() {
     return {
-      username: 'altenwerth.santos@example.com',
+      username: 'roberts.virgie@example.net',
       password: 'password',
       error: null
     };

@@ -273,6 +273,7 @@ export default {
     },
     abrirModal(categoria){
       this.limpiar()
+      console.log(categoria)
       if(categoria != 1){
         this.model = {
           titulo: 'Editando la categoria',
