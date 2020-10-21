@@ -911,20 +911,29 @@ export default {
         isClient: usuarioCajero.isClient
       }
     },
-    crearCajero(opcion){ 
+    async crearCajero(opcion){ 
       console.log(opcion, this.model)
-      // asignar rol es 2, crear cajero y editar cajero es 1 (opcion)
+      /*La opcion 1 es crear editar, la opcion 2 es asignar rol*/
       if(opcion == 1){
-       if(this.model.boton == "Crear"){
-        console.log('ando creando cajero')
+        /*crear cajero y editar cajero*/
+        if(this.model.boton == "Crear"){
+          console.log('ando creando cajero')
+          await axios.post(`${this.route}atm-register`, this.model)
+          this.closeModal('#registerCajeros')
+          await this.listCajeros()
+          this.notify(1, 'Success', 'Cajero creado exitosamente', 'success')
+        }else{
+          await axios.put(`${this.route}atm-update`, this.model)
+          this.closeModal('#registerCajeros')
+          await this.listCajeros()
+          this.notify(1, 'Success', 'Cajero creado exitosamente', 'success')
+          console.log('ando editando cajero')
+        }
       }else{
-        console.log('ando editando cajero')
+        console.log('ando asignando rol')
       }
-    }else{
-      console.log('ando asignando rol')
-    }
-  },
-}
+    },
+  }
 };
 </script>
 <style>

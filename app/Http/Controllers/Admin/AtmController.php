@@ -18,15 +18,17 @@ class AtmController extends Controller
 		$lista_users = usuarios::where('isAtm',0)->where('deleted_at',Null)->get();
 		return $lista_users;
 	}
-	public function registerAtm() {
+	public function registerAtm(Request $request) {
 		try {
+			return $request;
 			return 'registrando atm';
 		} catch (Exception $e) {
 			return $e;
 		}
 	}
-	public function updateAtm() {
+	public function updateAtm(Request $request) {
 		try {
+			return $request;
 			return 'actualizando atm';
 		} catch (Exception $e) {
 			return $e;
