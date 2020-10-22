@@ -7,6 +7,9 @@
       <div class="col-sm-4">
         <Login />
       </div>
+
+
+        <botman-tinker api-endpoint="/chatbot/botman" user-id="my-custom-user-id" style="background-color: gray;border-color: blue;border-radius: 1rem;padding: 1%;" />
     </div>
   </div>
 </template>
