@@ -9,14 +9,14 @@
       </div>
 
 
-        <botman-tinker api-endpoint="/chatbot/botman" user-id="my-custom-user-id" style="background-color: gray;border-color: blue;border-radius: 1rem;padding: 1%;" />
+      <botman-tinker api-endpoint="/botman" user-id="my-custom-user-id" style="background-color: gray;border-color: blue;border-radius: 1rem;padding: 1%;" />
     </div>
   </div>
 </template>
 <script>
-import { funciones } from '../../../functions/funciones_principales'
-export default {
-  mixins: [funciones],
+  import { funciones } from '../../../functions/funciones_principales'
+  export default {
+    mixins: [funciones],
 
-};
+  };
 </script>

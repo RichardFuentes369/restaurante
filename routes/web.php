@@ -14,3 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/{any}', 'SpaController@index')->where('any', '.*');
+
+Route::match(['get', 'post'], '/botman', "BotManController@handle");
+
+Route::get('/botman/tinker', 'BotManController@tinker');
