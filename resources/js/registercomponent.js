@@ -4,6 +4,7 @@ import {TinkerComponent} from 'botman-tinker';
 /*Globales*/
 Vue.component('uploadImage', require('./views/globales/uploadImage.vue').default); /*cropper*/
 Vue.component('botman-tinker', TinkerComponent); /*chatBoot*/
+Vue.component('botman', require('./views/globales/chatBot/botman').default); /*cropper*/
 /*Graficas*/
 Vue.component('loading', require('./views/globales/loading.vue').default);
 Vue.component('gralinea', require('./views/globales/charts/linea.vue').default);

@@ -74,7 +74,7 @@
           <div class="col-sm-2 mt-2"> 
             <button 
               v-model="boton" 
-              class="btn btn-success" 
+              class="btn bg-success text-white" 
               @click="option"
             >
               Go to

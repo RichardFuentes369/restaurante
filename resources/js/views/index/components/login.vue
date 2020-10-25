@@ -40,14 +40,14 @@
             </div>
             <button 
               type="submit" 
-              class="btn btn-block btn-success mt-3"
+              class="btn btn-block bg-success text-white mt-3"
             >
               Sign in
             </button>
           </form>
           <router-link 
             :to="{ name: 'register'}" 
-            class="mt-2 btn btn-primary btn-block"
+            class="mt-2 btn bg-primary text-white btn-block"
           >
             Register
           </router-link>

@@ -7,9 +7,11 @@
       <div class="col-sm-4">
         <Login />
       </div>
-
-
-      <botman-tinker api-endpoint="/botman" user-id="my-custom-user-id" style="background-color: gray;border-color: blue;border-radius: 1rem;padding: 1%;" />
+      <div class="fixed-bottom d-flex flex-row-reverse bd-highlight">
+        <div class="p-2 p-2 bd-highlight">
+          <botman />
+        </div>
+      </div>
     </div>
   </div>
 </template>
