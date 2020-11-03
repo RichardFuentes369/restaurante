@@ -6,7 +6,7 @@
       </h2> 
       <button 
         type="button" 
-        class="btn btn-success btnadd ml-3 mt-1" 
+        class="bg-success border-0 text-white btnadd ml-3 mt-1" 
         title="Crear" 
         @click="abrirModal"
       >
@@ -76,7 +76,7 @@
               </el-tooltip>
             </td>
             <td class="text-center">
-              <button class="btn btnadd btn-danger m-0" @click="eliminarMesa(mesa)">
+              <button class="bg-danger border-0 text-white m-0 btnadd btn-position-accion" @click="eliminarMesa(mesa)">
                 <i class="fa fa-trash" />
               </button>
             </td>

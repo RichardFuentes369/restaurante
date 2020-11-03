@@ -6,7 +6,7 @@
       </h2> 
       <button 
         type="button" 
-        class="btn btn-success btnadd ml-3 mt-1" 
+        class="bg-success border-0 text-white btnadd ml-3 mt-1" 
         title="Crear" 
         @click="abrirModal(1)"
       >
@@ -50,7 +50,7 @@
         > 
           <button 
             type="button" 
-            class="btn btn-warning mt-4 btnadd btn-position-accion" 
+            class="bg-warning border-0 text-white mt-4 btnadd btn-position-accion" 
             title="Actualizar" 
             @click="abrirModal(atm)"
           >
@@ -58,7 +58,7 @@
           </button>  
           <button 
             type="button" 
-            class="btn btn-danger mt-4 btnadd btn-position-accion" 
+            class="bg-danger border-0 text-white mt-4 btnadd btn-position-accion" 
             title="Eliminar" 
             @click="eliminar(atm)"
           >
@@ -72,7 +72,7 @@
         > 
           <button 
             type="button" 
-            class="btn btn-warning mt-4 btnadd btn-position-accion" 
+            class="bg-warning border-0 text-white mt-4 btnadd btn-position-accion" 
             title="Actualizar" 
             @click="abrirModal(atm)"
           >
@@ -80,7 +80,7 @@
           </button>      
           <button 
             type="button" 
-            class="btn btn-danger mt-4 btnadd btn-position-accion" 
+            class="bg-danger border-0 text-white mt-4 btnadd btn-position-accion" 
             title="Eliminar" 
             @click="eliminar(atm)"
           >

@@ -6,7 +6,7 @@
       </h2> 
       <button
         type="button" 
-        class="btn btn-success btnadd ml-3 mt-1" 
+        class="bg-success border-0 text-white btnadd ml-3 mt-1" 
         title="Crear" 
         @click="abrirModal" 
       >
@@ -112,7 +112,7 @@
             <td class="text-center">
               <button 
                 type="button" 
-                class="btn btn-danger m-0 btnadd btn-position-accion" 
+                class="bg-danger border-0 text-white m-0 btnadd btn-position-accion" 
                 title="Eliminar" 
                 @click="eliminar(promocion)"
               >

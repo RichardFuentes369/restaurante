@@ -6,7 +6,7 @@
       </h2> 
       <button 
         type="button" 
-        class="btn btn-success btnadd ml-3 mt-1" 
+        class="bg-success border-0 text-white btnadd ml-3 mt-1" 
         title="Crear" 
         @click="abrirModal(1)"
       >
@@ -67,7 +67,7 @@
         > 
           <button 
             type="button" 
-            class="btn btn-warning mt-4 btnadd btn-position-accion" 
+            class="bg-warning border-0 text-white mt-4 btnadd btn-position-accion" 
             title="Actualizar" 
             @click="abrirModal(dishe)"
           >
@@ -75,7 +75,7 @@
           </button>  
           <button 
             type="button" 
-            class="btn btn-danger mt-4 btnadd btn-position-accion" 
+            class="bg-danger border-0 text-white mt-4 btnadd btn-position-accion" 
             title="Eliminar" 
             @click="eliminar(dishe)"
           >
@@ -89,7 +89,7 @@
         > 
           <button 
             type="button" 
-            class="btn btn-warning mt-4 btnadd btn-position-accion" 
+            class="bg-warning border-0 text-white mt-4 btnadd btn-position-accion" 
             title="Actualizar" 
             @click="abrirModal(dishe)"
           >
@@ -97,7 +97,7 @@
           </button>      
           <button 
             type="button" 
-            class="btn btn-danger mt-4 btnadd btn-position-accion" 
+            class="bg-danger border-0 text-white mt-4 btnadd btn-position-accion" 
             title="Eliminar" 
             @click="eliminar(dishe)"
           >
@@ -335,12 +335,14 @@ export default {
     id_dishes_categoria: function (val) {
       if(this.clon != ''){   
         this.dishes = this.clon
-        let filtro = this.dishes.filter(obj => obj.id_dishes_category === val) 
-        this.dishes = []     
-        for (const fil of filtro) {
-          this.dishes.push(fil)
-        }    
-      }else{   
+        if(val != 0){
+          let filtro = this.dishes.filter(obj => obj.id_dishes_category === val) 
+          this.dishes = []     
+          for (const fil of filtro) {
+            this.dishes.push(fil)
+          }  
+        }
+      }else{ 
         this.clon = [...this.dishes]
         let filtro = this.dishes.filter(obj => obj.id_dishes_category === val) 
         this.dishes = []     
@@ -371,6 +373,7 @@ export default {
     limpiarArrays(){
       this.clon = [] // array clon de platos
       this.categorias = [] //array de categorias
+      this.duplicado_categorias = [] //array de categorias
       this.dishes = [] //array de platos
       this.id_dishes_categoria = '' //variable del filtro
     },
@@ -413,6 +416,7 @@ export default {
       this.limpiarArrays()
       axios.get(`${this.route}dishes-list`).then(res => {
         this.categorias = res.data
+        this.categorias.push({name: "Todas", color: "#A4A4A4", id: 0})
         for (var i = 0 ; i < this.categorias.length; i++) {
           let platos = this.categorias[i].misplatos
           for (const plato of platos) {

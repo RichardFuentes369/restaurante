@@ -6,7 +6,7 @@
       </h2> 
       <button 
         type="button" 
-        class="btn btn-success btnadd ml-3 mt-1" 
+        class="bg-success border-0 text-white btnadd ml-3 mt-1" 
         title="Crear" 
         circle
         @click="abrirModal"
@@ -92,7 +92,7 @@
                       <div class="col-sm-2 justify-content-center">
                         <button 
                           type="button" 
-                          class="btn btn-success btnadd ml-3 mt-1" 
+                          class="bg-success border-0 text-white btnadd ml-3 mt-1" 
                           data-target=".bd-example-modal-xl" 
                           circle
                           @click="addMenu"
