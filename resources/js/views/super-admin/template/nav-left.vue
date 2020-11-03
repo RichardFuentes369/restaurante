@@ -77,6 +77,11 @@
     <div>
       <router-view />
     </div>
+    <div class="fixed-bottom d-flex flex-row-reverse bd-highlight">
+      <div class="p-2 p-2 bd-highlight">
+        <botman />
+      </div>
+    </div>
   </div>
 </template>
 

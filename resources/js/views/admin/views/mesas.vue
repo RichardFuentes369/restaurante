@@ -129,7 +129,7 @@
                 </template>
               </el-input>
               <el-input 
-                v-model="model.nro_silla"
+                v-model="model.nro_chair"
                 placeholder="Please input" 
                 maxlength="50" 
                 show-word-limit
@@ -172,7 +172,7 @@
         route: window.location.origin+'/api/tables/',
         model:{
           nro_mesa: '',
-          nro_silla: ''
+          nro_chair: ''
         },
         mesas: []
       };
@@ -208,6 +208,7 @@
         this.listTables()
       },
       async actualizarMesa(mesa){
+        console.log(this.model)
         await axios.put(`${this.route}table-update`, this.model)
         this.notify(1, 'Success', 'Mesa actualizada con exito', 'success')
         this.listTables()

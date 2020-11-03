@@ -5,7 +5,7 @@
         Administradores
       </h2> 
       <button 
-        class="btn btn-success btnadd ml-3 mt-1" 
+        class="bg-success border-0 text-white btnadd ml-3 mt-1" 
         @click="abrirModal(0)"
       >
         <i class="fa fa-plus" />
@@ -85,21 +85,21 @@
             </td>
             <td class="text-center">
               <button 
-                class="btnadd btn btn-primary" 
+                class="bg-primary border-0 text-white btnadd ml-3 mt-1" 
                 title="Ver" 
                 @click="abrirModal(1, user)"
               >
                 <i class="far fa-eye" />
               </button>
               <button 
-                class="btnadd btn btn-warning" 
+                class="bg-warning border-0 text-white btnadd ml-3 mt-1" 
                 title="Editar" 
                 @click="abrirModal(2, user)"
               >
                 <i class="fas fa-pen" />
               </button>
               <button 
-                class="btnadd btn btn-danger m-0" 
+                class="bg-danger border-0 text-white btnadd ml-3 mt-1" 
                 title="Eliminar" 
                 @click="eliminar(user)"
               >

@@ -26,8 +26,9 @@ class TablesController extends Controller
 		}
 	}
 
-	public function updateTable(){
+	public function updateTable(Request $request){
 		try {
+			return $request;
 			return 'registrando';
 		} catch (Exception $e) {
 			return $e;
