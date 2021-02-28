@@ -25,11 +25,11 @@ class BotManController extends Controller
         // });
 
             $botman->hears('Hola', function ($bot) {
-                $bot->reply('No joda, busque trabajo!');
+                $bot->reply('Bienvenido al restau!');
             });
 
                         $botman->hears('Ayuda', function ($bot) {
-                $bot->reply('Paga la ayuda');
+                $bot->reply('En que te podemos colaborar');
             });
 
         $botman->listen();

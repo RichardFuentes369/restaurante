@@ -61,8 +61,8 @@
 export default {
   data() {
     return {
-      username: 'roberts.virgie@example.net',
-      password: 'password',
+      username: 'javierbaron6@gmail.com',
+      password: 'Qwerty9601',
       error: null
     };
   },

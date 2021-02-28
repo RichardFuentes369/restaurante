@@ -1,11 +1,11 @@
 <template>
   <div>
-    <button class="btn btn-primary" v-show="mostrar == false" @click="abrirChat(1)">Abrir chat</button>
+    <button class="btn bg-primary text-white" v-show="mostrar == false" @click="abrirChat(1)">Abrir chat</button>
 
     <div>
       <div class="row d-flex flex-row-reverse bd-highlight">
         <div class="p-2 bd-highlight">
-          <button class="btn btn-primary" v-show="mostrar != false" @click="abrirChat(0)">Cerrar Chat</button>
+          <button class="btn bg-primary text-white" v-show="mostrar != false" @click="abrirChat(0)">Cerrar Chat</button>
         </div>
       </div>
       <botman-tinker v-show="mostrar == true" id="botmanWidget" api-endpoint="/botman" class="botmanSettings" />
